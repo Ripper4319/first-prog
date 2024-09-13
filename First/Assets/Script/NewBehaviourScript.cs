@@ -11,6 +11,9 @@ public class NewBehaviourScript : MonoBehaviour
 
     public bool sprintmode = false;
 
+    public GameObject inv;
+    private bool inventoryOpen;
+
     [Header("Movement Settings")]
     public float speed = 10.0f;
     public float sprintMultiplier = 2.5f;
@@ -39,8 +42,8 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
+        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
 
         camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
@@ -59,8 +62,8 @@ public class NewBehaviourScript : MonoBehaviour
             sprintmode = false;
         }
 
-        float VerticalMove = Input.GetAxisRaw("Vertical");
-        float HorizontalMove = Input.GetAxisRaw("Horizontal");
+        float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;
+        float HorizontalMove = Input.GetAxisRaw("Horizontal") * Time.timeScale;
 
         if (SprintToggleOption)
         {
@@ -83,5 +86,29 @@ public class NewBehaviourScript : MonoBehaviour
             temp.y = jumpHeight;
 
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
+
+        if (Input.GetKeyDown(KeyCode.I))
+            Inventory();
+    }
+
+
+    private void Inventory()
+    {
+        if (inventoryOpen)
+        {
+            inv.SetActive(false);
+            inventoryOpen = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            inv.SetActive(true);
+            inventoryOpen = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
+        }
     }
 }
