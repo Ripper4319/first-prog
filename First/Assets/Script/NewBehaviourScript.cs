@@ -9,10 +9,20 @@ public class NewBehaviourScript : MonoBehaviour
 
     Vector2 camRotation;
 
+    public Transform weaponslot;
+
     public bool sprintmode = false;
 
     public GameObject inv;
     private bool inventoryOpen;
+
+    [Header("Player Stats")]
+    public int maxHealth = 5;
+    public int Health = 5;
+    public int healthRestore = 1;
+
+    [Header("weapon stats")]
+    public bool canfire = true;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -50,9 +60,12 @@ public class NewBehaviourScript : MonoBehaviour
         playercam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
-        theRB = GetComponent<Rigidbody>();
-
         Vector3 temp = theRB.velocity;
+
+
+        float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;
+        float HorizontalMove = Input.GetAxisRaw("Horizontal") * Time.timeScale;
+
         if (!SprintToggleOption)
         { 
          if (Input.GetKey(KeyCode.LeftShift))
@@ -61,9 +74,6 @@ public class NewBehaviourScript : MonoBehaviour
          if (Input.GetKey(KeyCode.LeftShift))
             sprintmode = false;
         }
-
-        float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;
-        float HorizontalMove = Input.GetAxisRaw("Horizontal") * Time.timeScale;
 
         if (SprintToggleOption)
         {
@@ -80,7 +90,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (sprintmode)
             temp.x = VerticalMove * speed * sprintMultiplier;
 
-        temp.z = VerticalMove * speed;
+        temp.z = HorizontalMove * speed;
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
@@ -111,4 +121,27 @@ public class NewBehaviourScript : MonoBehaviour
             Time.timeScale = 0;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((Health < maxHealth) && collision.gameObject.tag == "healthpickup")
+        {
+            Health += healthRestore;
+
+            if (Health > maxHealth)
+                Health = maxHealth;
+
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "weapon")
+            collision.gameObject.transform.SetParent(weaponslot);
+    }
+
+    IEnumerator cooldownfire(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canfire = true;
+    }
 }
+
