@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -22,14 +24,24 @@ public class NewBehaviourScript : MonoBehaviour
     public int healthRestore = 1;
 
     [Header("weapon stats")]
+    public int weaponid = -1;
+    public int firemode = 0;
+    public float firerate = 0;
+    public float clipsize = 0;
+    public float currentclip = 0;
+    public float maxclip = 0;
+    public float maxammo = 0;
+    public float currentammo = 0;
+    public float reloadamt = 0;
     public bool canfire = true;
+
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
     public float sprintMultiplier = 2.5f;
     public float jumpHeight = 5.0f;
     public float groundDetectDistance = 1.5f;
-   
+
 
     [Header("User Settings")]
     public bool SprintToggleOption = false;
@@ -37,7 +49,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float xsensitivity = 2.0f;
     public float ysensitivity = 2.0f;
     public float camRotationLimit = 90f;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +72,16 @@ public class NewBehaviourScript : MonoBehaviour
         playercam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
+        if (Input.GetMouseButton(0) && canfire)
+        {
+            canfire = false;
+            StartCoroutine("cooldownfire");
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+            reloadclip();
+
         Vector3 temp = theRB.velocity;
 
 
@@ -67,12 +89,12 @@ public class NewBehaviourScript : MonoBehaviour
         float HorizontalMove = Input.GetAxisRaw("Horizontal") * Time.timeScale;
 
         if (!SprintToggleOption)
-        { 
-         if (Input.GetKey(KeyCode.LeftShift))
-            sprintmode = true;
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+                sprintmode = true;
 
-         if (Input.GetKey(KeyCode.LeftShift))
-            sprintmode = false;
+            if (Input.GetKey(KeyCode.LeftShift))
+                sprintmode = false;
         }
 
         if (SprintToggleOption)
@@ -122,6 +144,43 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "weapon")
+
+
+            other.gameObject.transform.position = weaponslot.position;
+
+        other.gameObject.transform.SetParent(weaponslot);
+
+        switch (other.gameObject.name)
+        {
+            case "weapon1":
+                {
+                    weaponid = 0;
+                    firemode = 0;
+                    firerate = 0.25f;
+                    clipsize = 20;
+                    currentclip = 20;
+                    maxammo = 160;
+                    currentammo = 40;
+                    reloadamt = 20;
+                    break;
+
+                }
+
+            default:
+             break;
+        }
+
+
+        
+    }
+
+
+
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if ((Health < maxHealth) && collision.gameObject.tag == "healthpickup")
@@ -132,16 +191,90 @@ public class NewBehaviourScript : MonoBehaviour
                 Health = maxHealth;
 
             Destroy(collision.gameObject);
+
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+        {
+            if ((currentammo < maxammo) && collision.gameObject.tag == "ammopickup")
+            {
+                currentammo += reloadamt;
+
+                if (currentammo > maxammo)
+                    currentammo = maxammo;
+
+                Destroy(collision.gameObject);
+            }
+
+
+            if ((Health < maxHealth) && collision.gameObject.tag == "healthpickup")
+            {
+                Health += healthRestore;
+
+                if (Health > maxHealth)
+                    Health = maxHealth;
+
+                Destroy(collision.gameObject);
+          
+            
+            
+            }
+      
+        
+    }
+
+    public void reloadclip()
+    {
+
+        if (currentclip >= clipsize)
+            return;
+
+
+        else
+        {
+            float reloadcount = clipsize - currentclip;
+
+            if (currentammo < reloadcount)
+            {
+                currentclip += currentammo;
+
+                currentammo = 0;
+                return;
+
+            }
+
+            else
+            {
+                currentclip += reloadcount;
+
+                currentammo -= reloadcount;
+
+                return;
+
+            }
         }
 
-        if (collision.gameObject.tag == "weapon")
-            collision.gameObject.transform.SetParent(weaponslot);
-    }
 
-    IEnumerator cooldownfire(float time)
-    {
-        yield return new WaitForSeconds(time);
-        canfire = true;
+
+        IEnumerator cooldownfire()
+        {
+            yield return new WaitForSeconds(firerate);
+            canfire = true;
+        }
+
+
+
+
+        IEnumerator cooldownfire()
+        {
+            yield return new WaitForSeconds(firerate);
+            canfire = true;
+        }
     }
-}
+    
+
+
+
+
 
