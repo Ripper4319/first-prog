@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -24,8 +22,10 @@ public class NewBehaviourScript : MonoBehaviour
     public int healthRestore = 1;
 
     [Header("weapon stats")]
+    public GameObject shot;
     public int weaponid = -1;
     public int firemode = 0;
+    public float shotspeed = 15f;
     public float firerate = 0;
     public float clipsize = 0;
     public float currentclip = 0;
@@ -33,6 +33,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float maxammo = 0;
     public float currentammo = 0;
     public float reloadamt = 0;
+    public float bulletlifespan = 0; 
     public bool canfire = true;
 
 
@@ -72,9 +73,14 @@ public class NewBehaviourScript : MonoBehaviour
         playercam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
-        if (Input.GetMouseButton(0) && canfire)
+        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
         {
+            GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
+            s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
+            Destroy(s);
+                
             canfire = false;
+            currentclip--;
             StartCoroutine("cooldownfire");
 
         }
@@ -147,24 +153,26 @@ public class NewBehaviourScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "weapon")
-
-
+        {
             other.gameObject.transform.position = weaponslot.position;
-
-        other.gameObject.transform.SetParent(weaponslot);
+            other.gameObject.transform.SetParent(weaponslot);
+        }
 
         switch (other.gameObject.name)
         {
             case "weapon1":
                 {
+                    bulletlifespan = 3;
                     weaponid = 0;
                     firemode = 0;
                     firerate = 0.25f;
                     clipsize = 20;
                     currentclip = 20;
+                    maxclip = 20;
                     maxammo = 160;
                     currentammo = 40;
                     reloadamt = 20;
+                    shotspeed = 10000;
                     break;
 
                 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - healthpickup
   - weapon
+  - shot
   layers:
   - Default
   - TransparentFX
