@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-
     private Rigidbody theRB;
     Camera playercam;
 
@@ -194,10 +193,7 @@ public class NewBehaviourScript : MonoBehaviour
             Destroy(collision.gameObject);
 
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
         if ((currentammo < maxammo) && collision.gameObject.tag == "ammopickup")
         {
             currentammo += reloadamt;
@@ -221,9 +217,8 @@ public class NewBehaviourScript : MonoBehaviour
 
 
         }
-
-
     }
+
 
     public void reloadclip()
     {
@@ -267,8 +262,10 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
+    }
 }
-    
+
+
 
 
 
