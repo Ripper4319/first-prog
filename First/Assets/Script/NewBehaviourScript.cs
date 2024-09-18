@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+
     private Rigidbody theRB;
     Camera playercam;
 
@@ -170,11 +171,11 @@ public class NewBehaviourScript : MonoBehaviour
                 }
 
             default:
-             break;
+                break;
         }
 
 
-        
+
     }
 
 
@@ -196,32 +197,32 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        if ((currentammo < maxammo) && collision.gameObject.tag == "ammopickup")
         {
-            if ((currentammo < maxammo) && collision.gameObject.tag == "ammopickup")
-            {
-                currentammo += reloadamt;
+            currentammo += reloadamt;
 
-                if (currentammo > maxammo)
-                    currentammo = maxammo;
+            if (currentammo > maxammo)
+                currentammo = maxammo;
 
-                Destroy(collision.gameObject);
-            }
+            Destroy(collision.gameObject);
+        }
 
 
-            if ((Health < maxHealth) && collision.gameObject.tag == "healthpickup")
-            {
-                Health += healthRestore;
+        if ((Health < maxHealth) && collision.gameObject.tag == "healthpickup")
+        {
+            Health += healthRestore;
 
-                if (Health > maxHealth)
-                    Health = maxHealth;
+            if (Health > maxHealth)
+                Health = maxHealth;
 
-                Destroy(collision.gameObject);
-          
-            
-            
-            }
-      
-        
+            Destroy(collision.gameObject);
+
+
+
+        }
+
+
     }
 
     public void reloadclip()
@@ -266,12 +267,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
-        IEnumerator cooldownfire()
-        {
-            yield return new WaitForSeconds(firerate);
-            canfire = true;
-        }
-    }
+}
     
 
 
