@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2244637604198554388
+--- !u!1 &1703187851388125615
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5617958837087409475}
-  - component: {fileID: 2639492236819797519}
-  - component: {fileID: 1295079826040055244}
-  - component: {fileID: 6055888326215768376}
-  - component: {fileID: 4199599582534181136}
+  - component: {fileID: 3995532038811724672}
+  - component: {fileID: 6210720595891345257}
+  - component: {fileID: 5027666189969138768}
+  - component: {fileID: 5183780349415689803}
+  - component: {fileID: 4279084135372134337}
+  - component: {fileID: 4075734564380334961}
+  - component: {fileID: 7194730787930764815}
   m_Layer: 0
   m_Name: bullet
   m_TagString: shot
@@ -20,36 +22,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5617958837087409475
+--- !u!4 &3995532038811724672
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244637604198554388}
+  m_GameObject: {fileID: 1703187851388125615}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.117, y: 1.28, z: 0}
+  m_LocalPosition: {x: 1.117, y: -14199.533, z: 0}
   m_LocalScale: {x: 0.04, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2639492236819797519
+--- !u!33 &6210720595891345257
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244637604198554388}
+  m_GameObject: {fileID: 1703187851388125615}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1295079826040055244
+--- !u!23 &5027666189969138768
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244637604198554388}
+  m_GameObject: {fileID: 1703187851388125615}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -87,13 +89,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6055888326215768376
+--- !u!135 &5183780349415689803
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244637604198554388}
+  m_GameObject: {fileID: 1703187851388125615}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -108,13 +110,13 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &4199599582534181136
+--- !u!54 &4279084135372134337
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2244637604198554388}
+  m_GameObject: {fileID: 1703187851388125615}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -135,3 +137,83 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4075734564380334961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703187851388125615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534b930b2f673b2419da00215bc50c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponslot: {fileID: 0}
+  sprintmode: 0
+  inv: {fileID: 0}
+  maxHealth: 5
+  Health: 5
+  healthRestore: 1
+  shot: {fileID: 0}
+  weaponid: -1
+  firemode: 0
+  shotspeed: 15
+  firerate: 0
+  clipsize: 0
+  currentclip: 0
+  maxclip: 0
+  maxammo: 0
+  currentammo: 0
+  reloadamt: 0
+  bulletlifespan: 0
+  canfire: 1
+  speed: 10
+  sprintMultiplier: 2.5
+  jumpHeight: 5
+  groundDetectDistance: 1.5
+  SprintToggleOption: 0
+  mouseSensitivity: 2
+  xsensitivity: 2
+  ysensitivity: 2
+  camRotationLimit: 90
+--- !u!114 &7194730787930764815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703187851388125615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534b930b2f673b2419da00215bc50c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponslot: {fileID: 0}
+  sprintmode: 0
+  inv: {fileID: 0}
+  maxHealth: 5
+  Health: 5
+  healthRestore: 1
+  shot: {fileID: 0}
+  weaponid: -1
+  firemode: 0
+  shotspeed: 15
+  firerate: 0
+  clipsize: 0
+  currentclip: 0
+  maxclip: 0
+  maxammo: 0
+  currentammo: 0
+  reloadamt: 0
+  bulletlifespan: 0
+  canfire: 1
+  speed: 10
+  sprintMultiplier: 2.5
+  jumpHeight: 5
+  groundDetectDistance: 1.5
+  SprintToggleOption: 0
+  mouseSensitivity: 2
+  xsensitivity: 2
+  ysensitivity: 2
+  camRotationLimit: 90
