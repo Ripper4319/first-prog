@@ -119,6 +119,10 @@ public class NewBehaviourScript : MonoBehaviour
             temp.x = VerticalMove * speed * sprintMultiplier;
 
         temp.z = HorizontalMove * speed;
+        temp.x = VerticalMove * speed;
+
+        if (sprintmode)
+            temp.x *= sprintMultiplier;
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
@@ -154,31 +158,30 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (other.gameObject.tag == "weapon")
         {
-            other.gameObject.transform.position = weaponslot.position;
+            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
+
             other.gameObject.transform.SetParent(weaponslot);
         }
 
         switch (other.gameObject.name)
         {
             case "weapon1":
-                {
-                    bulletlifespan = 3;
-                    weaponid = 0;
-                    firemode = 0;
-                    firerate = 0.25f;
-                    clipsize = 20;
-                    currentclip = 20;
-                    maxclip = 20;
-                    maxammo = 160;
-                    currentammo = 40;
-                    reloadamt = 20;
-                    shotspeed = 10000;
-                    break;
-
-                }
-
-            default:
+                bulletlifespan = 3;
+                weaponid = 0;
+                firemode = 0;
+                firerate = 0.25f;
+                clipsize = 20;
+                currentclip = 20;
+                maxclip = 20;
+                maxammo = 160;
+                currentammo = 40;
+                reloadamt = 20;
+                shotspeed = 10000;
                 break;
+
+            default: break;
+
+            
         }
 
 
@@ -230,7 +233,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void reloadclip()
     {
-
+        currentclip = 0;
         if (currentclip >= clipsize)
             return;
 
@@ -261,15 +264,17 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
-        IEnumerator cooldownfire()
-        {
-            yield return new WaitForSeconds(firerate);
-            canfire = true;
-        }
+        
 
 
 
 
+    }
+
+    IEnumerator cooldownfire()
+    {
+        yield return new WaitForSeconds(firerate);
+        canfire = true;
     }
 }
 
