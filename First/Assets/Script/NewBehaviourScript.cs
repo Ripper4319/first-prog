@@ -75,15 +75,18 @@ public class NewBehaviourScript : MonoBehaviour
 
         if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
         {
+
             GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
             Destroy(s);
                 
             canfire = false;
-            currentclip--;
+            currentclip --;
             StartCoroutine("cooldownfire");
 
         }
+       
+          
 
         if (Input.GetKeyDown(KeyCode.R))
             reloadclip();
@@ -276,7 +279,12 @@ public class NewBehaviourScript : MonoBehaviour
         yield return new WaitForSeconds(firerate);
         canfire = true;
     }
+   
+    
+
+    
 }
+
 
 
 
