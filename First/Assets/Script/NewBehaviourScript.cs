@@ -18,6 +18,9 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject inv;
     private bool inventoryOpen;
 
+    public GameObject set;
+    private bool settingsOpen;
+
     [Header("Player Stats")]
     public int maxHealth = 5;
     public int Health = 5;
@@ -85,7 +88,7 @@ public class NewBehaviourScript : MonoBehaviour
 
             GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
-            Destroy(s);
+            Destroy(s, bulletlifespan);
 
             canfire = false;
             currentclip--;
@@ -145,8 +148,30 @@ public class NewBehaviourScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
             Inventory();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Settings();
     }
 
+    private void Settings()
+    {
+        if (settingsOpen)
+        {
+            set.SetActive(false);
+            settingsOpen = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+        }
+        else
+        {
+            set.SetActive(true);
+            settingsOpen = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
+        }
+    }
 
     private void Inventory()
     {
@@ -179,6 +204,7 @@ public class NewBehaviourScript : MonoBehaviour
             switch (other.gameObject.name)
             {
                 case "weapon1":
+
                     bulletlifespan = 3;
                     weaponid = 0;
                     firemode = 0;
@@ -189,7 +215,7 @@ public class NewBehaviourScript : MonoBehaviour
                     maxammo = 160;
                     currentammo = 40;
                     reloadamt = 20;
-                    shotspeed = 10000;
+                    shotspeed = 4500;
                     break;
 
                 default: break;
