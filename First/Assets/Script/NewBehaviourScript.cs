@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -7,12 +8,13 @@ public class NewBehaviourScript : MonoBehaviour
     private Rigidbody theRB;
     Camera playercam;
 
+    private Animator animator;
+
     Vector2 camRotation;
 
-    public Transform weaponslot;
+    
 
-    public bool sprintmode = false;
-
+    //ui
     public GameObject inv;
     private bool inventoryOpen;
 
@@ -35,6 +37,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float reloadamt = 0;
     public float bulletlifespan = 0; 
     public bool canfire = true;
+    public Transform weaponslot;
 
 
     [Header("Movement Settings")]
@@ -42,7 +45,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float sprintMultiplier = 2.5f;
     public float jumpHeight = 5.0f;
     public float groundDetectDistance = 1.5f;
-
+    public bool sprintmode = false;
 
     [Header("User Settings")]
     public bool SprintToggleOption = false;
@@ -50,6 +53,8 @@ public class NewBehaviourScript : MonoBehaviour
     public float xsensitivity = 2.0f;
     public float ysensitivity = 2.0f;
     public float camRotationLimit = 90f;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +65,8 @@ public class NewBehaviourScript : MonoBehaviour
         camRotation = Vector2.zero;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -79,14 +86,18 @@ public class NewBehaviourScript : MonoBehaviour
             GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
             Destroy(s);
-                
+
             canfire = false;
-            currentclip --;
+            currentclip--;
             StartCoroutine("cooldownfire");
 
+            Debug.Log("triggering shotsniper");
+            animator.ResetTrigger("shotsniper");
+            animator.SetTrigger("shotsniper");
+
+
+
         }
-       
-          
 
         if (Input.GetKeyDown(KeyCode.R))
             reloadclip();
@@ -164,28 +175,30 @@ public class NewBehaviourScript : MonoBehaviour
             other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
 
             other.gameObject.transform.SetParent(weaponslot);
+
+            switch (other.gameObject.name)
+            {
+                case "weapon1":
+                    bulletlifespan = 3;
+                    weaponid = 0;
+                    firemode = 0;
+                    firerate = 0.25f;
+                    clipsize = 20;
+                    currentclip = 20;
+                    maxclip = 20;
+                    maxammo = 160;
+                    currentammo = 40;
+                    reloadamt = 20;
+                    shotspeed = 10000;
+                    break;
+
+                default: break;
+
+
+            }
         }
 
-        switch (other.gameObject.name)
-        {
-            case "weapon1":
-                bulletlifespan = 3;
-                weaponid = 0;
-                firemode = 0;
-                firerate = 0.25f;
-                clipsize = 20;
-                currentclip = 20;
-                maxclip = 20;
-                maxammo = 160;
-                currentammo = 40;
-                reloadamt = 20;
-                shotspeed = 10000;
-                break;
-
-            default: break;
-
-            
-        }
+       
 
 
 
