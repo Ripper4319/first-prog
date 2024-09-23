@@ -1,23 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicEnemyController : MonoBehaviour
 {
     public int health = 3;
     public int maxHealth = 3;
+    public Transform player;
+    public float detectionRange = 10f;
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public float projectileSpeed = 10f;
+    public float fireRate = 2f;
+    private float nextFireTime = 0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (health <= 0)
             Destroy(gameObject);
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= detectionRange)
+        {
+            transform.LookAt(player);
+
+            if (Time.time >= nextFireTime)
+            {
+                ShootAtPlayer();
+                nextFireTime = Time.time + fireRate;
+            }
+        }
+    }
+
+    private void ShootAtPlayer()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.velocity = (player.position - firePoint.position).normalized * projectileSpeed;
+
+        Destroy(projectile, 2f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,3 +48,4 @@ public class BasicEnemyController : MonoBehaviour
         }
     }
 }
+

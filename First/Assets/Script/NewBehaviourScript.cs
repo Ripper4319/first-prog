@@ -70,6 +70,9 @@ public class NewBehaviourScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         animator = GetComponent<Animator>();
+
+        set.SetActive(false);
+        inv.SetActive(false);
     }
 
     // Update is called once per frame
