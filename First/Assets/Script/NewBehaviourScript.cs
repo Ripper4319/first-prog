@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using UnityEngine.Events;
+
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -30,7 +32,13 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject set;
     private bool settingsOpen;
 
+    public GameObject HUD;
+    private bool HUDActive;
 
+    public GameObject Main;
+    private bool MainOpen;
+
+    
 
     [Header("Player Stats")]
     public int maxHealth = 5;
@@ -71,13 +79,15 @@ public class NewBehaviourScript : MonoBehaviour
         playercam = transform.GetChild(0).GetComponent<Camera>();
 
         camRotation = Vector2.zero;
-        Cursor.visible = false;
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
         sniper = GetComponent<Animator>();
 
         set.SetActive(false);
         inv.SetActive(false);
+        HUD.SetActive(false);
+        Main.SetActive(true);
 
         gunNormalPosition = gunTransform.localPosition;
     }
@@ -88,6 +98,7 @@ public class NewBehaviourScript : MonoBehaviour
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
 
         camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
+
 
         playercam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
@@ -164,6 +175,8 @@ public class NewBehaviourScript : MonoBehaviour
 
         numberText.text = currentclip.ToString();
     }
+
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -257,6 +270,33 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
+    private void MainMenu()
+    {
+        if (MainOpen)
+        {
+            Main.SetActive(false);
+           MainOpen = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            HUD.SetActive(true);
+        }
+        else
+        {
+            HUD.SetActive(false);
+            Main.SetActive(true);
+            MainOpen = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
+        }
+    }
+
+    public void ToggleBool()
+    {
+        Main.SetActive (false);
+        Debug.Log("mybool in now:" + MainOpen);
+    }
     private void Settings()
     {
         if (settingsOpen)
@@ -266,9 +306,11 @@ public class NewBehaviourScript : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
+            HUD.SetActive(true);
         }
         else
         {
+            HUD.SetActive(false);   
             set.SetActive(true);
             settingsOpen = true;
             Cursor.visible = true;
@@ -286,9 +328,11 @@ public class NewBehaviourScript : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
+            HUD.SetActive(true);
         }
         else
         {
+            HUD.SetActive(false);
             inv.SetActive(true);
             inventoryOpen = true;
             Cursor.visible = true;

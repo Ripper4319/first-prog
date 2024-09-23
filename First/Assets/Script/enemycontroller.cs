@@ -8,7 +8,7 @@ public class BasicEnemyController : MonoBehaviour
     public float detectionRange = 10f;
     public GameObject projectilePrefab;
     public Transform firePoint;
-    public float projectileSpeed = 10f;
+    public float projectileSpeed = 20f;
     public float fireRate = 2f;
     private float nextFireTime = 0f;
 

@@ -12,7 +12,7 @@ public class ElevatorController : MonoBehaviour
 
     void Update()
     {
-        if (!moving && Input.GetKeyDown(KeyCode.Space)) 
+        if (!moving && Input.GetKeyDown(KeyCode.E)) 
         {
             GoToFloor(targetFloor);
 
