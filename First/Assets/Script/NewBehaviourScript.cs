@@ -276,7 +276,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             Main.SetActive(false);
            MainOpen = false;
-            Cursor.visible = false;
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
             HUD.SetActive(true);
