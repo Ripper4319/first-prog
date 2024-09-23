@@ -11,7 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     private Rigidbody theRB;
     Camera playercam;
 
-    private Animator animator;
+    private Animator sniper;
 
     public TextMeshProUGUI numberText;
 
@@ -74,7 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        animator = GetComponent<Animator>();
+        sniper = GetComponent<Animator>();
 
         set.SetActive(false);
         inv.SetActive(false);
@@ -223,8 +223,7 @@ public class NewBehaviourScript : MonoBehaviour
         StartCoroutine("cooldownfire");
 
         Debug.Log("triggering shotsniper");
-        animator.ResetTrigger("shotsniper");
-        animator.SetTrigger("shotsniper");
+        sniper.SetTrigger("shotsniper");
     }
 
 
@@ -236,6 +235,8 @@ public class NewBehaviourScript : MonoBehaviour
 
         else
         {
+            sniper.SetTrigger("reload");
+
             float reloadcount = clipsize - currentclip;
 
             if (currentammo < reloadcount)
