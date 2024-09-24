@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicEnemyController : MonoBehaviour
 {
+    //public playercontroller;
+
+
     public int health = 3;
     public int maxHealth = 3;
     public Transform player;
@@ -28,6 +32,11 @@ public class BasicEnemyController : MonoBehaviour
                 nextFireTime = Time.time + fireRate;
             }
         }
+
+        //agent.destination = player.transform.position;
+
+        if (health <= 0) ;
+            //Destroy(GameObject);
     }
 
     private void ShootAtPlayer()
