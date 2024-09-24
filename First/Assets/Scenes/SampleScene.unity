@@ -2496,6 +2496,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885044349}
   m_CullTransparentMesh: 1
+--- !u!4 &894550447 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 548714547320185918, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+  m_PrefabInstance: {fileID: 1476426203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &901714198
 GameObject:
   m_ObjectHideFlags: 0
@@ -4522,6 +4527,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a45ce1e5dad733499d25a9a1ce9b58e, type: 3}
+--- !u!4 &1325880208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 548714547320185918, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+  m_PrefabInstance: {fileID: 7757147921888656641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1325880214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,9 +4544,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletlifespan: 0
+  numberText: {fileID: 420470825}
+  isAiming: 0
+  normalFOV: 60
+  zoomFOV: 30
+  gunTransform: {fileID: 1325880208}
+  gunADSPosition: {x: 0, y: 0, z: 0}
+  gunNormalPosition: {x: 0, y: 0, z: 0}
+  shot: {fileID: 1033254731}
   weaponid: 0
   firemode: 0
+  shotspeed: 0
+  semiAutoFireRate: 0.1
+  fullAutoFireRate: 0.05
   firerate: 0
   clipsize: 0
   currentclip: 0
@@ -4544,10 +4564,19 @@ MonoBehaviour:
   maxammo: 0
   currentammo: 0
   reloadamt: 0
-  shotspeed: 0
+  bulletlifespan: 0
+  canfire: 1
+  weaponslot: {fileID: 1338362749}
+  newBehaviourScript: {fileID: 0}
+  direction: {fileID: 0}
 --- !u!1 &1326394800 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1861368233771695739, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+  m_PrefabInstance: {fileID: 6638228388811314046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1326394804 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1727188501787814055, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
   m_PrefabInstance: {fileID: 6638228388811314046}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1332294621
@@ -5098,8 +5127,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: weapon3
       objectReference: {fileID: 0}
+    - target: {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+      propertyPath: shot
+      value: 
+      objectReference: {fileID: 7541762847667164453, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+    - target: {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 1694671894}
+    - target: {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+      propertyPath: weaponslot
+      value: 
+      objectReference: {fileID: 1338362749}
+    - target: {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 894550447}
     m_RemovedComponents:
     - {fileID: 1040410343444670549, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+    - {fileID: 8483535602307604799, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 919132149155446097, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     m_AddedGameObjects: []
@@ -6666,6 +6712,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745476287}
   m_CullTransparentMesh: 1
+--- !u!4 &1751534022 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2381896644643678175, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+  m_PrefabInstance: {fileID: 6770270483576316142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1755285254
 GameObject:
   m_ObjectHideFlags: 0
@@ -6935,7 +6986,6 @@ GameObject:
   - component: {fileID: 1785173160}
   - component: {fileID: 1785173159}
   - component: {fileID: 1785173158}
-  - component: {fileID: 1785173162}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -7031,29 +7081,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1717499177}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1785173162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785173157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletlifespan: 3
-  weaponid: -1
-  firemode: 0
-  firerate: 0.25
-  clipsize: 20
-  currentclip: 20
-  maxclip: 20
-  maxammo: 160
-  currentammo: 40
-  reloadamt: 20
-  shotspeed: 15
 --- !u!1 &1794746034
 GameObject:
   m_ObjectHideFlags: 0
@@ -8516,6 +8543,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: weapon2
       objectReference: {fileID: 0}
+    - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+      propertyPath: shot
+      value: 
+      objectReference: {fileID: 7541762847667164453, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+    - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 1860336302}
+    - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+      propertyPath: weaponslot
+      value: 
+      objectReference: {fileID: 1338362749}
+    - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 1326394804}
     m_RemovedComponents:
     - {fileID: 7340527218717945254, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
     - {fileID: 3297273054601600445, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
@@ -8533,6 +8576,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1960265361813344965, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+      propertyPath: shot
+      value: 
+      objectReference: {fileID: 7541762847667164453, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+    - target: {fileID: 1960265361813344965, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 1860336302}
+    - target: {fileID: 1960265361813344965, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+      propertyPath: weaponslot
+      value: 
+      objectReference: {fileID: 1338362749}
+    - target: {fileID: 1960265361813344965, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 1751534022}
     - target: {fileID: 3484756644868197391, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
       propertyPath: player
       value: 
@@ -8585,11 +8644,16 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 001615426666bef46993dc1a86edc2be, type: 2}
+    - target: {fileID: 5992263842444944094, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 1860336302}
     - target: {fileID: 6965914777248116690, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
       propertyPath: m_Name
       value: enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5992263842444944094, guid: 6c1ec3cdee5cdd743a329da1f9b8a801, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -8660,6 +8724,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     - {fileID: 8483535602307604799, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+    - {fileID: 6234173836234399063, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

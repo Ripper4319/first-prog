@@ -12,7 +12,7 @@ using UnityEngine.Events;
 public class NewBehaviourScript : MonoBehaviour
 {
     private Rigidbody theRB;
-    Camera playercam;
+    public Camera playercam;
 
     private Animator sniper;
 
@@ -60,7 +60,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float camRotationLimit = 90f;
 
     
-    private 1auto autoGun;        
+    private Gun autoGun;        
     private bolt_action boltActionGun;
 
     void Start()
@@ -77,7 +77,7 @@ public class NewBehaviourScript : MonoBehaviour
         set.SetActive(false);
         inv.SetActive(false);
         HUD.SetActive(false);
-        Main.SetActive(true);
+        Main.SetActive(false);
 
         gunNormalPosition = gunTransform.localPosition;
     }
@@ -252,17 +252,12 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("weapon"))
         {
-            // Attach weapon to player
+            
             other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
             other.gameObject.transform.SetParent(weaponslot);
 
             
-            1auto weaponScript = other.gameObject.GetComponent<auto>();
-
-            if (weaponScript != null)
-            {
-                weaponScript.SetupWeapon();
-            }
+            
         }
     }
 

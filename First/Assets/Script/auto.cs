@@ -2,6 +2,7 @@ using NUnit;
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 
 public class RPKWeapon : MonoBehaviour
 {
@@ -24,25 +25,27 @@ public class RPKWeapon : MonoBehaviour
     [Header("Weapon Stats")]
     public GameObject shot;
     public int weaponid = -1;
-    public int firemode = 0; // 0: semi-auto, 1: full-auto
-    public float shotspeed = 700f; // Muzzle velocity in m/s
-    public float semiAutoFireRate = 0.1f; // 600 RPM (0.1 seconds between shots)
-    public float fullAutoFireRate = 0.05f; // 1200 RPM (0.05 seconds between shots)
-    public float firerate; // Variable fire rate based on mode
-    public float clipsize = 45f; // Standard magazine capacity
+    public int firemode = 0; 
+    public float shotspeed = 700f; 
+    public float semiAutoFireRate = 0.1f; 
+    public float fullAutoFireRate = 0.05f; 
+    public float firerate; 
+    public float clipsize = 45f; 
     public float currentclip = 0;
     public float maxclip = 45f;
-    public float maxammo = 150f; // Total ammo including reserves
+    public float maxammo = 150f; 
     public float currentammo = 0;
-    public float reloadamt = 45f; // Amount reloaded per action
-    public float bulletlifespan = 5f; // Time before bullet is destroyed
+    public float reloadamt = 45f; 
+    public float bulletlifespan = 5f; 
     public bool canfire = true;
     public Transform weaponslot;
+    public NewBehaviourScript newBehaviourScript;
+
+    public Camera direction;
 
     void Start()
     {
-        theRB = GetComponent<Rigidbody>();
-        playercam = transform.GetChild(0).GetComponent<Camera>();
+        
 
         camRotation = Vector2.zero;
         Cursor.visible = true;
@@ -52,32 +55,32 @@ public class RPKWeapon : MonoBehaviour
 
         gunNormalPosition = gunTransform.localPosition;
 
-        // Set initial fire rate to semi-auto
+        
         firerate = semiAutoFireRate;
     }
 
     void Update()
     {
-        // Aiming logic
+        
         if (Input.GetMouseButtonDown(1)) StartADS();
         if (Input.GetMouseButtonUp(1)) StopADS();
 
-        // Fire mode switching
+       
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             ToggleFireMode();
         }
 
-        // Firing logic
+       
         if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
         {
             FireWeapon();
         }
 
-        // Reload logic
+        
         if (Input.GetKeyDown(KeyCode.R)) ReloadClip();
 
-        // Update UI
+        
         numberText.text = currentclip.ToString();
     }
 
@@ -86,14 +89,14 @@ public class RPKWeapon : MonoBehaviour
 
     private void ToggleFireMode()
     {
-        if (firemode == 0) // If currently semi-auto
+        if (firemode == 0)
         {
-            firemode = 1; // Switch to full-auto
+            firemode = 1;
             firerate = fullAutoFireRate;
         }
-        else // If currently full-auto
+        else 
         {
-            firemode = 0; // Switch to semi-auto
+            firemode = 0; 
             firerate = semiAutoFireRate;
         }
 
@@ -102,19 +105,20 @@ public class RPKWeapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        direction = newBehaviourScript.playercam;
         GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
-        s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
+        s.GetComponent<Rigidbody>().AddForce(direction.transform.forward * shotspeed);
         Destroy(s, bulletlifespan);
 
         canfire = false;
         currentclip--;
 
-        // Use the current firerate for cooldown
+        
         StartCoroutine(CooldownFire());
 
         rpkAnimator.SetTrigger("Fire");
     }
-
+    
     private void ReloadClip()
     {
         if (currentclip >= clipsize) return;
