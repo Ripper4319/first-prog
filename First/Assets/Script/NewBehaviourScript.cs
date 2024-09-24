@@ -60,7 +60,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float camRotationLimit = 90f;
 
     
-    private auto autoGun;        
+    private 1auto autoGun;        
     private bolt_action boltActionGun;
 
     void Start()
@@ -257,7 +257,7 @@ public class NewBehaviourScript : MonoBehaviour
             other.gameObject.transform.SetParent(weaponslot);
 
             
-            auto weaponScript = other.gameObject.GetComponent<auto>();
+            1auto weaponScript = other.gameObject.GetComponent<auto>();
 
             if (weaponScript != null)
             {
