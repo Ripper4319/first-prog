@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using UnityEngine.Events;
 
 
+
 public class NewBehaviourScript : MonoBehaviour
 {
     private Rigidbody theRB;
@@ -25,6 +26,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Transform gunTransform;
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
+    public Transform weaponslot;
 
     public GameObject inv;
     private bool inventoryOpen;
@@ -38,28 +40,12 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject Main;
     private bool MainOpen;
 
-    
+
 
     [Header("Player Stats")]
     public int maxHealth = 5;
     public int Health = 5;
     public int healthRestore = 1;
-
-    [Header("Weapon Stats")]
-    public GameObject shot;
-    public int weaponid = -1;
-    public int firemode = 0;
-    public float shotspeed = 15f;
-    public float firerate = 0;
-    public float clipsize = 0;
-    public float currentclip = 0;
-    public float maxclip = 0;
-    public float maxammo = 0;
-    public float currentammo = 0;
-    public float reloadamt = 0;
-    public float bulletlifespan = 0;
-    public bool canfire = true;
-    public Transform weaponslot;
 
     public float speed = 10.0f;
     public float sprintMultiplier = 2.5f;
@@ -124,13 +110,7 @@ public class NewBehaviourScript : MonoBehaviour
             gunTransform.localPosition = Vector3.Lerp(gunTransform.localPosition, gunNormalPosition, 0.1f);
         }
 
-        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
-        {
-            FireWeapon();
-        }
 
-        if (Input.GetKeyDown(KeyCode.R))
-            reloadclip();
 
         Vector3 temp = theRB.velocity;
         float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;
@@ -173,47 +153,10 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Settings();
 
-        numberText.text = currentclip.ToString();
     }
 
-   
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "weapon")
-        {
-            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
-
-            other.gameObject.transform.SetParent(weaponslot);
-
-            switch (other.gameObject.name)
-            {
-                case "weapon1":
-
-                    bulletlifespan = 3;
-                    weaponid = 0;
-                    firemode = 0;
-                    firerate = 0.25f;
-                    clipsize = 20;
-                    currentclip = 20;
-                    maxclip = 20;
-                    maxammo = 160;
-                    currentammo = 40;
-                    reloadamt = 20;
-                    shotspeed = 4500;
-                    break;
-
-                default: break;
 
 
-            }
-        }
-
-
-
-
-
-    }
 
     private void StartADS()
     {
@@ -225,57 +168,17 @@ public class NewBehaviourScript : MonoBehaviour
         isAiming = false;
     }
 
-    private void FireWeapon()
-    {
-        GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
-        s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
-        Destroy(s, bulletlifespan);
-
-        canfire = false;
-        currentclip--;
-        StartCoroutine("cooldownfire");
-
-        Debug.Log("triggering shotsniper");
-        sniper.SetTrigger("shotsniper");
-    }
+    
 
 
-    private void reloadclip()
-    {
-        currentclip = 0;
-        if (currentclip >= clipsize)
-            return;
-
-        else
-        {
-            sniper.SetTrigger("reload");
-
-            float reloadcount = clipsize - currentclip;
-
-            if (currentammo < reloadcount)
-            {
-                currentclip += currentammo;
-
-                currentammo = 0;
-                return;
-            }
-            else
-            {
-                currentclip += reloadcount;
-
-                currentammo -= reloadcount;
-
-                return;
-            }
-        }
-    }
+    
 
     private void MainMenu()
     {
         if (MainOpen)
         {
             Main.SetActive(false);
-           MainOpen = false;
+            MainOpen = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
@@ -294,7 +197,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void ToggleBool()
     {
-        Main.SetActive (false);
+        Main.SetActive(false);
         Debug.Log("mybool in now:" + MainOpen);
     }
     private void Settings()
@@ -310,7 +213,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
         else
         {
-            HUD.SetActive(false);   
+            HUD.SetActive(false);
             set.SetActive(true);
             settingsOpen = true;
             Cursor.visible = true;
@@ -342,12 +245,10 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
 
-    IEnumerator cooldownfire()
-    {
-        yield return new WaitForSeconds(firerate);
-        canfire = true;
-    }
+    
 }
+    
+
 
 
 
