@@ -60,6 +60,11 @@ public class bolt_action : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButton(0) &&canfire && currentclip > 0 && weaponid >= 0)
+        {
+            FireWeapon();
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
              ReloadClip();
@@ -85,10 +90,11 @@ public class bolt_action : MonoBehaviour
     {
         GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
         s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
-        Destroy(s, bulletlifespan);
+        Destroy(s,bulletlifespan);
 
         canfire = false;
         currentclip--;
+        StartCoroutine("cooldownfire");
 
 
         StartCoroutine(CooldownFire());

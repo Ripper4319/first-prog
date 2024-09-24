@@ -8546,7 +8546,7 @@ PrefabInstance:
     - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
       propertyPath: shot
       value: 
-      objectReference: {fileID: 7541762847667164453, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+      objectReference: {fileID: 1033254731}
     - target: {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
       propertyPath: numberText
       value: 
