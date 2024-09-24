@@ -11,10 +11,10 @@ using UnityEngine.Events;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    private Rigidbody theRB;
-    public Camera playercam;
+    Rigidbody theRB;
+    Camera playercam;
 
-    private Animator sniper;
+    Transform camhold;
 
     public TextMeshProUGUI numberText;
 
@@ -66,13 +66,14 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
-        playercam = transform.GetChild(0).GetComponent<Camera>();
+        playercam = Camera.main;
+        camhold = transform.GetChild(0);
 
         camRotation = Vector2.zero;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
-        sniper = GetComponent<Animator>();
+       
 
         set.SetActive(false);
         inv.SetActive(false);
@@ -84,13 +85,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        playercam.transform.position = camhold.position;
+
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
 
         camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
 
-        playercam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
+       
+        playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
         if (Input.GetMouseButtonDown(1))

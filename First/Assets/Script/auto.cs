@@ -2,12 +2,13 @@ using NUnit;
 using TMPro;
 using UnityEngine;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor.Experimental;
 
 public class RPKWeapon : MonoBehaviour
 {
-    private Rigidbody theRB;
     Camera playercam;
+
+    private Rigidbody theRB;
 
     private Animator rpkAnimator;
 
