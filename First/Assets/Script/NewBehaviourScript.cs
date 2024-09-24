@@ -59,6 +59,10 @@ public class NewBehaviourScript : MonoBehaviour
     public float ysensitivity = 2.0f;
     public float camRotationLimit = 90f;
 
+    
+    private auto autoGun;        
+    private bolt_action boltActionGun;
+
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
@@ -244,8 +248,24 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("weapon"))
+        {
+            // Attach weapon to player
+            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
+            other.gameObject.transform.SetParent(weaponslot);
 
-    
+            
+            auto weaponScript = other.gameObject.GetComponent<auto>();
+
+            if (weaponScript != null)
+            {
+                weaponScript.SetupWeapon();
+            }
+        }
+    }
+
 }
     
 
