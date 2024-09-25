@@ -6,7 +6,7 @@ using UnityEditor.Experimental;
 
 public class RPKWeapon : MonoBehaviour
 {
-    Camera playercam;
+    public Camera playercam;
 
     private Rigidbody theRB;
 
@@ -20,6 +20,7 @@ public class RPKWeapon : MonoBehaviour
     public float normalFOV = 60f;
     public float zoomFOV = 30f;
     public Transform gunTransform;
+    public Transform firePoint;
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
 
@@ -27,10 +28,8 @@ public class RPKWeapon : MonoBehaviour
     public GameObject shot;
     public int weaponid = -1;
     public int firemode = 0; 
-    public float shotspeed = 700f; 
-    public float semiAutoFireRate = 0.1f; 
-    public float fullAutoFireRate = 0.05f; 
-    public float firerate; 
+    public float shotspeed = 100f; 
+    public float firerate = 2; 
     public float clipsize = 45f; 
     public float currentclip = 0;
     public float maxclip = 45f;
@@ -52,12 +51,10 @@ public class RPKWeapon : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
-        rpkAnimator = GetComponent<Animator>();
 
         gunNormalPosition = gunTransform.localPosition;
 
         
-        firerate = semiAutoFireRate;
     }
 
     void Update()
@@ -65,12 +62,6 @@ public class RPKWeapon : MonoBehaviour
         
         if (Input.GetMouseButtonDown(1)) StartADS();
         if (Input.GetMouseButtonUp(1)) StopADS();
-
-       
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            ToggleFireMode();
-        }
 
        
         if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
@@ -88,36 +79,14 @@ public class RPKWeapon : MonoBehaviour
     private void StartADS() => isAiming = true;
     private void StopADS() => isAiming = false;
 
-    private void ToggleFireMode()
-    {
-        if (firemode == 0)
-        {
-            firemode = 1;
-            firerate = fullAutoFireRate;
-        }
-        else 
-        {
-            firemode = 0; 
-            firerate = semiAutoFireRate;
-        }
-
-        Debug.Log("Fire mode changed to: " + (firemode == 0 ? "Semi-Auto" : "Full-Auto"));
-    }
 
     private void FireWeapon()
     {
-        direction = newBehaviourScript.playercam;
-        GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
-        s.GetComponent<Rigidbody>().AddForce(direction.transform.forward * shotspeed);
-        Destroy(s, bulletlifespan);
+        GameObject projectile = Instantiate(shot, firePoint.position, firePoint.rotation);
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-        canfire = false;
-        currentclip--;
+        Destroy(projectile, 2f);
 
-        
-        StartCoroutine(CooldownFire());
-
-        rpkAnimator.SetTrigger("Fire");
     }
     
     private void ReloadClip()

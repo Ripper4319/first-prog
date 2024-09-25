@@ -35,7 +35,7 @@ public class BasicEnemyController : MonoBehaviour
 
         //agent.destination = player.transform.position;
 
-        if (health <= 0) ;
+        if (health <= 0);
             //Destroy(GameObject);
     }
 
