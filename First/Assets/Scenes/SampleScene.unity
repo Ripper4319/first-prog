@@ -4527,12 +4527,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a45ce1e5dad733499d25a9a1ce9b58e, type: 3}
---- !u!4 &1325880208 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 548714547320185918, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
-  m_PrefabInstance: {fileID: 7757147921888656641}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1325880214
+--- !u!114 &1325880216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4544,27 +4539,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playercam: {fileID: 0}
+  playercam: {fileID: 70451545275941466}
   numberText: {fileID: 420470825}
   isAiming: 0
   normalFOV: 60
   zoomFOV: 30
-  gunTransform: {fileID: 1325880208}
-  firePoint: {fileID: 1325880208}
+  gunTransform: {fileID: 175401077214299222}
+  firePoint: {fileID: 175401077214299222}
   gunADSPosition: {x: 0, y: 0, z: 0}
   gunNormalPosition: {x: 0, y: 0, z: 0}
   shot: {fileID: 1033254731}
   weaponid: 0
   firemode: 0
-  shotspeed: 0
-  firerate: 0
-  clipsize: 0
-  currentclip: 0
-  maxclip: 0
-  maxammo: 0
+  shotspeed: 100
+  firerate: 2
+  clipsize: 20
+  currentclip: 20
+  maxclip: 20
+  maxammo: 150
   currentammo: 0
-  reloadamt: 0
-  bulletlifespan: 0
+  reloadamt: 45
+  bulletlifespan: 5
   canfire: 1
   weaponslot: {fileID: 175401077214299222}
   newBehaviourScript: {fileID: 4165954408834239754}
@@ -4579,6 +4574,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1727188501787814055, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
   m_PrefabInstance: {fileID: 6638228388811314046}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1326394808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326394800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad76cc15a8be4744b3fee29e8042f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberText: {fileID: 420470825}
+  bulletlifespan: 0
+  weaponid: 0
+  firemode: 0
+  firerate: 0
+  clipsize: 0
+  currentclip: 0
+  maxclip: 0
+  maxammo: 0
+  currentammo: 0
+  reloadamt: 0
+  shotspeed: 0
+  shot: {fileID: 1033254731}
+  canfire: 1
+  weaponslot: {fileID: 175401077214299222}
+  isAiming: 0
+  normalFOV: 60
+  zoomFOV: 30
+  gunTransform: {fileID: 175401077214299222}
+  gunADSPosition: {x: 0, y: 0, z: 0}
+  gunNormalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1332294621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,6 +5169,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1040410343444670549, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     - {fileID: 8483535602307604799, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
+    - {fileID: 4442550808476029220, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 919132149155446097, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
     m_AddedGameObjects: []
@@ -8721,9 +8750,13 @@ PrefabInstance:
     - {fileID: 3297273054601600445, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
     - {fileID: 296200114278770654, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
     - {fileID: 436859724731380817, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+    - {fileID: 7251847121071612608, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1861368233771695739, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1326394808}
   m_SourcePrefab: {fileID: 100100000, guid: 2bf34ea5740bedb4b88a3ac76022ae8a, type: 3}
 --- !u!1001 &6770270483576316142
 PrefabInstance:
@@ -8888,7 +8921,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 698533723066348258, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1325880214}
+      addedObject: {fileID: 1325880216}
   m_SourcePrefab: {fileID: 100100000, guid: 5b3e07ae39ba4bd4a889604b54ee6b7f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

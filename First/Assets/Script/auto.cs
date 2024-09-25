@@ -26,13 +26,13 @@ public class RPKWeapon : MonoBehaviour
 
     [Header("Weapon Stats")]
     public GameObject shot;
-    public int weaponid = -1;
+    public int weaponid = 0;
     public int firemode = 0; 
     public float shotspeed = 100f; 
-    public float firerate = 2; 
-    public float clipsize = 45f; 
-    public float currentclip = 0;
-    public float maxclip = 45f;
+    public float firerate = 2f; 
+    public float clipsize = 20f; 
+    public float currentclip = 20;
+    public float maxclip = 20f;
     public float maxammo = 150f; 
     public float currentammo = 0;
     public float reloadamt = 45f; 
@@ -82,9 +82,11 @@ public class RPKWeapon : MonoBehaviour
 
     private void FireWeapon()
     {
-        GameObject projectile = Instantiate(shot, firePoint.position, firePoint.rotation);
+        GameObject projectile = Instantiate(shot,weaponslot.position, weaponslot.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.AddForce(firePoint.forward * shotspeed, ForceMode.Impulse);
+        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+
+        canfire = false;
 
         Destroy(projectile, 2f);
         StartCoroutine

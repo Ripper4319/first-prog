@@ -40,20 +40,34 @@ public class bolt_action : MonoBehaviour
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
 
-    public void SetupWeapon()
+    private void OnTriggerEnter(Collider other)
     {
-        bulletlifespan = 10;
-        weaponid = 2;
-        firerate = 1.5f;
-        clipsize = 5;
-        currentclip = 5;
-        maxclip = 5;
-        maxammo = 50;
-        currentammo = 20;
-        reloadamt = 5;
-        shotspeed = 865f;
+        if (other.gameObject.tag == "weapon")
+        {
+            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
 
-        Debug.Log("Bolt action weapon equipped!");
+            other.gameObject.transform.SetParent(weaponslot);
+
+            switch (other.gameObject.name)
+            {
+                case "weapon2":
+
+                    weaponid = 1;
+                    shotspeed = 10000;
+                    firemode = 0;
+                    firerate = 0.25f;
+                    currentclip = 20;
+                    clipsize = 20;
+                    maxammo = 400;
+                    currentammo = 200;
+                    reloadamt = 20;
+                    bulletlifespan = 1;
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
 
