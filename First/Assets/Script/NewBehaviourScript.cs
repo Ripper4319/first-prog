@@ -12,7 +12,7 @@ using UnityEngine.Events;
 public class NewBehaviourScript : MonoBehaviour
 {
     Rigidbody theRB;
-    Camera playercam;
+    public Camera playercam;
 
     Transform camhold;
 

@@ -84,8 +84,11 @@ public class RPKWeapon : MonoBehaviour
     {
         GameObject projectile = Instantiate(shot, firePoint.position, firePoint.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.AddForce(firePoint.forward * shotspeed, ForceMode.Impulse);
 
         Destroy(projectile, 2f);
+        StartCoroutine
+            (CooldownFire());
 
     }
     

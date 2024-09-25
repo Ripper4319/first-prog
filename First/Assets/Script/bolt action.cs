@@ -44,7 +44,6 @@ public class bolt_action : MonoBehaviour
     {
         bulletlifespan = 10;
         weaponid = 2;
-        firemode = 0;
         firerate = 1.5f;
         clipsize = 5;
         currentclip = 5;

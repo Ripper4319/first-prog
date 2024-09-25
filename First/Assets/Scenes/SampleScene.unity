@@ -4550,7 +4550,7 @@ MonoBehaviour:
   normalFOV: 60
   zoomFOV: 30
   gunTransform: {fileID: 1325880208}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 1325880208}
   gunADSPosition: {x: 0, y: 0, z: 0}
   gunNormalPosition: {x: 0, y: 0, z: 0}
   shot: {fileID: 1033254731}
