@@ -29,12 +29,10 @@ public class RPKWeapon : MonoBehaviour
     public int weaponid = 0;
     public int firemode = 0; 
     public float shotspeed = 100f; 
-    public float firerate = 2f; 
-    public float clipsize = 20f; 
-    public float currentclip = 20;
-    public float maxclip = 20f;
-    public float maxammo = 150f; 
-    public float currentammo = 0;
+    public float firerate = 0.1f; 
+    public float clipsize = 200f; 
+    public float currentclip = 200;
+    public float maxclip = 200f; 
     public float reloadamt = 45f; 
     public float bulletlifespan = 5f; 
     public bool canfire = true;
@@ -70,8 +68,6 @@ public class RPKWeapon : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.R)) ReloadClip();
-
         
         numberText.text = currentclip.ToString();
     }
@@ -94,25 +90,6 @@ public class RPKWeapon : MonoBehaviour
 
     }
     
-    private void ReloadClip()
-    {
-        if (currentclip >= clipsize) return;
-
-        rpkAnimator.SetTrigger("Reload");
-
-        float reloadCount = clipsize - currentclip;
-
-        if (currentammo < reloadCount)
-        {
-            currentclip += currentammo;
-            currentammo = 0;
-        }
-        else
-        {
-            currentclip += reloadCount;
-            currentammo -= reloadCount;
-        }
-    }
 
     private IEnumerator CooldownFire()
     {

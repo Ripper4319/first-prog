@@ -10,65 +10,45 @@ using UnityEngine.Events;
 public class bolt_action : MonoBehaviour
 {
 
+    public Camera playercam;
+
     private Rigidbody theRB;
-    Camera playercam;
+
 
     public TextMeshProUGUI numberText;
 
     Vector2 camRotation;
 
-    public int bulletlifespan;
-    public int weaponid;
-    public int firemode;
-    public float firerate;
-    public int clipsize;
-    public int currentclip;
-    public int maxclip;
-    public int maxammo;
-    public int currentammo;
-    public int reloadamt;
-    public float shotspeed;
-
-    public GameObject shot;
-    public bool canfire = true;
-    public Transform weaponslot;
-
     public bool isAiming = false;
     public float normalFOV = 60f;
     public float zoomFOV = 30f;
     public Transform gunTransform;
+    public Transform firePoint;
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "weapon")
-        {
-            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
 
-            other.gameObject.transform.SetParent(weaponslot);
+    [Header("Weapon Stats")]
+    public GameObject shot;
+    public int weaponid = 1;
+    public int firemode = 0;
+    public float shotspeed = 100f;
+    public float firerate = 3.5f;
+    public int clipsize = 5;
+    public float currentclip = 5;
+    public float maxclip = 5f;
+    public float maxammo = 20f;
+    public float currentammo = 10;
+    public float reloadamt = 45f;
+    public float bulletlifespan = 5f;
+    public bool canfire = true;
 
-            switch (other.gameObject.name)
-            {
-                case "weapon2":
+    public Camera direction;
 
-                    weaponid = 1;
-                    shotspeed = 10000;
-                    firemode = 0;
-                    firerate = 0.25f;
-                    currentclip = 20;
-                    clipsize = 20;
-                    maxammo = 400;
-                    currentammo = 200;
-                    reloadamt = 20;
-                    bulletlifespan = 1;
-                    break;
+    public Transform weaponslot;
 
-                default:
-                    break;
-            }
-        }
-    }
+
+    
 
 
     private void Update()
@@ -86,31 +66,29 @@ public class bolt_action : MonoBehaviour
 
     void Start()
     {
-        theRB = GetComponent<Rigidbody>();
-        playercam = transform.GetChild(0).GetComponent<Camera>();
-
         camRotation = Vector2.zero;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
+
         gunNormalPosition = gunTransform.localPosition;
 
 
-        
+
     }
 
     public void FireWeapon()
     {
-        GameObject s = Instantiate(shot, weaponslot.position, weaponslot.rotation);
-        s.GetComponent<Rigidbody>().AddForce(playercam.transform.forward * shotspeed);
-        Destroy(s,bulletlifespan);
+        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation);
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
 
         canfire = false;
-        currentclip--;
-        StartCoroutine("cooldownfire");
 
+        Destroy(projectile, 2f);
+        StartCoroutine
+            (CooldownFire());
 
-        StartCoroutine(CooldownFire());
     }
 
     public void ReloadClip()
@@ -119,7 +97,7 @@ public class bolt_action : MonoBehaviour
 
        
 
-        int reloadCount = clipsize - currentclip;
+        int reloadCount = (int)(clipsize - currentclip);
 
         if (currentammo < reloadCount)
         {

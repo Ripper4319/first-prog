@@ -4556,8 +4556,6 @@ MonoBehaviour:
   clipsize: 20
   currentclip: 20
   maxclip: 20
-  maxammo: 150
-  currentammo: 0
   reloadamt: 45
   bulletlifespan: 5
   canfire: 1
@@ -4586,10 +4584,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad76cc15a8be4744b3fee29e8042f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playercam: {fileID: 0}
   numberText: {fileID: 420470825}
-  bulletlifespan: 0
+  isAiming: 0
+  normalFOV: 60
+  zoomFOV: 30
+  gunTransform: {fileID: 175401077214299222}
+  firePoint: {fileID: 0}
+  gunADSPosition: {x: 0, y: 0, z: 0}
+  gunNormalPosition: {x: 0, y: 0, z: 0}
+  shot: {fileID: 1033254731}
   weaponid: 0
   firemode: 0
+  shotspeed: 0
   firerate: 0
   clipsize: 0
   currentclip: 0
@@ -4597,16 +4604,10 @@ MonoBehaviour:
   maxammo: 0
   currentammo: 0
   reloadamt: 0
-  shotspeed: 0
-  shot: {fileID: 1033254731}
+  bulletlifespan: 0
   canfire: 1
+  direction: {fileID: 0}
   weaponslot: {fileID: 175401077214299222}
-  isAiming: 0
-  normalFOV: 60
-  zoomFOV: 30
-  gunTransform: {fileID: 175401077214299222}
-  gunADSPosition: {x: 0, y: 0, z: 0}
-  gunNormalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1332294621
 GameObject:
   m_ObjectHideFlags: 0
