@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 001615426666bef46993dc1a86edc2be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,9 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548714547320185918}
   - component: {fileID: 638643197987628324}
-  - component: {fileID: 6234173836234399063}
-  - component: {fileID: 4442550808476029220}
-  - component: {fileID: 8483535602307604799}
+  - component: {fileID: 1060941756177363003}
   m_Layer: 0
   m_Name: weapon1
   m_TagString: weapon
@@ -390,7 +388,7 @@ Transform:
   m_GameObject: {fileID: 698533723066348258}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.52, y: 2.093, z: 7.025}
+  m_LocalPosition: {x: -0.087, y: -0.73, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -420,23 +418,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!111 &6234173836234399063
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698533723066348258}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
---- !u!114 &4442550808476029220
+--- !u!114 &1060941756177363003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -448,40 +430,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletlifespan: 3
-  weaponid: -1
-  firemode: 0
-  firerate: 0.25
-  clipsize: 20
-  currentclip: 20
-  maxclip: 20
-  maxammo: 160
-  currentammo: 40
-  reloadamt: 20
-  shotspeed: 15
---- !u!114 &8483535602307604799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698533723066348258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletlifespan: 0
+  playercam: {fileID: 0}
+  numberText: {fileID: 0}
+  isAiming: 0
+  normalFOV: 60
+  zoomFOV: 30
+  gunTransform: {fileID: 0}
+  firePoint: {fileID: 0}
+  gunADSPosition: {x: 1, y: 0, z: 0}
+  gunNormalPosition: {x: -0.4, y: 0.308, z: -1.6}
+  shot: {fileID: 0}
   weaponid: 0
   firemode: 0
-  firerate: 0
-  clipsize: 0
-  currentclip: 0
-  maxclip: 0
-  maxammo: 0
-  currentammo: 0
-  reloadamt: 0
-  shotspeed: 0
+  shotspeed: 100
+  firerate: 0.1
+  clipsize: 200
+  currentclip: 200
+  maxclip: 200
+  reloadamt: 45
+  bulletlifespan: 5
+  canfire: 1
+  weaponslot: {fileID: 0}
+  newBehaviourScript: {fileID: 0}
+  direction: {fileID: 0}
 --- !u!1 &919132149155446097
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +478,7 @@ Transform:
   m_GameObject: {fileID: 919132149155446097}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0.861, y: 1.425, z: 0.86300015}
+  m_LocalPosition: {x: 0.434, y: 0.784, z: 0.546}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -603,7 +574,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -17961707495058693, guid: b234083478a987d4286b9f38a2d0e2f8, type: 3}
+  - {fileID: 2100000, guid: fc46d9d4e3ec94e48a3dddc8bf3a0e78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

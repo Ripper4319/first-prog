@@ -39,7 +39,7 @@ public class WeaponControl : MonoBehaviour
     public void SwitchWeapon(int weaponIndex)
     {
 
-        if (weaponIndex >= 0 && weaponIndex < weapons.Length)// && )
+        if (weaponIndex >= 0 && weaponIndex < weapons.Length)
         {
             if (weaponIndex != currentWeaponIndex)
             {
@@ -51,7 +51,7 @@ public class WeaponControl : MonoBehaviour
 
                 weapons[weaponIndex].SetActive(true);
                 weapons[weaponIndex].transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
-                weapons[weaponIndex].transform.SetParent(weaponslot); // Attach weapon to weapon slot
+                weapons[weaponIndex].transform.SetParent(weaponslot); 
 
                 if (weapons[weaponIndex].GetComponent<Auto>() != null)
                     weapons[weaponIndex].GetComponent<Auto>().canfire = true;
