@@ -62,6 +62,8 @@ public class bolt_action : MonoBehaviour
         {
              ReloadClip();
         }
+
+        numberText.text = "Ammo: " + currentclip;
     }
 
     void Start()
@@ -77,11 +79,14 @@ public class bolt_action : MonoBehaviour
 
     }
 
+
     public void FireWeapon()
     {
-        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation);
+        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+
+        currentclip--;
 
         canfire = false;
 

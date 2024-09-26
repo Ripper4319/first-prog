@@ -35,8 +35,6 @@ public class BasicEnemyController : MonoBehaviour
 
         //agent.destination = player.transform.position;
 
-        if (health <= 0);
-            //Destroy(GameObject);
     }
 
     private void ShootAtPlayer()
@@ -54,6 +52,11 @@ public class BasicEnemyController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             health--;
+        }
+        if (collision.gameObject.tag == "SHOTBIG")
+        {
+            Destroy(collision.gameObject);
+            health -= 999;
         }
     }
 }

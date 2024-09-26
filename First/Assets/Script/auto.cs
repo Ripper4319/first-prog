@@ -3,8 +3,13 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using UnityEditor.Experimental;
+using System.Runtime.CompilerServices;
+using System.Numerics;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 
-public class RPKWeapon : MonoBehaviour
+public class Auto : MonoBehaviour
 {
     public Camera playercam;
 
@@ -68,8 +73,8 @@ public class RPKWeapon : MonoBehaviour
         }
 
         
+        numberText.text = "Ammo: " + currentclip;
         
-        numberText.text = currentclip.ToString();
     }
 
     private void StartADS() => isAiming = true;
@@ -78,9 +83,11 @@ public class RPKWeapon : MonoBehaviour
 
     private void FireWeapon()
     {
-        GameObject projectile = Instantiate(shot,weaponslot.position, weaponslot.rotation);
+        GameObject projectile = Instantiate(shot,weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+
+        currentclip--;
 
         canfire = false;
 

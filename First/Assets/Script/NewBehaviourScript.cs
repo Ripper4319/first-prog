@@ -40,6 +40,8 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject Main;
     private bool MainOpen;
 
+    private bool EndGame = false;
+
 
 
     [Header("Player Stats")]
@@ -77,7 +79,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         set.SetActive(false);
         inv.SetActive(false);
-        HUD.SetActive(false);
+        HUD.SetActive(true);
         Main.SetActive(false);
 
         gunNormalPosition = gunTransform.localPosition;
@@ -156,9 +158,11 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
-        if (Input.GetKeyDown(KeyCode.I))
+        
+        
+        if (Input.GetKeyDown(KeyCode.I) && !EndGame)
             Inventory();
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
             Settings();
 
     }
@@ -252,16 +256,39 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void End()
     {
-        if (other.gameObject.CompareTag("weapon"))
+        EndGame = true;
+        HUD.SetActive(false);
+        set.SetActive(false);
+        settingsOpen = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("weapon") && (collision.gameObject.GetComponent<WeaponPickup>() != null && collision.gameObject.GetComponent<WeaponPickup>().canpickup))
         {
             
-            other.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
-            other.gameObject.transform.SetParent(weaponslot);
+            collision.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
+            collision.gameObject.transform.SetParent(weaponslot);
+            HUD.SetActive(true);
 
-            
-            
+
+        }
+        if (collision.gameObject.CompareTag("healthpickup") && Health < maxHealth)
+        {
+            Destroy(collision.gameObject);
+            Health++;
+        }
+        if (collision.gameObject.CompareTag("shot"))
+        {
+            Destroy(collision.gameObject);
+            Health--;
+            if (Health <= 0)
+                End();
         }
     }
 
