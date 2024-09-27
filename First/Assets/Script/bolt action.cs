@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine.Events;
+using UnityEngine.UIElements.Experimental;
 
 public class bolt_action : MonoBehaviour
 {
@@ -96,18 +97,11 @@ public class bolt_action : MonoBehaviour
         StartCoroutine
             (CooldownFire());
 
-        GunAction();
+        StartCoroutine(GunAction());
 
     }
 
-    public void GunAction()
-    {
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = casing1.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(casing1, 1f);
-    }
+   
 
     public void ReloadClip()
     {
@@ -135,6 +129,16 @@ public class bolt_action : MonoBehaviour
         yield return new WaitForSeconds(firerate);
         canfire = true;
     }
+
+    IEnumerator GunAction()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = casing1.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+        Destroy(casing1, 1f);
+    }
+
 }
-
-
