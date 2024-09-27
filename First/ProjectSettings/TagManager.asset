@@ -8,6 +8,8 @@ TagManager:
   - weapon
   - shot
   - SHOTBIG
+  - enemy
+  - turret
   layers:
   - Default
   - TransparentFX
