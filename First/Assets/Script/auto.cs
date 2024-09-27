@@ -8,6 +8,7 @@ using System.Numerics;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+using UnityEngine.UIElements.Experimental;
 
 public class Auto : MonoBehaviour
 {
@@ -31,9 +32,11 @@ public class Auto : MonoBehaviour
 
     [Header("Weapon Stats")]
     public GameObject shot;
+    public GameObject casing;
     public int weaponid = 0;
     public int firemode = 0; 
     public float shotspeed = 100f; 
+    public float casingspeed = 3f;
     public float firerate = 0.1f; 
     public float clipsize = 200f; 
     public float currentclip = 200;
@@ -95,9 +98,17 @@ public class Auto : MonoBehaviour
         StartCoroutine
             (CooldownFire());
 
+        GunAction();
     }
-    
 
+    public void GunAction()
+    {
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = casing1.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+        Destroy(casing1, 1f);
+    }
     private IEnumerator CooldownFire()
     {
         yield return new WaitForSeconds(firerate);

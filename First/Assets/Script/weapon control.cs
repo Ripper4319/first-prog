@@ -59,6 +59,9 @@ public class WeaponControl : MonoBehaviour
                 if (weapons[weaponIndex].GetComponent<bolt_action>() != null)
                     weapons[weaponIndex].GetComponent<bolt_action>().canfire = true;
 
+                if (weapons[weaponIndex].GetComponent<revolver>() != null)
+                    weapons[weaponIndex].GetComponent<revolver>().canfire = true;
+
 
                 currentWeaponIndex = weaponIndex;
 

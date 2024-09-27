@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine.Events;
 
-public class bolt_action : MonoBehaviour
+public class revolver : MonoBehaviour
 {
 
     public Camera playercam;
@@ -38,6 +38,7 @@ public class bolt_action : MonoBehaviour
     public float firerate = 3.5f;
     public int clipsize = 5;
     public float currentclip = 5;
+    private int shotsfired = 0;
     public float maxclip = 5f;
     public float maxammo = 20f;
     public float currentammo = 10;
@@ -50,19 +51,19 @@ public class bolt_action : MonoBehaviour
     public Transform weaponslot;
 
 
-    
+
 
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) &&canfire && currentclip > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
         {
             FireWeapon();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-             ReloadClip();
+            ReloadClip();
         }
 
         numberText.text = "Ammo: " + currentclip;
@@ -89,14 +90,13 @@ public class bolt_action : MonoBehaviour
         rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
 
         currentclip--;
+        shotsfired++;
 
         canfire = false;
 
         Destroy(projectile, 2f);
         StartCoroutine
             (CooldownFire());
-
-        GunAction();
 
     }
 
@@ -113,7 +113,7 @@ public class bolt_action : MonoBehaviour
     {
         if (currentclip >= clipsize) return;
 
-       
+
 
         int reloadCount = (int)(clipsize - currentclip);
 
@@ -125,8 +125,15 @@ public class bolt_action : MonoBehaviour
         else
         {
             currentclip += reloadCount;
-            currentammo -= reloadCount;
+            currentammo -= reloadCount; 
+
         }
+
+        for (int i = 0; i < shotsfired; i++)
+        {
+            GunAction();
+        }
+        shotsfired = 0;
 
     }
 
@@ -136,5 +143,3 @@ public class bolt_action : MonoBehaviour
         canfire = true;
     }
 }
-
-
