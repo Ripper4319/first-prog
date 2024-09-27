@@ -30,6 +30,7 @@ public class bolt_action : MonoBehaviour
 
     [Header("Weapon Stats")]
     public GameObject shot;
+    public GameObject casing;
     public int weaponid = 1;
     public int firemode = 0;
     public float shotspeed = 100f;
@@ -93,6 +94,17 @@ public class bolt_action : MonoBehaviour
         Destroy(projectile, 2f);
         StartCoroutine
             (CooldownFire());
+
+        GunAction();
+
+    }
+
+    public void GunAction()
+    {
+        GameObject projectile = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+
 
     }
 
