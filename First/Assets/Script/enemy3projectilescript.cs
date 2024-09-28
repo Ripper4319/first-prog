@@ -23,15 +23,19 @@ public class EnemyProjectileScript : MonoBehaviour
 
         if (collision.gameObject.CompareTag("shot"))
         {
-            Destroy(collision.gameObject);
+            
             health--;
             shotted = true;
-        }
-        if (collision.gameObject.CompareTag("shot"))
-        {
+            droneexplode();
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("SHOTBIG"))
+        {
+            
             health -= 999;
             shotted = true;
+            droneexplode();
+            Destroy(collision.gameObject);
         }
     }
 
