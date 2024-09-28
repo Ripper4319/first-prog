@@ -10,6 +10,8 @@ public class EnemyProjectileScript : MonoBehaviour
     public float explosionForce = 19f; 
     public float explosionRadius = 19f;
     public int health = 3;
+    public GameObject explosionbase;
+    private Animator cloneAnimator;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -39,6 +41,11 @@ public class EnemyProjectileScript : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        
+    }
+
     void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
     {
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
@@ -66,14 +73,30 @@ public class EnemyProjectileScript : MonoBehaviour
     void droneexplode()
     {
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(explosionbase, transform.position, Quaternion.identity);
+        PlayClonedAnimation();
 
         ApplyShockwave(transform.position, explosionRadius, explosionForce);
 
         Destroy(explosionEffect, 0.5f);
 
         Destroy(gameObject);
+
+        Destroy(animator);
     }
-       
+
+    private void PlayClonedAnimation()
+    {
+        if (clonedClip != null)
+        {
+            cloneAnimator.SetTrigger("StartAnimation");
+        }
+        else
+        {
+            Debug.LogWarning("Cloned animation clip is null.");
+        }
+    }
+
 }
 
 
