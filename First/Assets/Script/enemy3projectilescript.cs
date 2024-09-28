@@ -10,8 +10,7 @@ public class EnemyProjectileScript : MonoBehaviour
     public float explosionForce = 19f; 
     public float explosionRadius = 19f;
     public int health = 3;
-    public GameObject explosionbase;
-    private Animator cloneAnimator;
+    private Animator explosion;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -72,30 +71,45 @@ public class EnemyProjectileScript : MonoBehaviour
 
     void droneexplode()
     {
+       
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        Instantiate(explosionbase, transform.position, Quaternion.identity);
-        PlayClonedAnimation();
 
-        ApplyShockwave(transform.position, explosionRadius, explosionForce);
-
-        Destroy(explosionEffect, 0.5f);
-
-        Destroy(gameObject);
-
-        Destroy(animator);
-    }
-
-    private void PlayClonedAnimation()
-    {
-        if (clonedClip != null)
+        
+        Animator explosionAnimator = explosionEffect.GetComponent<Animator>();
+        if (explosionAnimator != null)
         {
-            cloneAnimator.SetTrigger("StartAnimation");
+            explosionAnimator.SetTrigger("explode");
         }
         else
         {
-            Debug.LogWarning("Cloned animation clip is null.");
+            Debug.LogWarning("No Animator found on explosion effect prefab.");
+        }
+
+        
+        ApplyShockwave(transform.position, explosionRadius, explosionForce);
+
+       
+        Destroy(explosionEffect, 1f); 
+        
+        Destroy(gameObject);
+    }
+
+
+    private void PlayClonedAnimation(GameObject explosionBaseInstance)
+    {
+        Animator cloneAnimator = explosionBaseInstance.GetComponent<Animator>(); 
+
+        if (cloneAnimator != null)
+        {
+            
+            cloneAnimator.SetTrigger("explode");
+        }
+        else
+        {
+            Debug.LogWarning("No Animator found on explosion base instance.");
         }
     }
+
 
 }
 
