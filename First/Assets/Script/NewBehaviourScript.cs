@@ -8,7 +8,6 @@ using System.Security.Cryptography;
 using UnityEngine.Events;
 
 
-
 public class NewBehaviourScript : MonoBehaviour
 {
     Rigidbody theRB;
@@ -48,6 +47,7 @@ public class NewBehaviourScript : MonoBehaviour
     public int maxHealth = 5;
     public int Health = 5;
     public int healthRestore = 1;
+    public int explosiondamage = 4;
 
     public float speed = 10.0f;
     public float sprintMultiplier = 2.5f;
@@ -61,13 +61,25 @@ public class NewBehaviourScript : MonoBehaviour
     public float ysensitivity = 2.0f;
     public float camRotationLimit = 90f;
 
-    
-    private Gun autoGun;        
+
+    private Gun autoGun;
     private bolt_action boltActionGun;
+
+    public float fallDamageThreshold = -10f;  
+    public float fallDamageMultiplier = 2f;  
+
+    private bool isGrounded;
+    private Vector3 lastVelocity;  
 
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
+
+        set.SetActive(false);
+        inv.SetActive(false);
+        HUD.SetActive(true);
+        Main.SetActive(false);
+
         playercam = Camera.main;
         camhold = transform.GetChild(0);
 
@@ -75,27 +87,43 @@ public class NewBehaviourScript : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
-       
-
-        set.SetActive(false);
-        inv.SetActive(false);
-        HUD.SetActive(true);
-        Main.SetActive(false);
-
         gunNormalPosition = gunTransform.localPosition;
     }
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.I) && !EndGame)
+            Inventory();
+        if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
+            Settings();
+
+        if (Health <= 0)
+        {
+            End();
+        }
+
+        lastVelocity = theRB.velocity;
+
+        if (isGrounded && lastVelocity.y < fallDamageThreshold)
+        {
+            ApplyFallDamage(lastVelocity.y);
+
+            
+
+        }
         playercam.transform.position = camhold.position;
+
+        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
+        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
+
+        camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit); playercam.transform.position = camhold.position;
 
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
 
         camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
-
-       
         playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
 
@@ -158,32 +186,12 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, groundDetectDistance))
             temp.y = jumpHeight;
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
+
+
         
-        
-        if (Input.GetKeyDown(KeyCode.I) && !EndGame)
-            Inventory();
-        if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
-            Settings();
-
     }
 
 
-
-
-    private void StartADS()
-    {
-        isAiming = true;
-    }
-
-    private void StopADS()
-    {
-        isAiming = false;
-    }
-
-    
-
-
-    
 
     private void MainMenu()
     {
@@ -267,11 +275,24 @@ public class NewBehaviourScript : MonoBehaviour
         Time.timeScale = 0;
     }
 
+
+
     private void OnCollisionEnter(Collision collision)
     {
+
+        if (collision.gameObject.CompareTag("enemy3"))
+        {
+            Health--;
+        }
+
+        if (collision.gameObject.CompareTag("Ground") || collision.contacts[0].normal.y > 0.9f)
+        {
+            isGrounded = true;
+        }
+
         if (collision.gameObject.CompareTag("weapon") && (collision.gameObject.GetComponent<WeaponPickup>() != null && collision.gameObject.GetComponent<WeaponPickup>().canpickup))
         {
-            
+
             collision.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
             collision.gameObject.transform.SetParent(weaponslot);
             HUD.SetActive(true);
@@ -287,13 +308,43 @@ public class NewBehaviourScript : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Health--;
-            if (Health <= 0)
-                End();
+        }
+
+
+    }
+
+    private void StartADS()
+    {
+        isAiming = true;
+    }
+
+    private void StopADS()
+    {
+        isAiming = false;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+    private void ApplyFallDamage(float fallSpeed)
+    {
+        int damage = Mathf.FloorToInt((fallSpeed - fallDamageThreshold) * fallDamageMultiplier);
+        Health--;
+
+        if (Health <= 0)
+        {
+            End();
         }
     }
 
 }
-    
+
+
 
 
 

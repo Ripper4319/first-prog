@@ -1,39 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 public class EnemyProjectileScript : MonoBehaviour
 {
     public bool collidedwithplayer = false;
     public bool shotted = false;
-    public GameObject explosionPrefab;  
-    public float explosionForce = 19f; 
+    public GameObject explosionPrefab;
+    public float explosionForce = 19f;
     public float explosionRadius = 19f;
     public int health = 3;
-    private Animator explosion;
-    private bool isexploding;
+    private float explosionradius = 100;
+    private float explosionforce = 2000;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collidedwithplayer = true;
 
             droneexplode();
-            
         }
 
         if (collision.gameObject.CompareTag("shot"))
         {
-            
             health--;
             shotted = true;
             droneexplode();
             Destroy(collision.gameObject);
         }
+
         if (collision.gameObject.CompareTag("SHOTBIG"))
         {
-            
             health -= 999;
             shotted = true;
             droneexplode();
@@ -43,7 +42,7 @@ public class EnemyProjectileScript : MonoBehaviour
 
     private void Start()
     {
-        isexploding = false;
+        // Any initialization code
     }
 
     void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
@@ -60,6 +59,7 @@ public class EnemyProjectileScript : MonoBehaviour
             }
         }
     }
+
     public void TakeDamage()
     {
         health -= 1;
@@ -72,64 +72,41 @@ public class EnemyProjectileScript : MonoBehaviour
 
     void droneexplode()
     {
-        
+        var surroundingObjects = Physics.OverlapSphere(transform.position, explosionradius);
+
+        foreach (var obj in surroundingObjects)
+        {
+            var rb = obj.GetComponent<Rigidbody>();
+            if (rb == null) continue;
+
+            rb.AddExplosionForce(explosionforce, transform.position, explosionradius, 1);
+        }
+
+        // Instantiate the explosion prefab
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        
-        Animator explosionAnimator = explosionEffect.GetComponent<Animator>();
-        if (explosionAnimator != null)
-        {
-            explosionAnimator.SetBool("isexploding", true);
-        }
-        else
-        {
-            Debug.LogWarning("No Animator found on explosion effect prefab.");
-        }
-
-        
+        // Fetch the particle system from the instantiated explosion
         ParticleSystem explosionParticles = explosionEffect.GetComponent<ParticleSystem>();
 
-        
         if (explosionParticles != null)
         {
-            
+            // Destroy the explosion instance after the particles have finished playing
             Destroy(explosionEffect, explosionParticles.main.duration + explosionParticles.main.startLifetime.constantMax);
         }
         else
         {
-           
-            Destroy(explosionEffect, .05f);
+            // Fallback if there's no particle system found, destroy immediately after a short time
+            Destroy(explosionEffect, 0.5f);
         }
 
-        
+        // Apply shockwave force to nearby objects
         ApplyShockwave(transform.position, explosionRadius, explosionForce);
 
-        
-        isexploding = false;
-
-        
+        // Destroy the current game object (the enemy or projectile)
         Destroy(gameObject);
     }
-
-
-
-    private void PlayClonedAnimation(GameObject explosionBaseInstance)
-    {
-        Animator cloneAnimator = explosionBaseInstance.GetComponent<Animator>(); 
-
-        if (cloneAnimator != null)
-        {
-            
-            cloneAnimator.SetTrigger("explode");
-        }
-        else
-        {
-            Debug.LogWarning("No Animator found on explosion base instance.");
-        }
-    }
-
-
 }
+
 
 
 

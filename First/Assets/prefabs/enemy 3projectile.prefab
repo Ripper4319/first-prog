@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collidedwithplayer: 0
   shotted: 0
-  explosionPrefab: {fileID: 407481951264039128, guid: 1c1d15bf2e1d80d419af482c0874fab3, type: 3}
+  explosionPrefab: {fileID: 1156871743400854672, guid: 1c1d15bf2e1d80d419af482c0874fab3, type: 3}
   explosionForce: 19
   explosionRadius: 19
   health: 3

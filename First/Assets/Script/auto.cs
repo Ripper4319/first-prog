@@ -46,6 +46,8 @@ public class Auto : MonoBehaviour
     public bool canfire = true;
     public Transform weaponslot;
     public NewBehaviourScript newBehaviourScript;
+    public GameObject muzzleFlashPrefab; 
+
 
     public Camera direction;
 
@@ -86,6 +88,8 @@ public class Auto : MonoBehaviour
 
     private void FireWeapon()
     {
+        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+
         GameObject projectile = Instantiate(shot,weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
@@ -97,6 +101,8 @@ public class Auto : MonoBehaviour
         Destroy(projectile, 2f);
         StartCoroutine
             (CooldownFire());
+        Destroy(muzzleFlash, 0.1f);
+
 
         GunAction();
     }
