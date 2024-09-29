@@ -11,6 +11,7 @@ public class EnemyProjectileScript : MonoBehaviour
     public float explosionRadius = 19f;
     public int health = 3;
     private Animator explosion;
+    private bool isexploding;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -42,7 +43,7 @@ public class EnemyProjectileScript : MonoBehaviour
 
     private void Start()
     {
-        
+        isexploding = false;
     }
 
     void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
@@ -71,14 +72,14 @@ public class EnemyProjectileScript : MonoBehaviour
 
     void droneexplode()
     {
-       
+        
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         
         Animator explosionAnimator = explosionEffect.GetComponent<Animator>();
         if (explosionAnimator != null)
         {
-            explosionAnimator.SetTrigger("explode");
+            explosionAnimator.SetBool("isexploding", true);
         }
         else
         {
@@ -86,13 +87,30 @@ public class EnemyProjectileScript : MonoBehaviour
         }
 
         
+        ParticleSystem explosionParticles = explosionEffect.GetComponent<ParticleSystem>();
+
+        
+        if (explosionParticles != null)
+        {
+            
+            Destroy(explosionEffect, explosionParticles.main.duration + explosionParticles.main.startLifetime.constantMax);
+        }
+        else
+        {
+           
+            Destroy(explosionEffect, .05f);
+        }
+
+        
         ApplyShockwave(transform.position, explosionRadius, explosionForce);
 
-       
-        Destroy(explosionEffect, 1f); 
+        
+        isexploding = false;
+
         
         Destroy(gameObject);
     }
+
 
 
     private void PlayClonedAnimation(GameObject explosionBaseInstance)
