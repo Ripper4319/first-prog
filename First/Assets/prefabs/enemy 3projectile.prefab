@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4340045567908538775}
   m_Layer: 0
   m_Name: enemy 3projectile
-  m_TagString: enemy
+  m_TagString: enemy3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   explosionForce: 19
   explosionRadius: 19
   health: 3
+  boomshake: 0
 --- !u!54 &4340045567908538775
 Rigidbody:
   m_ObjectHideFlags: 0

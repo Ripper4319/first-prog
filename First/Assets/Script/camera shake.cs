@@ -3,8 +3,8 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
-    public Transform objectToShake; // Assign any object you want to shake (camera, gun, etc.)
-    public float gunShakeIntensity = .6f;
+    public Transform objectToShake;
+    public float gunShakeIntensity = 2f;
     public float boomShakeIntensity = 0.3f;
     public float shakeDuration = 0.5f;
 
@@ -19,6 +19,7 @@ public class CameraShake : MonoBehaviour
     public bolt_action script3;
     public m4 script5;
     public EnemyProjectileScript script4;
+    public BasicEnemyController script6;
 
     public bool gunshake = false;
     public bool boomshake = false;
@@ -26,10 +27,10 @@ public class CameraShake : MonoBehaviour
 
     void Start()
     {
-        // Save the original position and rotation
+        
         if (objectToShake == null)
         {
-            objectToShake = transform; // Default to the object this script is attached to
+            objectToShake = transform; 
         }
 
         originalPosition = objectToShake.localPosition;
@@ -38,11 +39,11 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        // Check for gunshake and boomshake from external scripts
-        bool gunshakeActive = script1.gunshake || script2.gunshake || script3.gunshake || script5.gunshake;
+        
+        bool gunshakeActive = script1.gunshake || script2.gunshake || script3.gunshake || script5.gunshake || script6.gunshake;
         bool boomshakeActive = script4.boomshake;
 
-        // Start shaking if one of the bools is true
+        
         if (gunshakeActive && currentShakeRoutine == null)
         {
             currentShakeRoutine = StartCoroutine(Shake(gunShakeIntensity, shakeDuration));
@@ -52,7 +53,7 @@ public class CameraShake : MonoBehaviour
             currentShakeRoutine = StartCoroutine(Shake(boomShakeIntensity, shakeDuration));
         }
 
-        // Stop shaking if neither shake condition is active
+        
         if (!gunshakeActive && !boomshakeActive && currentShakeRoutine != null)
         {
             StopCoroutine(currentShakeRoutine);
@@ -70,7 +71,7 @@ public class CameraShake : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            // Apply random offset and slight rotation to the object
+           
             Vector3 randomOffset = Random.insideUnitSphere * intensity;
             Quaternion randomRotation = Quaternion.Euler(
                 Random.Range(-intensity * 60f, intensity * 60f),
@@ -91,7 +92,7 @@ public class CameraShake : MonoBehaviour
 
     private void ResetShake()
     {
-        // Reset the object to its original position and rotation
+        
         objectToShake.localPosition = originalPosition;
         objectToShake.localRotation = originalRotation;
     }

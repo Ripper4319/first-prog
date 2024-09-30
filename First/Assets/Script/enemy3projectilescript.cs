@@ -73,6 +73,9 @@ public class EnemyProjectileScript : MonoBehaviour
     {
         var surroundingObjects = Physics.OverlapSphere(transform.position, explosionradius);
 
+        boomshake = true;
+        StartCoroutine(BoomShake());
+
         foreach (var obj in surroundingObjects)
         {
             var rb = obj.GetComponent<Rigidbody>();
@@ -80,7 +83,7 @@ public class EnemyProjectileScript : MonoBehaviour
 
             rb.AddExplosionForce(explosionforce, transform.position, explosionradius, 1);
 
-            boomshake = true;
+            
         }
 
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -105,6 +108,15 @@ public class EnemyProjectileScript : MonoBehaviour
         
         Destroy(gameObject);
     }
+
+
+    private IEnumerator BoomShake
+        ()
+    {
+        yield return new WaitForSeconds(1f);
+        boomshake = false;
+    }
+
 }
 
 

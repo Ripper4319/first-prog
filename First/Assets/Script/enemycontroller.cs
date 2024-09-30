@@ -1,5 +1,14 @@
+using NUnit;
+using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections;
+using UnityEditor.Experimental;
+using System.Runtime.CompilerServices;
+using System.Numerics;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
+using UnityEngine.UIElements.Experimental;
 
 public class BasicEnemyController : MonoBehaviour
 {
@@ -15,6 +24,8 @@ public class BasicEnemyController : MonoBehaviour
     public float projectileSpeed = 20f;
     public float fireRate = 2f;
     private float nextFireTime = 0f;
+    public GameObject muzzleFlashPrefab;
+    public bool gunshake;
 
     void Update()
     {
@@ -33,17 +44,21 @@ public class BasicEnemyController : MonoBehaviour
             }
         }
 
-        //agent.destination = player.transform.position;
+       
 
     }
 
     private void ShootAtPlayer()
     {
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 90, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = (player.position - firePoint.position).normalized * projectileSpeed;
 
         Destroy(projectile, 2f);
+        Destroy(muzzleFlash, 0.1f);
+        gunshake = true;
+        StartCoroutine(camshake());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -58,6 +73,12 @@ public class BasicEnemyController : MonoBehaviour
             Destroy(collision.gameObject);
             health -= 999;
         }
+    }
+
+    private IEnumerator camshake()
+    {
+        yield return new WaitForSeconds(.2f);
+        gunshake = false;
     }
 }
 

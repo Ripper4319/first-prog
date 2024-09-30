@@ -87,18 +87,18 @@ public class bolt_action : MonoBehaviour
 
     public void FireWeapon()
     {
-        // Create the muzzle flash effect at the fire point
+        
         GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
 
-        // Start camera shake effect
-        gunshake = true; // Trigger shake
+        
+        gunshake = true; 
         StartCoroutine(camshake());
 
-        // Create and launch the projectile
+        
         GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-        if (rb != null) // Check if Rigidbody is not null
+        if (rb != null) 
         {
             rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
         }
@@ -107,15 +107,15 @@ public class bolt_action : MonoBehaviour
             Debug.LogError("Projectile Rigidbody is null!");
         }
 
-        // Update clip count and fire status
+        
         currentclip--;
         canfire = false;
 
-        // Clean up projectile and muzzle flash after specified duration
+        
         Destroy(projectile, 2f);
         Destroy(muzzleFlash, 0.1f);
 
-        // Start cooldown and gun action
+        
         StartCoroutine(CooldownFire());
         StartCoroutine(GunAction());
     }

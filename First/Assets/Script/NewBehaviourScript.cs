@@ -315,6 +315,11 @@ public class NewBehaviourScript : MonoBehaviour
             Destroy(collision.gameObject);
             Health--;
         }
+        if (collision.gameObject.CompareTag("SHOTBIG"))
+        {
+            Destroy(collision.gameObject);
+            Health--;
+        }
 
 
     }
