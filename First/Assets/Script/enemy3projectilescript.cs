@@ -42,7 +42,6 @@ public class EnemyProjectileScript : MonoBehaviour
 
     private void Start()
     {
-        // Any initialization code
     }
 
     void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
@@ -84,27 +83,26 @@ public class EnemyProjectileScript : MonoBehaviour
             boomshake = true;
         }
 
-        // Instantiate the explosion prefab
         GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        // Fetch the particle system from the instantiated explosion
+        
         ParticleSystem explosionParticles = explosionEffect.GetComponent<ParticleSystem>();
 
         if (explosionParticles != null)
         {
-            // Destroy the explosion instance after the particles have finished playing
+            
             Destroy(explosionEffect, explosionParticles.main.duration + explosionParticles.main.startLifetime.constantMax);
         }
         else
         {
-            // Fallback if there's no particle system found, destroy immediately after a short time
+            
             Destroy(explosionEffect, 0.5f);
         }
 
-        // Apply shockwave force to nearby objects
+        
         ApplyShockwave(transform.position, explosionRadius, explosionForce);
 
-        // Destroy the current game object (the enemy or projectile)
+        
         Destroy(gameObject);
     }
 }
