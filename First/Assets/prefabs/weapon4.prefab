@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 885590591106636967}
   - component: {fileID: 219473037954162109}
   - component: {fileID: 6724840820073309646}
-  - component: {fileID: 899848931725827206}
+  - component: {fileID: 4665430817609819165}
   m_Layer: 0
   m_Name: weapon4
   m_TagString: weapon
@@ -74,7 +74,7 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!114 &899848931725827206
+--- !u!114 &4665430817609819165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 173075990154381947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ad76cc15a8be4744b3fee29e8042f34, type: 3}
+  m_Script: {fileID: 11500000, guid: 965632f5a24b0fd4ba8a3252c64786f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playercam: {fileID: 0}
@@ -95,16 +95,20 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   gunADSPosition: {x: 0, y: 0, z: 0}
   gunNormalPosition: {x: 0, y: 0, z: 0}
-  shot: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 0}
+  gunshake: 0
+  shot: {fileID: 1203126699521438604, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+  casing: {fileID: 6879140468456663735, guid: 06df8bed85412fa4aa5d2624d271be1c, type: 3}
   weaponid: 3
   firemode: 0
   shotspeed: 100
-  firerate: 0.4
+  casingspeed: 3
+  firerate: 0.2
   clipsize: 30
   currentclip: 30
   maxclip: 30
-  maxammo: 60
-  currentammo: 30
+  maxammo: 90
+  currentammo: 60
   reloadamt: 45
   bulletlifespan: 5
   canfire: 1

@@ -69,11 +69,14 @@ public class NewBehaviourScript : MonoBehaviour
     public float fallDamageMultiplier = 2f;  
 
     private bool isGrounded;
-    private Vector3 lastVelocity;  
+    private Vector3 lastVelocity;
+
+    private CameraShake cameraShake;
 
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
+        cameraShake = FindObjectOfType<CameraShake>();
 
         set.SetActive(false);
         inv.SetActive(false);
@@ -88,6 +91,8 @@ public class NewBehaviourScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         gunNormalPosition = gunTransform.localPosition;
+
+        cameraShake = FindObjectOfType<CameraShake>();
     }
 
     void Update()
@@ -136,6 +141,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             StopADS();
         }
+
 
         if (isAiming)
         {

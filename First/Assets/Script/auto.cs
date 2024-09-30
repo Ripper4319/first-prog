@@ -29,6 +29,7 @@ public class Auto : MonoBehaviour
     public Transform firePoint;
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
+    public bool gunshake;
 
     [Header("Weapon Stats")]
     public GameObject shot;
@@ -78,7 +79,7 @@ public class Auto : MonoBehaviour
         }
 
         
-        numberText.text = "Ammo: " + currentclip;
+        numberText.text = " " + currentclip;
         
     }
 
@@ -89,23 +90,31 @@ public class Auto : MonoBehaviour
     private void FireWeapon()
     {
         GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-
-        GameObject projectile = Instantiate(shot,weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+
+        if (rb != null)
+        {
+            rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+        }
+        else
+        {
+            
+        }
 
         currentclip--;
-
         canfire = false;
 
         Destroy(projectile, 2f);
-        StartCoroutine
-            (CooldownFire());
+        StartCoroutine(CooldownFire());
         Destroy(muzzleFlash, 0.1f);
 
+        gunshake = true;
 
-        GunAction();
+        
+        StartCoroutine(camshake());
     }
+
 
     public void GunAction()
     {
@@ -119,6 +128,12 @@ public class Auto : MonoBehaviour
     {
         yield return new WaitForSeconds(firerate);
         canfire = true;
+    }
+
+    private IEnumerator camshake()
+    {
+        yield return new WaitForSeconds(.2f);
+        gunshake = false;
     }
 }
 

@@ -14,7 +14,7 @@ public class EnemyProjectileScript : MonoBehaviour
     public int health = 3;
     private float explosionradius = 100;
     private float explosionforce = 2000;
-
+    public bool boomshake;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -80,6 +80,8 @@ public class EnemyProjectileScript : MonoBehaviour
             if (rb == null) continue;
 
             rb.AddExplosionForce(explosionforce, transform.position, explosionradius, 1);
+
+            boomshake = true;
         }
 
         // Instantiate the explosion prefab

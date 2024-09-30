@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine.Events;
+using UnityEngine.UIElements.Experimental;
 
-public class revolver : MonoBehaviour
+public class m4 : MonoBehaviour
 {
 
     public Camera playercam;
@@ -30,21 +31,19 @@ public class revolver : MonoBehaviour
     public bool gunshake;
 
 
-
     [Header("Weapon Stats")]
     public GameObject shot;
     public GameObject casing;
-    public int weaponid = 1;
+    public int weaponid = 3;
     public int firemode = 0;
     public float shotspeed = 100f;
     public float casingspeed = 3f;
-    public float firerate = .7f;
-    public int clipsize = 5;
-    public float currentclip = 5;
-    private int shotsfired = 0;
-    public float maxclip = 5f;
-    public float maxammo = 20f;
-    public float currentammo = 10;
+    public float firerate = .2f;
+    public int clipsize = 30;
+    public float currentclip = 30;
+    public float maxclip = 30f;
+    public float maxammo = 90f;
+    public float currentammo = 60f;
     public float reloadamt = 45f;
     public float bulletlifespan = 5f;
     public bool canfire = true;
@@ -69,7 +68,7 @@ public class revolver : MonoBehaviour
             ReloadClip();
         }
 
-        numberText.text = " " + currentclip + " / " + currentammo;
+        numberText.text = "" + currentclip + " / " + currentammo;
     }
 
     void Start()
@@ -88,57 +87,47 @@ public class revolver : MonoBehaviour
 
     public void FireWeapon()
     {
+        // Create the muzzle flash effect at the fire point
         GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
 
+        // Start camera shake effect
+        gunshake = true; // Trigger shake
+        StartCoroutine(camshake());
 
+        // Create and launch the projectile
         GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
 
+        if (rb != null) // Check if Rigidbody is not null
+        {
+            rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+        }
+        else
+        {
+            Debug.LogError("Projectile Rigidbody is null!");
+        }
+
+        // Update clip count and fire status
         currentclip--;
-        shotsfired++;
-
         canfire = false;
 
+        // Clean up projectile and muzzle flash after specified duration
         Destroy(projectile, 2f);
-        StartCoroutine
-            (CooldownFire());
         Destroy(muzzleFlash, 0.1f);
 
-        gunshake = true;
-
-        StartCoroutine
-            (camshake());
-
+        // Start cooldown and gun action
+        StartCoroutine(CooldownFire());
+        StartCoroutine(GunAction());
     }
 
-    public void GunAction()
-    {
-        
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
 
-        
-        Rigidbody rb = casing1.GetComponent<Rigidbody>();
-
-        
-        Vector3 randomForce = new Vector3(
-            Random.Range(1f, 2f),  //x
-            Random.Range(0.5f, 1.5f),  //y
-            Random.Range(-0.5f, 0.5f)   //z
-        ) * casingspeed;
-
-        rb.AddForce(randomForce, ForceMode.Impulse);
-
-        
-        Destroy(casing1, 1f);
-
-        shotsfired--;
-    }
 
 
     public void ReloadClip()
     {
         if (currentclip >= clipsize) return;
+
+
 
         int reloadCount = (int)(clipsize - currentclip);
 
@@ -153,20 +142,7 @@ public class revolver : MonoBehaviour
             currentammo -= reloadCount;
         }
 
-        
-        StartCoroutine(EjectCasings());
-
     }
-
-    private IEnumerator EjectCasings()
-    {
-        for (int i = 0; i < shotsfired; i++)
-        {
-            GunAction();
-            yield return new WaitForSeconds(0.1f);  
-        }
-    }
-
 
     private IEnumerator CooldownFire()
     {
@@ -174,9 +150,21 @@ public class revolver : MonoBehaviour
         canfire = true;
     }
 
+    IEnumerator GunAction()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = casing1.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+        Destroy(casing1, 1f);
+    }
+
     private IEnumerator camshake()
     {
         yield return new WaitForSeconds(.2f);
         gunshake = false;
     }
+
 }
