@@ -3,64 +3,56 @@ using System.Collections;
 
 public class grenadeprojectile : MonoBehaviour
 {
+    public float delay = 3f;
+
+    float countdown;
+
+    bool hasexploded;
+
     public GameObject explosionPrefab;
     public float explosionRadius = 19f;
     public float explosionForce = 19f;
     public bool boomshake;
+    private float explosionradius = 100;
+    private float explosionforce = 2000;
+
+    private Grenade Grenade;
 
     void Start()
     {
-        
-        StartCoroutine(ExplodeAfterDelay());
+        countdown = delay;
+
+        Grenade = GetComponent<Grenade>();
     }
 
-    private IEnumerator ExplodeAfterDelay()
+    void Update()
     {
+
+        if(Grenade != null && Grenade.Grenadetriggered)
+        {
+            Grenadelogic();
+        }
        
-        yield return new WaitForSeconds(5f);
-
-        Explode();
     }
 
-    //private void OnCollisionEnter(Collision collision)
-   // {
-       // Explode();
-   // }
-
-    private void Explode()
+    void Grenadelogic()
     {
-        boomshake = true;
-        StartCoroutine(BoomShake());
-
-        GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-
-        
-        ParticleSystem explosionParticles = explosionEffect.GetComponent<ParticleSystem>();
-        if (explosionParticles != null)
+        countdown -= Time.deltaTime;
+        if (countdown <= 0f && !hasexploded)
         {
-            Destroy(explosionEffect, explosionParticles.main.duration + explosionParticles.main.startLifetime.constantMax);
+            Explode();
+            hasexploded = true;
         }
-        else
-        {
-            Destroy(explosionEffect, 0.5f);
-        }
-
-        
-        ApplyShockwave(transform.position, explosionRadius, explosionForce);
-
-        
-        Destroy(gameObject);
-
-        Debug.Log("runs");
     }
 
-    private void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
+    void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
     {
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
 
         foreach (Collider hit in colliders)
         {
             Rigidbody rb = hit.GetComponent<Rigidbody>();
+
             if (rb != null)
             {
                 rb.AddExplosionForce(force, explosionPosition, radius);
@@ -68,11 +60,54 @@ public class grenadeprojectile : MonoBehaviour
         }
     }
 
+    void Explode()
+    {
+        var surroundingObjects = Physics.OverlapSphere(transform.position, explosionradius);
+
+        boomshake = true;
+        StartCoroutine(BoomShake());
+
+        foreach (var obj in surroundingObjects)
+        {
+            var rb = obj.GetComponent<Rigidbody>();
+            if (rb == null) continue;
+
+            rb.AddExplosionForce(explosionforce, transform.position, explosionRadius, 1);
+
+
+        }
+
+        GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+
+        ParticleSystem explosionParticles = explosionEffect.GetComponent<ParticleSystem>();
+
+        if (explosionParticles != null)
+        {
+
+            Destroy(explosionEffect, explosionParticles.main.duration + explosionParticles.main.startLifetime.constantMax);
+        }
+        else
+        {
+
+            Destroy(explosionEffect, 0.5f);
+        }
+
+
+        ApplyShockwave(transform.position, explosionRadius, explosionForce);
+
+
+        Destroy(gameObject);
+    }
+
+
     private IEnumerator BoomShake
         ()
     {
         yield return new WaitForSeconds(1f);
         boomshake = false;
     }
+
+
 }
 

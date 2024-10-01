@@ -4,22 +4,26 @@ using System.Collections;
 
 public class Grenade : MonoBehaviour
 {
-    public float throwForce = 3f;
+    public float throwForce = .2f;
     public float fuseTime = 3f;
     public GameObject explosionPrefab;
     public GameObject grenadeprojectile; 
     public Transform weaponslot;
+    public Camera playercam;
     public int currentgrenades = 3;
     public int maxgrenades = 4;
     public bool isthrowing = false;
     public float throwrate = 2f;
+    public bool canthrow = true;
     public TextMeshProUGUI numberText;
+
+    public bool Grenadetriggered = false;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && currentgrenades > 0)
+        if (Input.GetMouseButton(0) && currentgrenades > 0)
         {
-            StartCoroutine(ThrowGrenade());
+            Grenadetriggered = true;
         }
 
         numberText.text = "" + currentgrenades + " / " + maxgrenades;
@@ -28,36 +32,38 @@ public class Grenade : MonoBehaviour
         {
             Destroy(gameObject); 
         }
+
+        if (Grenadetriggered && !isthrowing)
+        {
+            ThrowGrenade();
+            isthrowing=true;
+            Grenadetriggered=false;
+        }
     }
 
-    private IEnumerator ThrowGrenade()
+    private void ThrowGrenade()
     {
-        if (!isthrowing && currentgrenades > 0)
+        GameObject projectile = Instantiate(grenadeprojectile, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
+        if (rb != null)
         {
-            isthrowing = true;
-            currentgrenades--;
-
-            
-            if (grenadeprojectile != null)
-            {
-                
-                GameObject grenade = Instantiate(grenadeprojectile, weaponslot.position, weaponslot.rotation);
-                Rigidbody rb = grenade.GetComponent<Rigidbody>();
-
-                if (rb != null)
-                {
-                    rb.AddForce(weaponslot.forward * throwForce, ForceMode.Impulse);
-                }
-            }
-            else
-            {
-                Debug.LogError("Grenade projectile is missing!");
-            }
-
-            yield return new WaitForSeconds(throwrate);
-
-            isthrowing = false;
+            rb.AddForce(playercam.transform.forward * throwForce, ForceMode.Impulse);
         }
+        else
+        {
+
+        }
+
+        currentgrenades--;
+
+        StartCoroutine(CooldownThrow());
+    }
+
+    private IEnumerator CooldownThrow()
+    {
+        yield return new WaitForSeconds(throwrate);
+        isthrowing = false;
     }
 }
 
