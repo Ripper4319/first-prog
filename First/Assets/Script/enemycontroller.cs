@@ -26,6 +26,7 @@ public class BasicEnemyController : MonoBehaviour
     private float nextFireTime = 0f;
     public GameObject muzzleFlashPrefab;
     public bool gunshake;
+    public bool hit = false;
 
     void Update()
     {
@@ -67,12 +68,19 @@ public class BasicEnemyController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             health--;
+            hit = true;
         }
         if (collision.gameObject.tag == "SHOTBIG")
         {
             Destroy(collision.gameObject);
             health -= 999;
+            hit = true;
         }
+    }
+
+    public void togglehit()
+    {
+        hit = false;
     }
 
     private IEnumerator camshake()

@@ -15,6 +15,8 @@ public class EnemyProjectileScript : MonoBehaviour
     private float explosionradius = 100;
     private float explosionforce = 2000;
     public bool boomshake;
+    public bool hit = false;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -29,6 +31,7 @@ public class EnemyProjectileScript : MonoBehaviour
             shotted = true;
             droneexplode();
             Destroy(collision.gameObject);
+            hit = true;
         }
 
         if (collision.gameObject.CompareTag("SHOTBIG"))
@@ -37,7 +40,12 @@ public class EnemyProjectileScript : MonoBehaviour
             shotted = true;
             droneexplode();
             Destroy(collision.gameObject);
+            hit = true;
         }
+    }
+    public void togglehit()
+    {
+        hit = false;
     }
 
     private void Start()

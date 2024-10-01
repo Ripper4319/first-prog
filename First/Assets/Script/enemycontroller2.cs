@@ -14,6 +14,7 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
     public int damageGiven = 1;
     public int damageRecieved = 1;
     public float pushBackForce = 10000;
+    public bool hit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,11 +38,18 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
         {
             Destroy(collision.gameObject);
             health--;
+            hit = true;
         }
         if (collision.gameObject.tag == "SHOTBIG")
         {
             Destroy(collision.gameObject);
             health -= 999;
+            hit = true;
         }
+    }
+
+    public void togglehit()
+    {
+        hit = false;
     }
 }
