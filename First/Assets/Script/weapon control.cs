@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class WeaponControl : MonoBehaviour
 {
-    public GameObject[] weapons; // Array of weapons
-    public Transform weaponslot;  // Where weapons are equipped
+    public GameObject[] weapons; 
+    public Transform weaponslot;  
 
     public GameObject[] weaponpickups;
 
 
-    private int currentWeaponIndex = -1; // Tracks currently equipped weapon
-    public bool[] weaponUnlocked; // Tracks which weapons are unlocked
+    private int currentWeaponIndex = -1; 
+    public bool[] weaponUnlocked; 
 
     void Start()
     {
@@ -34,6 +34,8 @@ public class WeaponControl : MonoBehaviour
             SwitchWeapon(2);
         if (weapons.Length > 3 && weaponUnlocked[3] && Input.GetKeyDown(KeyCode.Alpha4))
             SwitchWeapon(3);
+        if (weapons.Length > 4 && weaponUnlocked[4] && Input.GetKeyDown(KeyCode.Alpha5))
+            SwitchWeapon(4);
     }
 
     public void SwitchWeapon(int weaponIndex)
@@ -62,6 +64,9 @@ public class WeaponControl : MonoBehaviour
                 if (weapons[weaponIndex].GetComponent<revolver>() != null)
                     weapons[weaponIndex].GetComponent<revolver>().canfire = true;
 
+                if (weapons[weaponIndex].GetComponent<Grenade>() != null)
+                    weapons[weaponIndex].GetComponent<Grenade>().isthrowing = false;
+
 
                 currentWeaponIndex = weaponIndex;
 
@@ -75,7 +80,7 @@ public class WeaponControl : MonoBehaviour
 
 
                 weapons[weaponIndex].SetActive(false);
-                weapons[weaponIndex].transform.SetParent(null); // Attach weapon to weapon slot
+                weapons[weaponIndex].transform.SetParent(null); 
 
                 weaponUnlocked[weaponIndex] = false;
 

@@ -20,6 +20,7 @@ public class CameraShake : MonoBehaviour
     public m4 script5;
     public EnemyProjectileScript script4;
     public BasicEnemyController script6;
+    public grenadeprojectile script7;
 
     public bool gunshake = false;
     public bool boomshake = false;
@@ -41,7 +42,7 @@ public class CameraShake : MonoBehaviour
     {
         
         bool gunshakeActive = script1.gunshake || script2.gunshake || script3.gunshake || script5.gunshake || script6.gunshake;
-        bool boomshakeActive = script4.boomshake;
+        bool boomshakeActive = script4.boomshake || script7.boomshake;
 
         
         if (gunshakeActive && currentShakeRoutine == null)
