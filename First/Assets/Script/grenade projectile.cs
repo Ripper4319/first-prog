@@ -22,11 +22,10 @@ public class grenadeprojectile : MonoBehaviour
         Explode();
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        
-        Explode();
-    }
+    //private void OnCollisionEnter(Collision collision)
+   // {
+       // Explode();
+   // }
 
     private void Explode()
     {
@@ -51,6 +50,8 @@ public class grenadeprojectile : MonoBehaviour
 
         
         Destroy(gameObject);
+
+        Debug.Log("runs");
     }
 
     private void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
