@@ -6486,19 +6486,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be942979c87d0e84e8a588d02652455a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiImages:
-  - {fileID: 4601573788497214707}
-  - {fileID: 4221016206053605203}
-  - {fileID: 6270818887550689957}
-  - {fileID: 8754278274292560959}
-  - {fileID: 8192630100387477300}
-  - {fileID: 3323617050160437330}
-  targetColor: {r: 1, g: 0, b: 0, a: 1}
-  duration: 0.5
-  delayBetweenChanges: 1
   script1: {fileID: 4983919627524357742, guid: 2f9f1ce2505aadc48a8ef1ce18a58086, type: 3}
   script2: {fileID: 7024351669893231209, guid: e785a292dfcc8744eb7bfb48ae79d318, type: 3}
   script3: {fileID: 6276233668299261479, guid: c897319baf9b0224da97a2fcf20b8c76, type: 3}
+  images:
+  - {fileID: 5826282971512853979}
+  - {fileID: 1874281030508255096}
+  targetColor: {r: 1, g: 0, b: 0, a: 1}
+  originalColor: {r: 0.30980393, g: 0.9607844, b: 0.08627451, a: 1}
+  colorChangeDuration: 0.3
 --- !u!1 &8399129528247688796
 GameObject:
   m_ObjectHideFlags: 0

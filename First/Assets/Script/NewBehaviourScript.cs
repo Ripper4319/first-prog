@@ -39,13 +39,16 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject Main;
     private bool MainOpen;
 
+    public GameObject Resume;
+    private bool ResumeOpen;
+
     private bool EndGame = false;
 
 
 
     [Header("Player Stats")]
-    public int maxHealth = 5;
-    public int Health = 5;
+    public int maxHealth = 8;
+    public int Health = 8;
     public int healthRestore = 1;
     public int explosiondamage = 4;
 
@@ -82,6 +85,7 @@ public class NewBehaviourScript : MonoBehaviour
         inv.SetActive(false);
         HUD.SetActive(true);
         Main.SetActive(false);
+        Resume.SetActive(false);
 
         playercam = Camera.main;
         camhold = transform.GetChild(0);
@@ -221,11 +225,17 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    public void ToggleBool()
+    public void ToggleMainBool()
     {
         Main.SetActive(false);
         Debug.Log("mybool in now:" + MainOpen);
     }
+
+    public void ToggleResumeBool()
+    {
+        Resume.SetActive(false);
+    }
+
     private void Settings()
     {
         if (settingsOpen)
@@ -294,6 +304,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") || collision.contacts[0].normal.y > 0.9f)
         {
             isGrounded = true;
+           // Mathf.Lerp
         }
 
         if (collision.gameObject.CompareTag("weapon") && (collision.gameObject.GetComponent<WeaponPickup>() != null && collision.gameObject.GetComponent<WeaponPickup>().canpickup))

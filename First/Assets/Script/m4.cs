@@ -34,6 +34,7 @@ public class m4 : MonoBehaviour
     [Header("Weapon Stats")]
     public GameObject shot;
     public GameObject casing;
+    public GameObject MAG;
     public int weaponid = 3;
     public int firemode = 0;
     public float shotspeed = 100f;
@@ -67,6 +68,7 @@ public class m4 : MonoBehaviour
         {
             ReloadClip();
         }
+
 
         numberText.text = "" + currentclip + " / " + currentammo;
     }
@@ -141,6 +143,12 @@ public class m4 : MonoBehaviour
             currentammo -= reloadCount;
         }
 
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = casing1.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+        Destroy(casing1, 1f);
+
     }
 
     private IEnumerator CooldownFire()
@@ -153,11 +161,11 @@ public class m4 : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
 
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = casing1.GetComponent<Rigidbody>();
+        GameObject MAG1 = Instantiate(MAG, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb = MAG1.GetComponent<Rigidbody>();
         rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
 
-        Destroy(casing1, 1f);
+        Destroy(MAG1, 3f);
     }
 
     private IEnumerator camshake()
