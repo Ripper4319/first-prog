@@ -21,34 +21,32 @@ public class Grenade : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && currentgrenades > 0)
+        if (Input.GetMouseButton(0) && currentgrenades > 0 && !isthrowing)
         {
             Grenadetriggered = true;
+            ThrowGrenade();
+            isthrowing = true;
         }
 
         numberText.text = "" + currentgrenades + " / " + maxgrenades;
 
         if (currentgrenades <= 0)
         {
-            Destroy(gameObject); 
+            Deactivateboomboom();
         }
 
-        if (Grenadetriggered && !isthrowing)
-        {
-            ThrowGrenade();
-            isthrowing=true;
-            Grenadetriggered=false;
-        }
     }
 
     private void ThrowGrenade()
     {
+
         GameObject projectile = Instantiate(grenadeprojectile, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
         if (rb != null)
         {
             rb.AddForce(playercam.transform.forward * throwForce, ForceMode.Impulse);
+            projectile.GetComponent<grenadeprojectile>().Grenadelogic();
         }
         else
         {
@@ -64,6 +62,11 @@ public class Grenade : MonoBehaviour
     {
         yield return new WaitForSeconds(throwrate);
         isthrowing = false;
+    }
+
+    public void Deactivateboomboom()
+    {
+        gameObject.SetActive(false);
     }
 }
 

@@ -36,8 +36,6 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject HUD;
     private bool HUDActive;
 
-    public GameObject Main;
-    private bool MainOpen;
 
     public GameObject Resume;
     private bool ResumeOpen;
@@ -84,7 +82,6 @@ public class NewBehaviourScript : MonoBehaviour
         set.SetActive(false);
         inv.SetActive(false);
         HUD.SetActive(true);
-        Main.SetActive(false);
         Resume.SetActive(false);
 
         playercam = Camera.main;
@@ -202,34 +199,6 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
 
-
-    private void MainMenu()
-    {
-        if (MainOpen)
-        {
-            Main.SetActive(false);
-            MainOpen = false;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
-            HUD.SetActive(true);
-        }
-        else
-        {
-            HUD.SetActive(false);
-            Main.SetActive(true);
-            MainOpen = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
-        }
-    }
-
-    public void ToggleMainBool()
-    {
-        Main.SetActive(false);
-        Debug.Log("mybool in now:" + MainOpen);
-    }
 
     public void ToggleResumeBool()
     {

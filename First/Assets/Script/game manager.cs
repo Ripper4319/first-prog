@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour
 {
@@ -21,20 +22,40 @@ public class gamemanager : MonoBehaviour
 
     void Start()
     {
-        playerdata = GameObject.Find("Player").GetComponent<NewBehaviourScript>();
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        { 
+            playerdata = GameObject.Find("player").GetComponent<NewBehaviourScript>();
 
-        quit.SetActive(false);
-
+            quit.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthbar.fillAmount = Mathf.Clamp((float)playerdata.Health / (float)playerdata.maxHealth, 0, 1);
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            healthbar.fillAmount = Mathf.Clamp((float)playerdata.Health / (float)playerdata.maxHealth, 0, 1);
+        }
+    
     }
-    public void ToggleBool()
+  
+    public void Quitgame()
     {
-        quit.SetActive(false);
+        Application.Quit();
+    }
+
+    public void LoadLevel(int sceneID)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneID);
+
+    }
+
+    public void RestartLevel()
+    {
+        Time.timeScale = 1;
+        LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
 }

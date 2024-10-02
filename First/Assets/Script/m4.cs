@@ -95,9 +95,15 @@ public class m4 : MonoBehaviour
         gunshake = true; 
         StartCoroutine(camshake());
 
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb1 = casing1.GetComponent<Rigidbody>();
         
+
+        Destroy(casing1, 1f);
+
         GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb1.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
 
         if (rb != null) 
         {
@@ -143,11 +149,7 @@ public class m4 : MonoBehaviour
             currentammo -= reloadCount;
         }
 
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = casing1.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(casing1, 1f);
+       
 
     }
 

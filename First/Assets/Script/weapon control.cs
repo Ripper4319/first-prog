@@ -67,6 +67,8 @@ public class WeaponControl : MonoBehaviour
                 if (weapons[weaponIndex].GetComponent<Grenade>() != null)
                     weapons[weaponIndex].GetComponent<Grenade>().isthrowing = false;
 
+                if (weapons[weaponIndex].GetComponent<m4>() != null)
+                    weapons[weaponIndex].GetComponent<m4>().canfire = true;
 
                 currentWeaponIndex = weaponIndex;
 

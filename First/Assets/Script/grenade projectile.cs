@@ -10,19 +10,20 @@ public class grenadeprojectile : MonoBehaviour
     bool hasexploded;
 
     public GameObject explosionPrefab;
+    public float strikeTimer = 3f;
     public float explosionRadius = 19f;
     public float explosionForce = 19f;
     public bool boomshake;
     private float explosionradius = 100;
     private float explosionforce = 2000;
 
-    private Grenade Grenade;
+    public Grenade Grenade;
 
     void Start()
     {
         countdown = delay;
 
-        Grenade = GetComponent<Grenade>();
+        //Grenade = GameObject.Find("grenade").GetComponent<Grenade>();
     }
 
     void Update()
@@ -35,14 +36,9 @@ public class grenadeprojectile : MonoBehaviour
        
     }
 
-    void Grenadelogic()
+    public void Grenadelogic()
     {
-        countdown -= Time.deltaTime;
-        if (countdown <= 0f && !hasexploded)
-        {
-            Explode();
-            hasexploded = true;
-        }
+        StartCoroutine("BoomShake");
     }
 
     void ApplyShockwave(Vector3 explosionPosition, float radius, float force)
@@ -101,11 +97,15 @@ public class grenadeprojectile : MonoBehaviour
     }
 
 
-    private IEnumerator BoomShake
-        ()
+    private IEnumerator BoomShake()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(strikeTimer);
+        Explode();
+        hasexploded = true;
+
+        Debug.Log("boomy");
         boomshake = false;
+        Destroy(gameObject);
     }
 
 

@@ -7,6 +7,7 @@ public class CameraShake : MonoBehaviour
     public float gunShakeIntensity = 2f;
     public float boomShakeIntensity = 0.3f;
     public float shakeDuration = 0.5f;
+    public float strikeTimer = 3f;
 
     private Vector3 originalPosition;
     private Quaternion originalRotation;
@@ -28,7 +29,8 @@ public class CameraShake : MonoBehaviour
 
     void Start()
     {
-        
+        ResetShake();
+
         if (objectToShake == null)
         {
             objectToShake = transform; 
@@ -47,11 +49,11 @@ public class CameraShake : MonoBehaviour
         
         if (gunshakeActive && currentShakeRoutine == null)
         {
-            currentShakeRoutine = StartCoroutine(Shake(gunShakeIntensity, shakeDuration));
+            currentShakeRoutine = StartCoroutine(Shake(gunShakeIntensity, shakeDuration, 0));
         }
         else if (boomshakeActive && currentShakeRoutine == null)
         {
-            currentShakeRoutine = StartCoroutine(Shake(boomShakeIntensity, shakeDuration));
+            currentShakeRoutine = StartCoroutine(Shake(boomShakeIntensity, shakeDuration, 0));
         }
 
         
@@ -65,28 +67,21 @@ public class CameraShake : MonoBehaviour
         
     }
 
-    IEnumerator Shake(float intensity, float duration)
+    IEnumerator Shake(float intensity, float duration, float timer)
     {
-        isShaking = true;
-        float elapsedTime = 0.0f;
-
-        while (elapsedTime < duration)
+        while (timer < strikeTimer)
         {
-           
+            timer += Time.deltaTime;
             Vector3 randomOffset = Random.insideUnitSphere * intensity;
             Quaternion randomRotation = Quaternion.Euler(
                 Random.Range(-intensity * 60f, intensity * 60f),
                 Random.Range(-intensity * 60f, intensity * 60f),
-                0
-            );
+                Random.Range(-intensity * 60f, intensity * 60f));
 
-            objectToShake.localPosition = originalPosition + randomOffset;
-            objectToShake.localRotation = originalRotation * randomRotation;
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
         }
-
+        yield return new WaitForSeconds(timer);
+        
         ResetShake();
         currentShakeRoutine = null;
     }

@@ -88,10 +88,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c6e7092d4e1ec4f81a8ff5d0dabdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 3
   explosionPrefab: {fileID: 3918789989227822319, guid: ee7bada253317d14cb2789b79f9fcbf1, type: 3}
   explosionRadius: 19
   explosionForce: 19
-  boomshake: 0
+  boomshake: 1
+  Grenade: {fileID: 0}
 --- !u!54 &5130556878683995012
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,7 +102,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3965722837096109917}
   serializedVersion: 4
-  m_Mass: 0.1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
