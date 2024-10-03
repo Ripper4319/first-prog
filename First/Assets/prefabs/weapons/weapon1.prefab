@@ -378,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &548714547320185918
 Transform:
   m_ObjectHideFlags: 0
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea291e5aac19e048939c7b3dda676d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playercam: {fileID: 0}
+  playercam: {fileID: 6413526959301485166, guid: 841dcead007a9e249a37e792dc92d836, type: 3}
   numberText: {fileID: 0}
   isAiming: 0
   normalFOV: 60
@@ -439,10 +439,13 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   gunADSPosition: {x: 1, y: 0, z: 0}
   gunNormalPosition: {x: -0.4, y: 0.308, z: -1.6}
-  shot: {fileID: 0}
+  gunshake: 0
+  shot: {fileID: 1203126699521438604, guid: 1bf71a9570baee3489faa2d2cd9d5086, type: 3}
+  casing: {fileID: 6879140468456663735, guid: 06df8bed85412fa4aa5d2624d271be1c, type: 3}
   weaponid: 0
   firemode: 0
   shotspeed: 100
+  casingspeed: 3
   firerate: 0.1
   clipsize: 200
   currentclip: 200
@@ -452,6 +455,7 @@ MonoBehaviour:
   canfire: 1
   weaponslot: {fileID: 0}
   newBehaviourScript: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 0}
   direction: {fileID: 0}
 --- !u!1 &919132149155446097
 GameObject:

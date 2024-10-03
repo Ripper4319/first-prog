@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grenade
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 02ed8d83f8e254c49a0e55f0a06757ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -94,8 +98,11 @@ MonoBehaviour:
   explosionPrefab: {fileID: 3918789989227822319, guid: ee7bada253317d14cb2789b79f9fcbf1, type: 3}
   grenadeprojectile: {fileID: 3965722837096109917, guid: f97e471f788eea34c9333b6ea8452caf, type: 3}
   weaponslot: {fileID: 0}
+  playercam: {fileID: 0}
   currentgrenades: 3
   maxgrenades: 4
   isthrowing: 0
   throwrate: 2
+  canthrow: 1
   numberText: {fileID: 0}
+  Grenadetriggered: 0
