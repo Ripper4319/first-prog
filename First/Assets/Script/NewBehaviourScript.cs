@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 
 public class NewBehaviourScript : MonoBehaviour
@@ -26,21 +28,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Vector3 gunADSPosition;
     public Vector3 gunNormalPosition;
     public Transform weaponslot;
-
-    public GameObject inv;
-    private bool inventoryOpen;
-
-    public GameObject set;
-    private bool settingsOpen;
-
-    public GameObject HUD;
-    private bool HUDActive;
-
-
-    public GameObject Resume;
-    private bool ResumeOpen;
-
-    private bool EndGame = false;
+    public gamemanager gamemanager;
 
 
 
@@ -74,15 +62,14 @@ public class NewBehaviourScript : MonoBehaviour
 
     private CameraShake cameraShake;
 
+    public gamemanager isnotalive;
+
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
         cameraShake = FindObjectOfType<CameraShake>();
 
-        set.SetActive(false);
-        inv.SetActive(false);
-        HUD.SetActive(true);
-        Resume.SetActive(false);
+        isnotalive = gamemanager.GetComponent<gamemanager>();
 
         playercam = Camera.main;
         camhold = transform.GetChild(0);
@@ -98,15 +85,14 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        
+        
+        
 
-        if (Input.GetKeyDown(KeyCode.I) && !EndGame)
-            Inventory();
-        if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
-            Settings();
 
         if (Health <= 0)
         {
-            End();
+            gamemanager.End();
         }
 
         lastVelocity = theRB.velocity;
@@ -200,66 +186,6 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
-    public void ToggleResumeBool()
-    {
-        Resume.SetActive(false);
-    }
-
-    private void Settings()
-    {
-        if (settingsOpen)
-        {
-            set.SetActive(false);
-            settingsOpen = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
-            HUD.SetActive(true);
-        }
-        else
-        {
-            HUD.SetActive(false);
-            set.SetActive(true);
-            settingsOpen = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
-        }
-    }
-
-    private void Inventory()
-    {
-        if (inventoryOpen)
-        {
-            inv.SetActive(false);
-            inventoryOpen = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
-            HUD.SetActive(true);
-        }
-        else
-        {
-            HUD.SetActive(false);
-            inv.SetActive(true);
-            inventoryOpen = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
-        }
-    }
-
-    private void End()
-    {
-        EndGame = true;
-        HUD.SetActive(false);
-        set.SetActive(false);
-        settingsOpen = false;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0;
-    }
-
 
 
     private void OnCollisionEnter(Collision collision)
@@ -281,7 +207,7 @@ public class NewBehaviourScript : MonoBehaviour
 
             collision.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
             collision.gameObject.transform.SetParent(weaponslot);
-            HUD.SetActive(true);
+            
 
 
         }
@@ -327,10 +253,7 @@ public class NewBehaviourScript : MonoBehaviour
         int damage = Mathf.FloorToInt((fallSpeed - fallDamageThreshold) * fallDamageMultiplier);
         Health--;
 
-        if (Health <= 0)
-        {
-            End();
-        }
+        
     }
 
 }

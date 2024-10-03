@@ -765,6 +765,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099639667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
+  m_PrefabInstance: {fileID: 4136199698726985078}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b3f3ac606c43344b58f5090dbdd7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &70451545275941466 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6413526959301485166, guid: 16d64e5f0f79ff64ea728fb25019c95b, type: 3}
@@ -1929,6 +1940,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 70451545275941466}
     - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
+      propertyPath: isnotalive
+      value: 
+      objectReference: {fileID: 2099639667}
+    - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
       propertyPath: numberText
       value: 
       objectReference: {fileID: 8691951160719662287}
@@ -1936,6 +1951,10 @@ PrefabInstance:
       propertyPath: weaponslot
       value: 
       objectReference: {fileID: 175401077214299222}
+    - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
+      propertyPath: gamemanager
+      value: 
+      objectReference: {fileID: 2099639667}
     - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
       propertyPath: gunTransform
       value: 
@@ -3918,9 +3937,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 8292943926573202621}
+    - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
+      propertyPath: inv
+      value: 
+      objectReference: {fileID: 1018730259976907874}
+    - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
+      propertyPath: set
+      value: 
+      objectReference: {fileID: 9164876963603178530}
+    - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
       propertyPath: quit
       value: 
       objectReference: {fileID: 8506286242160777113}
+    - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
+      propertyPath: Resume
+      value: 
+      objectReference: {fileID: 3353681456724654840}
     - target: {fileID: 3444998592383952649, guid: 3ffa0b8c1feb03246955a50208d7ae5d, type: 3}
       propertyPath: healthbar
       value: 
@@ -8505,7 +8540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &9172217041266192194
 CanvasRenderer:
   m_ObjectHideFlags: 0
