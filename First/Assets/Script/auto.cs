@@ -102,6 +102,12 @@ public class Auto : MonoBehaviour
             
         }
 
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        Rigidbody rb1 = casing1.GetComponent<Rigidbody>();
+        rb1.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+        Destroy(casing1, 1f);
+
         currentclip--;
         canfire = false;
 
@@ -116,14 +122,6 @@ public class Auto : MonoBehaviour
     }
 
 
-    public void GunAction()
-    {
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = casing1.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(casing1, 1f);
-    }
     private IEnumerator CooldownFire()
     {
         yield return new WaitForSeconds(firerate);

@@ -35,6 +35,7 @@ public class m4 : MonoBehaviour
     public GameObject shot;
     public GameObject casing;
     public GameObject MAG;
+    public Transform Mag;
     public int weaponid = 3;
     public int firemode = 0;
     public float shotspeed = 100f;
@@ -124,7 +125,6 @@ public class m4 : MonoBehaviour
 
         
         StartCoroutine(CooldownFire());
-        StartCoroutine(GunAction());
     }
 
 
@@ -134,7 +134,11 @@ public class m4 : MonoBehaviour
     {
         if (currentclip >= clipsize) return;
 
+        GameObject MAG1 = Instantiate(MAG, Mag.position, Mag.rotation * Quaternion.Euler(-90, 0, 0));
+        Rigidbody rb = MAG1.GetComponent<Rigidbody>();
+        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
 
+        Destroy(MAG1, 3f);
 
         int reloadCount = (int)(clipsize - currentclip);
 
@@ -159,16 +163,7 @@ public class m4 : MonoBehaviour
         canfire = true;
     }
 
-    IEnumerator GunAction()
-    {
-        yield return new WaitForSeconds(0.01f);
-
-        GameObject MAG1 = Instantiate(MAG, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = MAG1.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(MAG1, 3f);
-    }
+   
 
     private IEnumerator camshake()
     {
