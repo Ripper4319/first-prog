@@ -40,7 +40,7 @@ public class gamemanager : MonoBehaviour
         set.SetActive(false);
         inv.SetActive(false);
         HUD.SetActive(true);
-        Resume.SetActive(false);
+      
 
 
         if (SceneManager.GetActiveScene().buildIndex > 0)
@@ -57,12 +57,14 @@ public class gamemanager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex > 0)
         {
             healthbar.fillAmount = Mathf.Clamp((float)playerdata.Health / (float)playerdata.maxHealth, 0, 1);
+
+            if (Input.GetKeyDown(KeyCode.I) && !EndGame)
+                Inventory();
+            if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
+                Settings();
         }
 
-        if (Input.GetKeyDown(KeyCode.I) && !EndGame)
-            Inventory();
-        if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
-            Settings();
+        
 
     }
   
@@ -86,13 +88,9 @@ public class gamemanager : MonoBehaviour
 
     public void ResumeGame()
     {
-
+        inv.SetActive(false);
     }
 
-    public void ToggleResumeBool()
-    {
-        Resume.SetActive(false);
-    }
 
     private void Settings()
     {
