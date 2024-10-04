@@ -15,6 +15,8 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
     public int damageRecieved = 1;
     public float pushBackForce = 10000;
     public bool hit = false;
+    public Transform player1;
+    public float detectionRange = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +28,15 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
     // Update is called once per frame
     void Update()
     {
-        agent.destination = player.transform.position;
+        float distanceToPlayer = Vector3.Distance(transform.position, player1.position);
+        if (distanceToPlayer <= detectionRange)
+        {
+            agent.destination = player.transform.position;
 
-        if (health <= 0)
-            Destroy(gameObject);
+            if (health <= 0)
+                Destroy(gameObject);
+        }
+          
     }
 
     private void OnCollisionEnter(Collision collision)

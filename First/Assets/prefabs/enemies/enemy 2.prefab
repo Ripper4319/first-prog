@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6016061370606163935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.571785, y: 0.507, z: -6.57}
+  m_LocalPosition: {x: -61.51681, y: 7.74, z: -7.6976485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -128,6 +128,9 @@ MonoBehaviour:
   damageGiven: 1
   damageRecieved: 1
   pushBackForce: 10000
+  hit: 0
+  player1: {fileID: 0}
+  detectionRange: 10
 --- !u!195 &7799815191242236995
 NavMeshAgent:
   m_ObjectHideFlags: 0
