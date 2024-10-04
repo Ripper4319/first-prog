@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 865532958505910436}
   - component: {fileID: 4294672307548568647}
   - component: {fileID: 2351784353024388700}
+  - component: {fileID: 5476424325443053676}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 570582167703388726}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7381591, z: -0, w: 0.6746267}
-  m_LocalPosition: {x: 12.52, y: 18.43, z: 2.2}
+  m_LocalPosition: {x: 12.52, y: 1.32, z: 2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -152,12 +153,9 @@ MonoBehaviour:
   gunADSPosition: {x: 0.05, y: -0.15, z: 1.1}
   gunNormalPosition: {x: 0.2, y: -0.15, z: 0.933}
   weaponslot: {fileID: 0}
-  inv: {fileID: 0}
-  set: {fileID: 0}
-  HUD: {fileID: 0}
-  Main: {fileID: 0}
-  maxHealth: 5
-  Health: 5
+  gamemanager: {fileID: 0}
+  maxHealth: 8
+  Health: 8
   healthRestore: 1
   explosiondamage: 4
   speed: 10
@@ -172,6 +170,7 @@ MonoBehaviour:
   camRotationLimit: 90
   fallDamageThreshold: -10
   fallDamageMultiplier: 2
+  isnotalive: {fileID: 0}
 --- !u!33 &2351784353024388700
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -180,6 +179,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570582167703388726}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5476424325443053676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570582167703388726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acbf71ec7e20fa45ac4f04a175f2eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crouchSpeed: 0.1
+  normalHeight: -1
+  crouchHeight: 0
+  capsuleCollider: {fileID: 3370948196962283824}
+  rb: {fileID: 865532958505910436}
 --- !u!1 &4420180530352284587
 GameObject:
   m_ObjectHideFlags: 0
