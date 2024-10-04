@@ -14,6 +14,8 @@ public class gamemanager : MonoBehaviour
 
     public NewBehaviourScript playerdata;
 
+    public GameObject player;
+
     public Image healthbar;
 
     public GameObject quit;
@@ -43,12 +45,12 @@ public class gamemanager : MonoBehaviour
       
 
 
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        { 
-            playerdata = GameObject.Find("player").GetComponent<NewBehaviourScript>();
+        //if (SceneManager.GetActiveScene().buildIndex > 0)
+        //{ 
+            //playerdata = GameObject.Find("player").GetComponent<NewBehaviourScript>();
 
-            quit.SetActive(false);
-        }
+            //quit.SetActive(false);
+        //}
     }
 
     // Update is called once per frame
