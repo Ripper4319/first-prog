@@ -16,7 +16,7 @@ public class CrosshairController : MonoBehaviour
         Ray ray = new Ray(gunslot.position, -gunslot.up);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, maxRaycastDistance, interactableLayer))
+        if (Physics.Raycast(ray, out hit, maxRaycastDistance, interactableitems))
         {
             Vector3 screenPoint = mainCamera.WorldToScreenPoint(hit.point);
             crosshair.transform.position = screenPoint;
