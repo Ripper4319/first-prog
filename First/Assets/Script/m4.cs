@@ -54,13 +54,13 @@ public class m4 : MonoBehaviour
 
     public Transform weaponslot;
 
-
+    public NewBehaviourScript playerAmmo;
 
 
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) && canfire && playerAmmo.lightAmmo > 0 && weaponid >= 0)
         {
             FireWeapon();
         }
@@ -71,7 +71,7 @@ public class m4 : MonoBehaviour
         }
 
 
-        numberText.text = "" + currentclip + " / " + currentammo;
+        numberText.text = "" + currentclip + " / " + playerAmmo.lightAmmo;
     }
 
     void Start()
@@ -142,15 +142,15 @@ public class m4 : MonoBehaviour
 
         int reloadCount = (int)(clipsize - currentclip);
 
-        if (currentammo < reloadCount)
+        if (playerAmmo.lightAmmo < reloadCount)
         {
-            currentclip += currentammo;
+            currentclip += playerAmmo.lightAmmo;
             currentammo = 0;
         }
         else
         {
             currentclip += reloadCount;
-            currentammo -= reloadCount;
+            playerAmmo.lightAmmo -= reloadCount;
         }
 
        

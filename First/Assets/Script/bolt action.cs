@@ -52,13 +52,14 @@ public class bolt_action : MonoBehaviour
 
     public Transform weaponslot;
 
+    public NewBehaviourScript playerAmmo;
 
-    
+
 
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) &&canfire && currentclip > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) &&canfire && playerAmmo.heavyAmmo > 0 && weaponid >= 0)
         {
             FireWeapon();
         }
@@ -127,21 +128,18 @@ public class bolt_action : MonoBehaviour
     {
         if (currentclip >= clipsize) return;
 
-       
-
         int reloadCount = (int)(clipsize - currentclip);
 
-        if (currentammo < reloadCount)
+        if (playerAmmo.heavyAmmo < reloadCount)
         {
-            currentclip += currentammo;
-            currentammo = 0;
+            currentclip += playerAmmo.heavyAmmo;
+            playerAmmo.heavyAmmo = 0;
         }
         else
         {
             currentclip += reloadCount;
-            currentammo -= reloadCount;
+            playerAmmo.heavyAmmo -= reloadCount;
         }
-
     }
 
     private IEnumerator CooldownFire()

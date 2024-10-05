@@ -54,6 +54,8 @@ public class revolver : MonoBehaviour
     public Transform weaponslot;
 
 
+    public NewBehaviourScript playerAmmo;
+
 
 
 
@@ -69,7 +71,7 @@ public class revolver : MonoBehaviour
             ReloadClip();
         }
 
-        numberText.text = " " + currentclip + " / " + currentammo;
+        numberText.text = " " + currentclip + " / " + playerAmmo.heavyAmmo;
     }
 
     void Start()
@@ -142,15 +144,15 @@ public class revolver : MonoBehaviour
 
         int reloadCount = (int)(clipsize - currentclip);
 
-        if (currentammo < reloadCount)
+        if (playerAmmo.heavyAmmo < reloadCount)
         {
-            currentclip += currentammo;
-            currentammo = 0;
+            currentclip += playerAmmo.heavyAmmo;
+            playerAmmo.heavyAmmo = 0;
         }
         else
         {
             currentclip += reloadCount;
-            currentammo -= reloadCount;
+            playerAmmo.heavyAmmo -= reloadCount;
         }
 
         

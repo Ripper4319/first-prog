@@ -4,11 +4,29 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
+    public Light directionalLight;
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = new Vector3(0, 0, 1000);
+            other.transform.position = new Vector3(0, 5, 11000);
+            DeactivateDirectionalLight();
+            ToggleFog(false);
         }
+    }
+
+    public void DeactivateDirectionalLight()
+    {
+        if (directionalLight != null)
+        {
+            directionalLight.enabled = false;
+        }
+    }
+
+    public void ToggleFog(bool isEnabled)
+    {
+        RenderSettings.fog = isEnabled;
     }
 }

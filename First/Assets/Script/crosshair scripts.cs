@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CrosshairController : MonoBehaviour
 {
@@ -8,8 +9,9 @@ public class CrosshairController : MonoBehaviour
     public Camera mainCamera;
     public float interactDistance = 5f;
     public LayerMask interactableitems;
-    public Text objectname;
+    public TextMeshProUGUI objectname;
     public float maxRaycastDistance = 100;
+
 
     void Update()
     {

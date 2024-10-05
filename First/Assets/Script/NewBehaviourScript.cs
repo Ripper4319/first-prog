@@ -64,6 +64,11 @@ public class NewBehaviourScript : MonoBehaviour
 
     public gamemanager isnotalive;
 
+    public int lightAmmo = 0;
+    public int heavyAmmo = 0;
+
+
+
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
@@ -184,9 +189,17 @@ public class NewBehaviourScript : MonoBehaviour
         
     }
 
+    public void AddlightAmmo(int amount)
+    {
+        lightAmmo += amount;
+        Debug.Log("Added " + amount + " Type1 Ammo. Total: " + lightAmmo);
+    }
 
-
-
+    public void AddheavyAmmo(int amount)
+    {
+        heavyAmmo += amount;
+        Debug.Log("Added " + amount + " Type2 Ammo. Total: " + heavyAmmo);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

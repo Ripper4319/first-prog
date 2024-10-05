@@ -47,8 +47,9 @@ public class Auto : MonoBehaviour
     public bool canfire = true;
     public Transform weaponslot;
     public NewBehaviourScript newBehaviourScript;
-    public GameObject muzzleFlashPrefab; 
+    public GameObject muzzleFlashPrefab;
 
+    public NewBehaviourScript playerAmmo;
 
     public Camera direction;
 
@@ -73,7 +74,7 @@ public class Auto : MonoBehaviour
         if (Input.GetMouseButtonUp(1)) StopADS();
 
        
-        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) && canfire && playerAmmo.lightAmmo > 0 && weaponid >= 0)
         {
             FireWeapon();
         }
