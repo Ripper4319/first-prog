@@ -90,11 +90,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
-        
-        
-        
-
-
         if (Health <= 0)
         {
             gamemanager.End();
@@ -106,9 +101,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             ApplyFallDamage(lastVelocity.y);
 
-            
-
         }
+
         playercam.transform.position = camhold.position;
 
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
@@ -263,10 +257,12 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void ApplyFallDamage(float fallSpeed)
     {
-        int damage = Mathf.FloorToInt((fallSpeed - fallDamageThreshold) * fallDamageMultiplier);
-        Health--;
+        int damage = Mathf.FloorToInt((fallDamageThreshold - fallSpeed) * fallDamageMultiplier);
 
-        
+        if (damage > 0)
+        {
+            Health -= damage;
+        }
     }
 
 }

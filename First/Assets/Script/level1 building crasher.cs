@@ -4,10 +4,12 @@ public class CollisionExplosionRotator : MonoBehaviour
 {
     public GameObject explosionprefab;
     public GameObject rotater;
-    public float rotationspeed = 100f;
+    public float rotationspeed = .0005f;
     public int explosions = 6;
     public Transform[] explosionspawnpoints;
     private bool shouldrotate = false;
+    private float currentRotationZ = 0f;
+    private float targetRotationZ = 90f;
 
     void Update()
     {
@@ -36,7 +38,20 @@ public class CollisionExplosionRotator : MonoBehaviour
 
     void RotateObject()
     {
-        rotater.transform.Rotate(Vector3.up * rotationspeed * Time.deltaTime);
+        if (currentRotationZ < targetRotationZ)
+        {
+            float rotationStep = rotationspeed * Time.deltaTime;
+            rotater.transform.Rotate(Vector3.forward * rotationStep);
+            currentRotationZ += rotationStep;
+
+            if (currentRotationZ >= targetRotationZ)
+            {
+                rotater.transform.rotation = Quaternion.Euler(0, 0, targetRotationZ);
+                currentRotationZ = targetRotationZ;
+                shouldrotate = false; // Stop rotating once target is reached
+            }
+        }
     }
 }
+
 
