@@ -7,16 +7,23 @@ public class ElevatorController : MonoBehaviour
     public float speed = 3f;
     private int targetFloor = 0;
     private bool moving = false;
-
+    [SerializeField]
+    public KeyCode activationKey = KeyCode.E; 
     public ElevatorDoor elevatorDoor;
+
+    public Transform player;
+    public float activationRange = 1f;
+
 
     void Update()
     {
-        if (!moving && Input.GetKeyDown(KeyCode.E)) 
+        if (!moving && Vector3.Distance(player.position, transform.position) <= activationRange)
         {
-            GoToFloor(targetFloor);
-
-            moving = true;
+            if (Input.GetKeyDown(activationKey))
+            {
+                GoToFloor(targetFloor);
+                moving = true;
+            }
         }
     }
 
@@ -26,6 +33,7 @@ public class ElevatorController : MonoBehaviour
         {
             targetFloor = floorIndex;
             StartCoroutine(MoveToPosition(floorHeights[floorIndex]));
+            //
         }
     }
 

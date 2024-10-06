@@ -11,7 +11,7 @@ public class Teleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.transform.position = new Vector3(0, 5, 11000);
+            other.transform.position = new Vector3(0, 2, 11000);
             DeactivateDirectionalLight();
             ToggleFog(false);
         }
