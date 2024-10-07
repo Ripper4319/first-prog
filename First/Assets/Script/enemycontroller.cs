@@ -52,7 +52,7 @@ public class BasicEnemyController : MonoBehaviour
     private void ShootAtPlayer()
     {
         GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 90, 0));
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(180, 0, 0));
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = (player.position - firePoint.position).normalized * projectileSpeed;
 
