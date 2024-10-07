@@ -10,7 +10,7 @@ public class CollisionExplosionRotator : MonoBehaviour
     private bool shouldrotate = false;
     private float currentRotationZ = 0f;
     private float targetRotationZ = 90f;
-
+    public NewBehaviourScript playerscript;
     void Update()
     {
         if (shouldrotate && rotater != null)
@@ -21,6 +21,8 @@ public class CollisionExplosionRotator : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        playerscript.levelevent = true;
+
         if (collision.gameObject.tag == "Player")
         {
             for (int i = 0; i < explosions; i++)
@@ -49,6 +51,7 @@ public class CollisionExplosionRotator : MonoBehaviour
                 rotater.transform.rotation = Quaternion.Euler(0, 0, targetRotationZ);
                 currentRotationZ = targetRotationZ;
                 shouldrotate = false; // Stop rotating once target is reached
+
             }
         }
     }

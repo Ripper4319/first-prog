@@ -66,7 +66,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public int lightAmmo = 0;
     public int heavyAmmo = 0;
-
+    public bool levelevent = false;
 
 
     void Start()
@@ -97,7 +97,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         lastVelocity = theRB.velocity;
 
-        if (isGrounded && lastVelocity.y < fallDamageThreshold)
+        if (isGrounded && lastVelocity.y < fallDamageThreshold && !levelevent)
         {
             ApplyFallDamage(lastVelocity.y);
 
