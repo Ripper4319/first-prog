@@ -11,17 +11,19 @@ public class CrosshairController : MonoBehaviour
     public Transform cam1;
     public float interactDistance = 5f;
 
-    private LayerMask mask;
+    public bool hasChanged = false;
 
     [SerializeField]
     private float maxRaycastDistance = 100;
+    [SerializeField]
+    private LayerMask mask;
 
-    void start()
+    public playerui playerUI;
+
+    private void Start()
     {
-        //h
+
     }
-   
-    
 
     void Update()
     {
@@ -30,11 +32,16 @@ public class CrosshairController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitinfo, maxRaycastDistance, mask))
         {
+            Debug.Log("Test");
 
-            if (hitinfo.collider.GetComponent<interactable>()! = null )
+            if (hitinfo.collider.GetComponent<interactable>() != null)
             {
-                //huh
+                playerUI.UpdateText(hitinfo.collider.GetComponent<interactable>().promptmessage);
             }
+        }
+        else
+        {
+            playerUI.UpdateText(string.Empty);
         }
        
     }

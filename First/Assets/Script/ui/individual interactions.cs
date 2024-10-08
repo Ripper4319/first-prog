@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class individualinteractions : interactable
 {
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class individualinteractions : interactable
 
     protected override void interact()
     {
-        Debug.Log("huh2");
+        Debug.Log("interacted");
     }
 
 }

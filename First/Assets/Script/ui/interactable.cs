@@ -13,6 +13,6 @@ public abstract class interactable : MonoBehaviour
 
     protected virtual void interact()
     {
-
+        
     }
 }
