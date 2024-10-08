@@ -37,7 +37,7 @@ public class WeaponPickup : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && canpickup)  // Assuming the player has the tag "Player"
         {
-            if(weaponController != null)
+            if (weaponController != null)
             {
                 weaponController.weaponUnlocked[weaponIndex] = true;  // Unlock the weapon in WeaponController
                 weaponController.SwitchWeapon(weaponIndex);
@@ -49,6 +49,10 @@ public class WeaponPickup : MonoBehaviour
             }
         }
     }
+
+    
+        
+
 
 }
 

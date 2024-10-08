@@ -50,9 +50,6 @@ public class NewBehaviourScript : MonoBehaviour
     public float camRotationLimit = 90f;
 
 
-    private Gun autoGun;
-    private bolt_action boltActionGun;
-
     public float fallDamageThreshold = -10f;  
     public float fallDamageMultiplier = 2f;  
 

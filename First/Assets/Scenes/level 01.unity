@@ -11182,6 +11182,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 786849801}
     - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
+      propertyPath: levelevent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
       propertyPath: numberText
       value: 
       objectReference: {fileID: 1212142704}
@@ -11244,7 +11248,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 570582167703388726, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1137414811}
   m_SourcePrefab: {fileID: 100100000, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
 --- !u!1 &1081890435
 GameObject:
@@ -12328,6 +12335,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8933964769220326396, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
   m_PrefabInstance: {fileID: 1074259297}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1137414811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19236878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a285e1a2447e7c04e841860571841405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 0}
+  gunslot: {fileID: 0}
+  interactDistance: 5
+  interactableitems:
+    serializedVersion: 2
+    m_Bits: 0
+  objectname: {fileID: 0}
+  maxRaycastDistance: 100
 --- !u!1 &1145670360
 GameObject:
   m_ObjectHideFlags: 0
