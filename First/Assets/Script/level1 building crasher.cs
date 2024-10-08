@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CollisionExplosionRotator : MonoBehaviour
@@ -11,6 +12,9 @@ public class CollisionExplosionRotator : MonoBehaviour
     private float currentRotationZ = 0f;
     private float targetRotationZ = 90f;
     public NewBehaviourScript playerscript;
+    public gamemanager levelchanger;
+
+    public ColorChangeBriefly fadeinout; 
     void Update()
     {
         if (shouldrotate && rotater != null)
@@ -35,6 +39,8 @@ public class CollisionExplosionRotator : MonoBehaviour
             }
 
             shouldrotate = true;
+
+            StartCoroutine(Fade());
         }
     }
 
@@ -54,6 +60,14 @@ public class CollisionExplosionRotator : MonoBehaviour
 
             }
         }
+    }
+
+    public IEnumerator Fade()
+    {
+        yield return new WaitForSeconds(.001f);
+        yield return StartCoroutine(fadeinout.FadeOut());
+        yield return new WaitForSeconds(3f);
+        levelchanger.LoadNextLevel();
     }
 }
 

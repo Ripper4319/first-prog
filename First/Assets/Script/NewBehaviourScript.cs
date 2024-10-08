@@ -44,7 +44,6 @@ public class NewBehaviourScript : MonoBehaviour
     public float groundDetectDistance = 1.5f;
     public bool sprintmode = false;
 
-    public bool SprintToggleOption = false;
     public float mouseSensitivity = 2.0f;
     public float xsensitivity = 2.0f;
     public float ysensitivity = 2.0f;
@@ -63,6 +62,7 @@ public class NewBehaviourScript : MonoBehaviour
     private CameraShake cameraShake;
 
     public gamemanager isnotalive;
+
 
     public int lightAmmo = 0;
     public int heavyAmmo = 0;
@@ -146,23 +146,14 @@ public class NewBehaviourScript : MonoBehaviour
         float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;
         float HorizontalMove = Input.GetAxisRaw("Horizontal") * Time.timeScale;
 
-        if (!SprintToggleOption)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-                sprintmode = true;
 
-            if (Input.GetKey(KeyCode.LeftShift))
-                sprintmode = false;
-        }
-
-        if (SprintToggleOption)
-        {
+       
             if (Input.GetKeyDown(KeyCode.LeftShift) && VerticalMove > 0)
                 sprintmode = true;
 
             if (VerticalMove <= 0)
                 sprintmode = false;
-        }
+        
 
         if (!sprintmode)
             temp.x = VerticalMove * speed;

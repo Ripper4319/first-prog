@@ -42,15 +42,7 @@ public class gamemanager : MonoBehaviour
         set.SetActive(false);
         inv.SetActive(false);
         HUD.SetActive(true);
-      
-
-
-        //if (SceneManager.GetActiveScene().buildIndex > 0)
-        //{ 
-            //playerdata = GameObject.Find("player").GetComponent<NewBehaviourScript>();
-
-            //quit.SetActive(false);
-        //}
+     
     }
 
     // Update is called once per frame
@@ -148,4 +140,16 @@ public class gamemanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
+
+    public void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+    }
+
 }
