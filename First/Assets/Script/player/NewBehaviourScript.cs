@@ -115,7 +115,7 @@ public class NewBehaviourScript : MonoBehaviour
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
         playercam.transform.position = camhold.position;
 
-        currentRecoilPosition = Vector3.Lerp(currentRecoilPosition, targetRecoilPosition, Time.deltaTime * 5f);
+        currentRecoilPosition = Vector3.Slerp(currentRecoilPosition, targetRecoilPosition, Time.deltaTime * 5f);
         playercam.transform.localPosition = camhold.position + currentRecoilPosition;
 
         if (Input.GetMouseButtonDown(1))
