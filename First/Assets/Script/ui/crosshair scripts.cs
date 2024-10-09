@@ -4,8 +4,8 @@ using TMPro;
 
 public class CrosshairController : MonoBehaviour
 {
+    public individualinteractions individualinteractions;
 
-   
     public Image crosshair;
     public Camera cam;
     public Transform cam1;
@@ -27,23 +27,50 @@ public class CrosshairController : MonoBehaviour
 
     void Update()
     {
-        Ray ray = new Ray(cam1.position, cam.transform.forward);
-        RaycastHit hitinfo;
-
-        if (Physics.Raycast(ray, out hitinfo, maxRaycastDistance, mask))
+        
+        if(individualinteractions.isScriptActive)
         {
-            Debug.Log("Test");
-
-            if (hitinfo.collider.GetComponent<interactable>() != null)
+            if (individualinteractions != null)
             {
-                playerUI.UpdateText(hitinfo.collider.GetComponent<interactable>().promptmessage);
+                Ray ray = new Ray(cam1.position, cam.transform.forward);
+                RaycastHit hitinfo;
+
+                if (Physics.Raycast(ray, out hitinfo, maxRaycastDistance, mask))
+                {
+                    Debug.Log("Test");
+
+                    if (hitinfo.collider.GetComponent<interactable>() != null)
+                    {
+                        playerUI.UpdateText(hitinfo.collider.GetComponent<interactable>().promptmessage);
+                        Debug.Log("elevator");
+                    }
+                }
+                else
+                {
+                    playerUI.UpdateText(string.Empty);
+                }
             }
         }
-        else
+        
+
+        if (individualinteractions != null && individualinteractions.isshutoffscript)
         {
-            playerUI.UpdateText(string.Empty);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                DisableScriptForObject();
+            }
         }
-       
+
+
+    }
+
+    public void DisableScriptForObject()
+    {
+        if (individualinteractions != null)
+        {
+            individualinteractions.isScriptActive = false;
+        }
+            
     }
 }
 

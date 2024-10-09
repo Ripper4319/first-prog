@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class individualinteractions : interactable
 {
+    public bool isshutoffscript = false;
+    public bool isScriptActive = true;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,8 @@ public class individualinteractions : interactable
 
     protected override void interact()
     {
-        Debug.Log("interacted");
+        
     }
 
+    
 }
