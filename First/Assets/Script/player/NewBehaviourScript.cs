@@ -49,6 +49,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float xsensitivity = 2.0f;
     public float ysensitivity = 2.0f;
     public float camRotationLimit = 90f;
+    public bool recoilapplied = false;
 
 
     public float fallDamageThreshold = -10f;  
@@ -67,12 +68,17 @@ public class NewBehaviourScript : MonoBehaviour
     public bool levelevent = false;
 
 
+    private Vector3 currentRecoilPosition;
+    private Vector3 targetRecoilPosition;
+
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
         cameraShake = FindObjectOfType<CameraShake>();
 
         isnotalive = gamemanager.GetComponent<gamemanager>();
+
+        currentRecoilPosition = Vector3.zero;
 
         playercam = Camera.main;
         camhold = transform.GetChild(0);
@@ -101,21 +107,16 @@ public class NewBehaviourScript : MonoBehaviour
 
         }
 
-        camRotation.y = Mathf.Clamp(camRotation.y + recoil, -camRotation, camRotationLimit);
-        playercam.transform.position = camhold.position;
-
+        
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
-
-        camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit); playercam.transform.position = camhold.position;
-
-        camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
-        camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
-
-        camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
-
+        
         playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
+        playercam.transform.position = camhold.position;
+
+        currentRecoilPosition = Vector3.Lerp(currentRecoilPosition, targetRecoilPosition, Time.deltaTime * 5f);
+        playercam.transform.localPosition = camhold.position + currentRecoilPosition;
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -171,6 +172,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 
         
+    }
+
+    public void SetRecoil(float recoilAmount)
+    {
+        targetRecoilPosition += new Vector3(0, recoilAmount, 0);
     }
 
     public void AddlightAmmo(int amount)
