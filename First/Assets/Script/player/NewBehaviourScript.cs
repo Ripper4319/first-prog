@@ -29,6 +29,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Vector3 gunNormalPosition;
     public Transform weaponslot;
     public gamemanager gamemanager;
+    public float recoil = 0;
 
 
 
@@ -100,6 +101,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         }
 
+        camRotation.y = Mathf.Clamp(camRotation.y + recoil, -camRotation, camRotationLimit);
         playercam.transform.position = camhold.position;
 
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
