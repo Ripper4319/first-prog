@@ -11587,6 +11587,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
+      propertyPath: Revolver
+      value: 
+      objectReference: {fileID: 946550315}
+    - target: {fileID: 4294672307548568647, guid: f13c1bf74ab6665499cd949f4fed3dcd, type: 3}
       propertyPath: playercam
       value: 
       objectReference: {fileID: 1869756774}

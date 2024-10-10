@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using static UnityEngine.GraphicsBuffer;
+using System;
 
 
 public class NewBehaviourScript : MonoBehaviour
@@ -67,10 +69,13 @@ public class NewBehaviourScript : MonoBehaviour
     public int heavyAmmo = 0;
     public bool levelevent = false;
 
+    public float revolverrecoilcount;
+    public float m4recoilcount;
+    public float boltyrecoilcount;
+    public float lmgrecoilcount;
 
-    private Vector3 currentRecoilPosition;
-    private Vector3 targetRecoilPosition;
-    public revolver revolver;
+    public revolver Revolver;
+
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
@@ -78,7 +83,6 @@ public class NewBehaviourScript : MonoBehaviour
 
         isnotalive = gamemanager.GetComponent<gamemanager>();
 
-        currentRecoilPosition = Vector3.zero;
 
         playercam = Camera.main;
         camhold = transform.GetChild(0);
@@ -90,6 +94,8 @@ public class NewBehaviourScript : MonoBehaviour
         gunNormalPosition = gunTransform.localPosition;
 
         cameraShake = FindObjectOfType<CameraShake>();
+
+
     }
 
     void Update()
@@ -167,16 +173,50 @@ public class NewBehaviourScript : MonoBehaviour
             temp.y = jumpHeight;
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
 
-        if(Input.GetMouseButton(0) && revolver.canfire = false)
+        if(Input.GetMouseButton(0))
         {
-
+            recoilcalculate();
         }
             
     }
 
-    public void SetRecoil(float recoilAmount)
+    public void recoilcalculate()
     {
-        targetRecoilPosition += new Vector3(0, recoilAmount, 0);
+        if (Revolver.canfire == false)
+        {
+            Vector3 rotationAmount = Revolver.rotationAmount;
+
+            StartCoroutine(RotateBackAndForth(weaponslot, rotationAmount, revolverrecoilcount));
+        }
+
+        //if () 
+
+        //if ()
+
+        //if ()
+
+        //if ()
+
+    }
+
+    private IEnumerator RotateBackAndForth(Transform weaponslot, Vector3 rotationAmount, float revolverrecoilcount)
+    {
+        Quaternion initialRotation = weaponslot.rotation;
+        Quaternion targetRotation = initialRotation * Quaternion.Euler(rotationAmount.x, rotationAmount.y, rotationAmount.z);
+
+        for (float t = 0; t < 1; t += Time.deltaTime / revolverrecoilcount)
+        {
+            weaponslot.rotation = Quaternion.Lerp(initialRotation, targetRotation, t);
+            yield return null;
+        }
+        weaponslot.rotation = targetRotation;
+
+        for (float t = 0; t < 1; t += Time.deltaTime / revolverrecoilcount)
+        {
+            weaponslot.rotation = Quaternion.Lerp(targetRotation, initialRotation, t);
+            yield return null;
+        }
+        weaponslot.rotation = initialRotation;
     }
 
     public void AddlightAmmo(int amount)
@@ -260,6 +300,9 @@ public class NewBehaviourScript : MonoBehaviour
             Health -= damage;
         }
     }
+
+
+
 
 }
 

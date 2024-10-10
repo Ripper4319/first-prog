@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 
 public class revolver : MonoBehaviour
 {
+    public Vector3 rotationAmount = new Vector3(0, 3, 0);
 
     public Camera playercam;
 
@@ -88,6 +89,7 @@ public class revolver : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
 
+        rotationAmount = Vector3.zero;
 
         gunNormalPosition = gunTransform.localPosition;
 
@@ -120,8 +122,6 @@ public class revolver : MonoBehaviour
         StartCoroutine
             (camshake());
 
-        recoilcontroller.recoilapplied = true;
-        recoilcontroller.SetRecoil(weaponrecoil);
 
     }
 
