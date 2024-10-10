@@ -51,6 +51,7 @@ public class revolver : MonoBehaviour
     public float bulletlifespan = 5f;
     public bool canfire = true;
 
+
     public Camera direction;
 
     public Transform weaponslot;
@@ -118,6 +119,7 @@ public class revolver : MonoBehaviour
 
         StartCoroutine
             (camshake());
+
 
 
     }
