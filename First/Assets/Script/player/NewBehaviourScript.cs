@@ -70,7 +70,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private Vector3 currentRecoilPosition;
     private Vector3 targetRecoilPosition;
-
+    public revolver revolver;
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
@@ -114,9 +114,6 @@ public class NewBehaviourScript : MonoBehaviour
         playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
         playercam.transform.position = camhold.position;
-
-        currentRecoilPosition = Vector3.Slerp(currentRecoilPosition, targetRecoilPosition, Time.deltaTime * 5f);
-        playercam.transform.localPosition = camhold.position + currentRecoilPosition;
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -170,8 +167,11 @@ public class NewBehaviourScript : MonoBehaviour
             temp.y = jumpHeight;
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
 
+        if(Input.GetMouseButton(0) && revolver.canfire = false)
+        {
 
-        
+        }
+            
     }
 
     public void SetRecoil(float recoilAmount)
