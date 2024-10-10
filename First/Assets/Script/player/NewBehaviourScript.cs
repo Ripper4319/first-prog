@@ -173,51 +173,9 @@ public class NewBehaviourScript : MonoBehaviour
             temp.y = jumpHeight;
         theRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
 
-        if(Input.GetMouseButton(0))
-        {
-            recoilcalculate();
-        }
-            
     }
 
-    public void recoilcalculate()
-    {
-        if (Revolver.canfire == false)
-        {
-            Vector3 rotationAmount = Revolver.rotationAmount;
-
-            StartCoroutine(RotateBackAndForth(weaponslot, rotationAmount, revolverrecoilcount));
-        }
-
-        //if () 
-
-        //if ()
-
-        //if ()
-
-        //if ()
-
-    }
-
-    private IEnumerator RotateBackAndForth(Transform weaponslot, Vector3 rotationAmount, float revolverrecoilcount)
-    {
-        Quaternion initialRotation = weaponslot.rotation;
-        Quaternion targetRotation = initialRotation * Quaternion.Euler(rotationAmount.x, rotationAmount.y, rotationAmount.z);
-
-        for (float t = 0; t < 1; t += Time.deltaTime / revolverrecoilcount)
-        {
-            weaponslot.rotation = Quaternion.Lerp(initialRotation, targetRotation, t);
-            yield return null;
-        }
-        weaponslot.rotation = targetRotation;
-
-        for (float t = 0; t < 1; t += Time.deltaTime / revolverrecoilcount)
-        {
-            weaponslot.rotation = Quaternion.Lerp(targetRotation, initialRotation, t);
-            yield return null;
-        }
-        weaponslot.rotation = initialRotation;
-    }
+    
 
     public void AddlightAmmo(int amount)
     {
