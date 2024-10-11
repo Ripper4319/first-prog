@@ -13,6 +13,8 @@ public class CollisionExplosionRotator : MonoBehaviour
     private float targetRotationZ = 90f;
     public NewBehaviourScript playerscript;
     public gamemanager levelchanger;
+    public GameObject extra;
+    public GameObject extra2;
 
     public ColorChangeBriefly fadeinout; 
     void Update()
@@ -46,6 +48,9 @@ public class CollisionExplosionRotator : MonoBehaviour
 
     void RotateObject()
     {
+        extra.SetActive(false);
+        extra2.SetActive(false);
+
         if (currentRotationZ < targetRotationZ)
         {
             float rotationStep = rotationspeed * Time.deltaTime;
