@@ -58,7 +58,7 @@ public class revolver : MonoBehaviour
     public NewBehaviourScript playerAmmo;
 
 
-
+    //huh
 
     private void Update()
     {
