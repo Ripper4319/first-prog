@@ -1,16 +1,8 @@
-using NUnit;
+
 using TMPro;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using static UnityEngine.GraphicsBuffer;
-using System;
-
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -175,9 +167,9 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
-    
 
-    public void AddlightAmmo(int amount)
+
+public void AddlightAmmo(int amount)
     {
         lightAmmo += amount;
         Debug.Log("Added " + amount + " Type1 Ammo. Total: " + lightAmmo);

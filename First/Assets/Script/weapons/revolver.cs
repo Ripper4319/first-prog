@@ -29,6 +29,7 @@ public class revolver : MonoBehaviour
     public Vector3 gunNormalPosition;
     public GameObject muzzleFlashPrefab;
     public bool gunshake;
+    public NewBehaviourScript recoilcontroller;
     public float weaponrecoil = 30;
 
 
@@ -49,6 +50,7 @@ public class revolver : MonoBehaviour
     public float reloadamt = 45f;
     public float bulletlifespan = 5f;
     public bool canfire = true;
+
 
     public Camera direction;
 
@@ -74,7 +76,11 @@ public class revolver : MonoBehaviour
 
         numberText.text = " " + currentclip + " / " + playerAmmo.heavyAmmo;
 
-       
+        if (recoilcontroller.recoilapplied)
+        {
+            recoilcontroller.recoil = 0;
+            recoilcontroller.recoilapplied = false;
+        }
     }
 
     void Start()
@@ -113,6 +119,7 @@ public class revolver : MonoBehaviour
 
         StartCoroutine
             (camshake());
+
 
 
     }

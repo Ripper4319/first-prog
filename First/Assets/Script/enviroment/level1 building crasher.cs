@@ -56,7 +56,7 @@ public class CollisionExplosionRotator : MonoBehaviour
             {
                 rotater.transform.rotation = Quaternion.Euler(0, 0, targetRotationZ);
                 currentRotationZ = targetRotationZ;
-                shouldrotate = false; // Stop rotating once target is reached
+                shouldrotate = false;
 
             }
         }
