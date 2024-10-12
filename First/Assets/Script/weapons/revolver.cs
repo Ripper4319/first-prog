@@ -63,7 +63,7 @@ public class revolver : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0 )
         {
             FireWeapon();
         }
@@ -92,29 +92,32 @@ public class revolver : MonoBehaviour
 
     public void FireWeapon()
     {
-        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+        if (Time.timeScale == 1)
+        {
+            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
 
 
-        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+            GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+            rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
 
-        currentclip--;
-        shotsfired++;
+            currentclip--;
+            shotsfired++;
 
-        canfire = false;
+            canfire = false;
 
-        Destroy(projectile, 2f);
-        StartCoroutine
-            (CooldownFire());
-        Destroy(muzzleFlash, 0.1f);
+            Destroy(projectile, 2f);
+            StartCoroutine
+                (CooldownFire());
+            Destroy(muzzleFlash, 0.1f);
 
-        gunshake = true;
+            gunshake = true;
 
-        StartCoroutine
-            (camshake());
+            StartCoroutine
+                (camshake());
 
 
+        }
 
     }
 
