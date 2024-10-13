@@ -56,6 +56,11 @@ public class NewBehaviourScript : MonoBehaviour
 
     public gamemanager isnotalive;
 
+    [Header("leaning")]
+    public float leanAmount = 40f;
+    public float leanSpeed = 5f;
+    private float targetLean = 90f;
+    private float currentLean = 0f;
 
     public int lightAmmo = 0;
     public int heavyAmmo = 0;
@@ -135,7 +140,22 @@ public class NewBehaviourScript : MonoBehaviour
             gunTransform.localPosition = Vector3.Lerp(gunTransform.localPosition, gunNormalPosition, 0.1f);
         }
 
+        if (Input.GetKey(KeyCode.Q))
+        {
+            targetLean = leanAmount;
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            targetLean = -leanAmount;
+        }
+        else
+        {
+            targetLean = 0f;
+        }
 
+        currentLean = Mathf.Lerp(currentLean, targetLean, Time.deltaTime * leanSpeed);
+        transform.localRotation = Quaternion.Euler(0f, 0f, currentLean);
+    
 
         Vector3 temp = theRB.velocity;
         float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;

@@ -103,7 +103,6 @@ public class grenadeprojectile : MonoBehaviour
         Explode();
         hasexploded = true;
 
-        Debug.Log("boomy");
         boomshake = false;
         Destroy(gameObject);
     }

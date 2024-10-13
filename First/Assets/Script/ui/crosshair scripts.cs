@@ -37,12 +37,11 @@ public class CrosshairController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hitinfo, maxRaycastDistance, mask))
                 {
-                    Debug.Log("Test");
 
                     if (hitinfo.collider.GetComponent<interactable>() != null)
                     {
                         playerUI.UpdateText(hitinfo.collider.GetComponent<interactable>().promptmessage);
-                        Debug.Log("elevator");
+                        
                     }
                 }
                 else

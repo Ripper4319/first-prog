@@ -103,10 +103,6 @@ public class bolt_action : MonoBehaviour
         {
             rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
         }
-        else
-        {
-            Debug.LogError("Projectile Rigidbody is null!");
-        }
 
         
         currentclip--;

@@ -15,7 +15,6 @@ public class Teleporter : MonoBehaviour
         {
             StartCoroutine(Fade());
 
-            Debug.Log("huh");
 
             other.transform.position = teleportPosition;
             
