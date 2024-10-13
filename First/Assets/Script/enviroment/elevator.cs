@@ -10,6 +10,7 @@ public class ElevatorController : MonoBehaviour
     [SerializeField]
     public KeyCode activationKey = KeyCode.E; 
     public ElevatorDoor elevatorDoor;
+    public GameObject extra;
 
     public Transform player;
     public float activationRange = 1f;
@@ -41,7 +42,9 @@ public class ElevatorController : MonoBehaviour
     {
         moving = true;
 
-       
+        extra.SetActive(false);
+
+
         while (Mathf.Abs(transform.position.y - targetY) > 0.01f)
         {
             Vector3 newPosition = new Vector3(transform.position.x, Mathf.MoveTowards(transform.position.y, targetY, speed * Time.deltaTime), transform.position.z);

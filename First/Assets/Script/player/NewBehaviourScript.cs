@@ -57,9 +57,9 @@ public class NewBehaviourScript : MonoBehaviour
     public gamemanager isnotalive;
 
     [Header("leaning")]
-    public float leanAmount = 40f;
+    public float leanAmount = 100f;
     public float leanSpeed = 5f;
-    private float targetLean = 90f;
+    private float targetLean = 30f;
     private float currentLean = 0f;
 
     public int lightAmmo = 0;
@@ -113,9 +113,13 @@ public class NewBehaviourScript : MonoBehaviour
         
         camRotation.x += Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.timeScale;
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
-        
+
         playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
-        transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
+
+        transform.rotation = Quaternion.Euler(0, camRotation.x, 0);
+
+        playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
+
         playercam.transform.position = camhold.position;
 
         if (Input.GetMouseButtonDown(1))
@@ -154,8 +158,8 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         currentLean = Mathf.Lerp(currentLean, targetLean, Time.deltaTime * leanSpeed);
-        transform.localRotation = Quaternion.Euler(0f, 0f, currentLean);
-    
+        playercam.transform.localRotation = Quaternion.Euler(playercam.transform.localRotation.eulerAngles.x, playercam.transform.localRotation.eulerAngles.y, currentLean);
+
 
         Vector3 temp = theRB.velocity;
         float VerticalMove = Input.GetAxisRaw("Vertical") * Time.timeScale;

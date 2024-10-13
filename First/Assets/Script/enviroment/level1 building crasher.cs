@@ -69,7 +69,6 @@ public class CollisionExplosionRotator : MonoBehaviour
 
     public IEnumerator Fade()
     {
-        yield return new WaitForSeconds(.001f);
         yield return StartCoroutine(fadeinout.FadeOut());
         yield return new WaitForSeconds(3f);
         levelchanger.LoadNextLevel();

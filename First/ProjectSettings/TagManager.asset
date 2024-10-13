@@ -12,6 +12,7 @@ TagManager:
   - turret
   - Ground
   - enemy3
+  - elevator
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - weapon
   - mask
-  - 
+  - elevator
   - 
   - 
   - 
