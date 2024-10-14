@@ -22,7 +22,7 @@ public class gamemanager : MonoBehaviour
     private bool QuitActive;
 
     public GameObject inv;
-    private bool inventoryOpen;
+    public bool inventoryOpen;
 
     public GameObject set;
     private bool settingsOpen;

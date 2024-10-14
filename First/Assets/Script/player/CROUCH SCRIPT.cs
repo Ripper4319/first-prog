@@ -6,15 +6,10 @@ public class Crouch : MonoBehaviour
     public float normalHeight = 2.0f;
     public float crouchHeight = 1.0f;
     private bool crouching = false;
+    public bool inelevator;
 
     public CapsuleCollider capsuleCollider;
     public Rigidbody rb;
-
-    public LayerMask elevator;
-    public float groundCheckDistance = 0.2f;
-
-    private bool isGrounded = false;
-    private bool onElevator = false;
 
     void Start()
     {
@@ -24,14 +19,26 @@ public class Crouch : MonoBehaviour
 
     void Update()
     {
-        GroundCheck();
 
-        if ((isGrounded || onElevator) && Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !inelevator)
         {
             crouching = !crouching;
         }
 
         AdjustCrouch();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("elevator"))
+        {
+            inelevator = true;
+        }
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            inelevator =false;
+        }
     }
 
     void AdjustCrouch()
@@ -45,30 +52,6 @@ public class Crouch : MonoBehaviour
         {
             capsuleCollider.height = Mathf.MoveTowards(capsuleCollider.height, normalHeight, crouchSpeed * Time.deltaTime);
             capsuleCollider.center = new Vector3(0, normalHeight / 2, 0);
-        }
-    }
-
-    void GroundCheck()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance, elevator))
-        {
-            isGrounded = true;
-
-            if (hit.collider.CompareTag("Elevator"))
-            {
-                onElevator = true;
-            }
-            else
-            {
-                onElevator = false;
-            }
-        }
-        else
-        {
-            isGrounded = false;
-            onElevator = false;
         }
     }
 }

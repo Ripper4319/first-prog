@@ -62,9 +62,13 @@ public class NewBehaviourScript : MonoBehaviour
     private float targetLean = 30f;
     private float currentLean = 0f;
 
+    public DisplayAndControl INV;
+
     public int lightAmmo = 0;
     public int heavyAmmo = 0;
     public bool levelevent = false;
+    public int healthpacks;
+    public int armour;
 
     public float revolverrecoilcount;
     public float m4recoilcount;
@@ -231,7 +235,7 @@ public void AddlightAmmo(int amount)
         if (collision.gameObject.CompareTag("healthpickup") && Health < maxHealth)
         {
             Destroy(collision.gameObject);
-            Health++;
+            healthpacks++;
         }
         if (collision.gameObject.CompareTag("shot"))
         {

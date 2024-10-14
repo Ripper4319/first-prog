@@ -90,36 +90,41 @@ public class Auto : MonoBehaviour
 
     private void FireWeapon()
     {
-        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-        if (rb != null)
+        if (Time.timeScale == 1)
         {
-            rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+            GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+            }
+            else
+            {
+
+            }
+
+            GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+            Rigidbody rb1 = casing1.GetComponent<Rigidbody>();
+            rb1.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
+
+            Destroy(casing1, 1f);
+
+            currentclip--;
+            canfire = false;
+
+            Destroy(projectile, 2f);
+            StartCoroutine(CooldownFire());
+            Destroy(muzzleFlash, 0.1f);
+
+            gunshake = true;
+
+
+            StartCoroutine(camshake());
         }
-        else
-        {
-            
-        }
-
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb1 = casing1.GetComponent<Rigidbody>();
-        rb1.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(casing1, 1f);
-
-        currentclip--;
-        canfire = false;
-
-        Destroy(projectile, 2f);
-        StartCoroutine(CooldownFire());
-        Destroy(muzzleFlash, 0.1f);
-
-        gunshake = true;
-
-        
-        StartCoroutine(camshake());
+       
     }
 
 

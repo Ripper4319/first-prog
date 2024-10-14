@@ -88,33 +88,35 @@ public class bolt_action : MonoBehaviour
 
     public void FireWeapon()
     {
-        
-        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-
-        
-        gunshake = true; 
-        StartCoroutine(camshake());
-
-        
-        GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-
-        if (rb != null) 
+        if (Time.timeScale == 1)
         {
-            rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+
+
+            gunshake = true;
+            StartCoroutine(camshake());
+
+
+            GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+            }
+
+
+            currentclip--;
+            canfire = false;
+
+
+            Destroy(projectile, 2f);
+            Destroy(muzzleFlash, 0.1f);
+
+
+            StartCoroutine(CooldownFire());
+            StartCoroutine(GunAction());
         }
-
-        
-        currentclip--;
-        canfire = false;
-
-        
-        Destroy(projectile, 2f);
-        Destroy(muzzleFlash, 0.1f);
-
-        
-        StartCoroutine(CooldownFire());
-        StartCoroutine(GunAction());
     }
 
 
