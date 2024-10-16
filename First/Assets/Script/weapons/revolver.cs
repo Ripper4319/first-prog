@@ -50,6 +50,7 @@ public class revolver : MonoBehaviour
     public float bulletlifespan = 5f;
     public bool canfire = true;
     public Animator myani;
+    public GameObject model;
 
 
     public Camera direction;
@@ -88,7 +89,7 @@ public class revolver : MonoBehaviour
 
         gunNormalPosition = gunTransform.localPosition;
 
-        myani = GetComponent<Animator>();
+        myani = model.GetComponent<Animator>();
 
     }
 
@@ -119,7 +120,6 @@ public class revolver : MonoBehaviour
             StartCoroutine
                 (camshake());
 
-            myani.SetBool("isfiring", false);
         }
 
     }
@@ -186,6 +186,8 @@ public class revolver : MonoBehaviour
     {
         yield return new WaitForSeconds(firerate);
         canfire = true;
+
+        myani.SetBool("isfiring", false);
     }
 
     private IEnumerator camshake()
