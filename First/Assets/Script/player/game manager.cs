@@ -74,6 +74,17 @@ public class gamemanager : MonoBehaviour
 
     }
 
+    public void MainLevel(int sceneID)
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = 0;
+
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+    }
+
     public void RestartLevel()
     {
         Time.timeScale = 1;
@@ -86,7 +97,7 @@ public class gamemanager : MonoBehaviour
     }
 
 
-    private void Settings()
+    public void Settings()
     {
         if (settingsOpen)
         {
