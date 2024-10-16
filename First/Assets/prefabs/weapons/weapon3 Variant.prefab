@@ -52,57 +52,101 @@ PrefabInstance:
       propertyPath: m_Name
       value: weapon3 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 9005843243474192293, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
+      propertyPath: m_Name
+      value: weapon3 Variant
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2673079246194950755, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7714584650163100008, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 9005843243474192293, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5599452188747102274}
+      addedObject: {fileID: 1655089853768854427}
+    - targetCorrespondingSourceObject: {fileID: 9005843243474192293, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5904734572551784627}
   m_SourcePrefab: {fileID: 100100000, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
---- !u!1 &9005843243474192293 stripped
+--- !u!1 &7714584650163100008 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 7714584650163100008, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 9005843243474192293, guid: ae9d200c55aeb5c4780a0e5dbe57238e, type: 3}
   m_PrefabInstance: {fileID: 1726175439317540557}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5599452188747102274
-MonoBehaviour:
+--- !u!95 &1655089853768854427
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9005843243474192293}
+  m_GameObject: {fileID: 7714584650163100008}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67ddf39092c63748b152756d8f2d767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playercam: {fileID: 6413526959301485166, guid: 841dcead007a9e249a37e792dc92d836, type: 3}
-  numberText: {fileID: 0}
-  isAiming: 0
-  normalFOV: 60
-  zoomFOV: 30
-  gunTransform: {fileID: 0}
-  firePoint: {fileID: 0}
-  gunADSPosition: {x: 0, y: 0, z: 0}
-  gunNormalPosition: {x: 0, y: 0, z: 0}
-  muzzleFlashPrefab: {fileID: 3396879488657841877, guid: 1494cde05a701de4f8b271d7afdeae22, type: 3}
-  gunshake: 0
-  shot: {fileID: 1523549674035294788, guid: 53afabd021e9c3b4c82d7a091f6b7f06, type: 3}
-  casing: {fileID: 6879140468456663735, guid: 06df8bed85412fa4aa5d2624d271be1c, type: 3}
-  weaponid: 1
-  firemode: 0
-  shotspeed: 100
-  casingspeed: 3
-  firerate: 0.7
-  clipsize: 7
-  currentclip: 7
-  maxclip: 7
-  maxammo: 28
-  currentammo: 14
-  reloadamt: 45
-  bulletlifespan: 3
-  canfire: 1
-  direction: {fileID: 6413526959301485166, guid: 841dcead007a9e249a37e792dc92d836, type: 3}
-  weaponslot: {fileID: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &-5904734572551784627
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7714584650163100008}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 0}
+  m_Bones: []
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_DirtyAABB: 0

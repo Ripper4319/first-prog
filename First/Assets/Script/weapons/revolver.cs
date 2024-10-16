@@ -49,6 +49,7 @@ public class revolver : MonoBehaviour
     public float reloadamt = 45f;
     public float bulletlifespan = 5f;
     public bool canfire = true;
+    public Animator myani;
 
 
     public Camera direction;
@@ -66,6 +67,8 @@ public class revolver : MonoBehaviour
         if (Input.GetMouseButton(0) && canfire && currentclip > 0 && weaponid >= 0 )
         {
             FireWeapon();
+
+            myani.SetBool("isfiring", true);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -85,7 +88,7 @@ public class revolver : MonoBehaviour
 
         gunNormalPosition = gunTransform.localPosition;
 
-
+        myani = GetComponent<Animator>();
 
     }
 
@@ -116,7 +119,7 @@ public class revolver : MonoBehaviour
             StartCoroutine
                 (camshake());
 
-
+            myani.SetBool("isfiring", false);
         }
 
     }
