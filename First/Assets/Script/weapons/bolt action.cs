@@ -54,6 +54,8 @@ public class bolt_action : MonoBehaviour
 
     public NewBehaviourScript playerAmmo;
 
+    public Animator Animation;
+    public GameObject model;
 
 
 
@@ -62,6 +64,7 @@ public class bolt_action : MonoBehaviour
         if (Input.GetMouseButton(0) &&canfire && playerAmmo.heavyAmmo > 0 && weaponid >= 0)
         {
             FireWeapon();
+            Animation.SetBool("isfiring1", true);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -81,7 +84,7 @@ public class bolt_action : MonoBehaviour
 
         gunNormalPosition = gunTransform.localPosition;
 
-
+        Animation = model.GetComponent<Animator>();
 
     }
 
@@ -142,6 +145,7 @@ public class bolt_action : MonoBehaviour
 
     private IEnumerator CooldownFire()
     {
+        Animation.SetBool("isfiring1", false);
         yield return new WaitForSeconds(firerate);
         canfire = true;
     }
