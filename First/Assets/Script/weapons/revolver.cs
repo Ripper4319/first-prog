@@ -69,7 +69,7 @@ public class revolver : MonoBehaviour
         {
             FireWeapon();
 
-            myani.SetBool("isfiring", true);
+            
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -98,6 +98,8 @@ public class revolver : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
+            myani.SetBool("isfiring", true);
+
             GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
 
 

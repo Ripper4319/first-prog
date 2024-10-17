@@ -1,4 +1,4 @@
-using NUnit;
+ using NUnit;
 using TMPro;
 using UnityEngine;
 using System.Collections;
@@ -61,9 +61,10 @@ public class bolt_action : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) &&canfire && playerAmmo.heavyAmmo > 0 && weaponid >= 0)
+        if (Input.GetMouseButton(0) &&canfire && currentclip > 0 && weaponid >= 0)
         {
             FireWeapon();
+
             Animation.SetBool("isfiring1", true);
         }
 
@@ -93,6 +94,7 @@ public class bolt_action : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
+
             GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
 
 
@@ -145,9 +147,9 @@ public class bolt_action : MonoBehaviour
 
     private IEnumerator CooldownFire()
     {
-        Animation.SetBool("isfiring1", false);
         yield return new WaitForSeconds(firerate);
         canfire = true;
+        Animation.SetBool("isfiring1", false);
     }
 
     IEnumerator GunAction()
