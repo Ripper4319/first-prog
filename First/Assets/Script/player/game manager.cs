@@ -21,11 +21,10 @@ public class gamemanager : MonoBehaviour
     public GameObject quit;
     private bool QuitActive;
 
-    public GameObject inv;
-    public bool inventoryOpen;
-
     public GameObject set;
     private bool settingsOpen;
+
+    public GameObject end;
 
     public GameObject HUD;
     private bool HUDActive;
@@ -40,8 +39,8 @@ public class gamemanager : MonoBehaviour
     void Start()
     {
         set.SetActive(false);
-        inv.SetActive(false);
         HUD.SetActive(true);
+        end.SetActive(false);
      
     }
 
@@ -52,8 +51,6 @@ public class gamemanager : MonoBehaviour
         {
             healthbar.fillAmount = Mathf.Clamp((float)playerdata.Health / (float)playerdata.maxHealth, 0, 1);
 
-            if (Input.GetKeyDown(KeyCode.I) && !EndGame)
-                Inventory();
             if (Input.GetKeyDown(KeyCode.Escape) && !EndGame)
                 Settings();
         }
@@ -87,14 +84,12 @@ public class gamemanager : MonoBehaviour
 
     public void RestartLevel()
     {
+
         Time.timeScale = 1;
         LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ResumeGame()
-    {
-        inv.SetActive(false);
-    }
+    
 
 
     public void Settings()
@@ -119,37 +114,19 @@ public class gamemanager : MonoBehaviour
         }
     }
 
-    private void Inventory()
-    {
-        if (inventoryOpen)
-        {
-            inv.SetActive(false);
-            inventoryOpen = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
-            HUD.SetActive(true);
-        }
-        else
-        {
-            HUD.SetActive(false);
-            inv.SetActive(true);
-            inventoryOpen = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
-        }
-    }
 
     public void End()
     {
         EndGame = true;
         HUD.SetActive(false);
         set.SetActive(false);
+        end.SetActive(true);
         settingsOpen = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
+
+        StartCoroutine(RestartGame());
     }
 
     public void LoadNextLevel()
@@ -162,5 +139,11 @@ public class gamemanager : MonoBehaviour
             SceneManager.LoadScene(nextSceneIndex);
         }
     }
+    public IEnumerator RestartGame()
+    {
 
+        yield return new WaitForSeconds(2);
+
+        Application.Quit();
+    }
 }

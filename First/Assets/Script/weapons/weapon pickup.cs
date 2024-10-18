@@ -22,7 +22,6 @@ public class WeaponPickup : MonoBehaviour
     void Start()
     {
 
-        weaponController = FindFirstObjectByType<WeaponControl>();
     }
 
     private void Update()
@@ -35,17 +34,13 @@ public class WeaponPickup : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && canpickup)  // Assuming the player has the tag "Player"
+        if (collision.gameObject.CompareTag("Player") && canpickup) 
         {
             if (weaponController != null)
             {
-                weaponController.weaponUnlocked[weaponIndex] = true;  // Unlock the weapon in WeaponController
+                weaponController.weaponUnlocked[weaponIndex] = true;  
                 weaponController.SwitchWeapon(weaponIndex);
-                Destroy(gameObject);  // Destroy the pickup after collecting
-            }
-            else
-            {
-                Debug.LogError("WeaponController is not assigned!");
+                Destroy(gameObject);  
             }
         }
     }

@@ -17,6 +17,7 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
     public bool hit = false;
     public Transform player1;
     public float detectionRange = 10f;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,8 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
         float distanceToPlayer = Vector3.Distance(transform.position, player1.position);
         if (distanceToPlayer <= detectionRange)
         {
+            animator.SetBool("isactive", true);
+
             agent.destination = player.transform.position;
 
             if (health <= 0)
@@ -52,6 +55,10 @@ public class BasicEnemyController2 : MonoBehaviour //moving enemy base
             Destroy(collision.gameObject);
             health -= 999;
             hit = true;
+        }
+        if (collision.gameObject.tag == "player")
+        {
+            player.Health--;
         }
     }
 
