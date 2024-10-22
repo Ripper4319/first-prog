@@ -16,37 +16,41 @@ public class WeaponPickup : MonoBehaviour
     public float pickuprate = 2f;
 
 
-    private WeaponControl weaponController;
+    public Firearm weaponController;
 
 
     void Start()
     {
-
     }
 
     private void Update()
     {
+        /*
         if (pickuprate >= 0)
             pickuprate -= Time.deltaTime;
         else
             canpickup = true;
+    */
+        canpickup = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") && canpickup) 
         {
-            if (weaponController != null)
-            {
-                weaponController.weaponUnlocked[weaponIndex] = true;  
-                weaponController.SwitchWeapon(weaponIndex);
-                Destroy(gameObject);  
-            }
+            UnlockWeapon(weaponIndex);
         }
     }
 
-    
-        
+    public void UnlockWeapon(int weaponIndex)
+    {
+        if (weaponIndex >= 0 && weaponIndex < weaponController.weaponUnlocked.Length)
+        {
+            weaponController.UnlockWeapon(weaponIndex);
+            weaponController.SetupWeapon(weaponIndex);
+        }
+    }
+
 
 
 }

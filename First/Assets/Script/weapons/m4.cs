@@ -3,170 +3,276 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using UnityEngine.Events;
-using UnityEngine.UIElements.Experimental;
 
-public class m4 : MonoBehaviour
+public class Firearm : MonoBehaviour
 {
 
-    public Camera playercam;
-
-    private Rigidbody theRB;
-
-
-    public TextMeshProUGUI numberText;
-
-    Vector2 camRotation;
-
-    public bool isAiming = false;
-    public float normalFOV = 60f;
-    public float zoomFOV = 30f;
-    public Transform gunTransform;
-    public Transform firePoint;
-    public Vector3 gunADSPosition;
-    public Vector3 gunNormalPosition;
-    public GameObject muzzleFlashPrefab;
-    public bool gunshake;
-
-
     [Header("Weapon Stats")]
+    public int weaponID;
+    public float shotVel;
+    public int fireMode;
+    public float fireRate;
+    public int currentClip;
+    public int clipSize;
+    public int maxAmmo;
+    public int currentAmmo;
+    public int reloadAmt;
+    public float bulletLifespan;
+    public float casingspeed;
+
+    public int ShotgunBB;
+
+    [Header("Weapon Library")]
+    public bool useWeapon0 = true; 
+    public bool useWeapon1 = false; 
+    public bool useWeapon2 = false; 
+    public bool useWeapon3 = false;
+    public bool useWeapon4 = false;
+    public bool useWeapon5 = false;
+    public bool CanFire = true;
+    public Transform camera;
+
+
+    [Header("Weapon Objects")]
     public GameObject shot;
-    public GameObject casing;
-    public GameObject MAG;
-    public Transform Mag;
-    public int weaponid = 3;
-    public int firemode = 0;
-    public float shotspeed = 100f;
-    public float casingspeed = 3f;
-    public float firerate = .2f;
-    public int clipsize = 30;
-    public float currentclip = 30;
-    public float maxclip = 30f;
-    public float maxammo = 90f;
-    public float currentammo = 60f;
-    public float reloadamt = 45f;
-    public float bulletlifespan = 5f;
-    public bool canfire = true;
-
-    public Camera direction;
-
-    public Transform weaponslot;
-
+    public GameObject muzzleFlashPrefab;
+    public GameObject[] casingPrefabs;
+    public bool gunshake;
     public NewBehaviourScript playerAmmo;
+    public Transform gunTransform;
+
+
+    [Header("Weapon Models")]
+    public GameObject[] weapons;
+    public GameObject[] weaponModels;
+    public Transform weaponslot;
+    public GameObject[] weaponpickups;
+    private int currentWeaponIndex = -1;
+    public bool[] weaponUnlocked;
+
+
+    [Header("Shake")]
+    public float gunShakeIntensity = 2f;
+    public float shakeDuration = 0.5f;
+
+    [Header("Weapon Locational Data")]
+    public GameObject[] bulletInstantiators;
+    public GameObject[] casingInstantiators;
 
 
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetMouseButton(0) && canfire && playerAmmo.lightAmmo > 0 && weaponid >= 0)
+
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < weapons.Length; i++)
         {
-            FireWeapon();
+            if (weapons.Length > i && weaponUnlocked[i])
+            {
+                Debug.Log($"Weapon {i} is unlocked and can be switched.");
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                {
+                    SwitchWeapon(i);
+                }
+            }
+            else
+            {
+                Debug.Log($"Weapon {i} is locked.");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ReloadClip();
+            Reload();
         }
 
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
+        {
+            if (currentClip > 0)
+            {
+                Debug.Log("Firing weapon...");
+                Fire();
+            }
+            else
+            {
+                Reload();
+            }
 
-        numberText.text = "" + currentclip + " / " + playerAmmo.lightAmmo;
+        }
     }
 
-    void Start()
+    public void SetupWeapon(int id)
     {
-        camRotation = Vector2.zero;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Locked;
+        switch (id)
+        {
+            case 0 when useWeapon0: 
+                weaponID = 0;
+                shotVel = 300f;
+                fireMode = 0;
+                fireRate = 0.5f;
+                currentClip = 7;
+                clipSize = 7;
+                maxAmmo = 14;
+                currentAmmo = 21;
+                reloadAmt = 7;
+                bulletLifespan = 1.5f;
+                break;
 
+            case 1 when useWeapon1: 
+                weaponID = 1;
+                shotVel = 900f;
+                fireMode = 1;
+                fireRate = 0.083f;
+                currentClip = 30;
+                clipSize = 30;
+                maxAmmo = 60;
+                currentAmmo = 90;
+                reloadAmt = 30;
+                bulletLifespan = 2f;
+                break;
 
-        gunNormalPosition = gunTransform.localPosition;
+            case 2 when useWeapon2: 
+                weaponID = 2;
+                shotVel = 600f;
+                fireMode = 2;
+                fireRate = 0.067f;
+                currentClip = 20;
+                clipSize = 20;
+                maxAmmo = 40;
+                currentAmmo = 60;
+                reloadAmt = 20;
+                bulletLifespan = 1.0f;
+                break;
 
+            case 3 when useWeapon3: 
+                weaponID = 3;
+                shotVel = 700f;
+                fireMode = 2;
+                fireRate = 0.1f;
+                currentClip = 30;
+                clipSize = 30;
+                maxAmmo = 60;
+                currentAmmo = 90;
+                reloadAmt = 30;
+                bulletLifespan = 1.0f;
+                break;
 
+            default:
+                Debug.Log("Invalid weapon ID or weapon not available.");
+                break;
 
+        }
     }
 
-
-    public void FireWeapon()
+    public void Fire()
     {
         if (Time.timeScale == 1)
         {
-            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-
-
+            GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, gunTransform.position, gunTransform.rotation);
             gunshake = true;
             StartCoroutine(camshake());
 
-            GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
-            Rigidbody rb1 = casing1.GetComponent<Rigidbody>();
+            Transform cameraTransform = Camera.main.transform;
+            float intensity = 2f;
+            float duration = 0.5f;
 
 
-            Destroy(casing1, 1f);
-
-            GameObject projectile = Instantiate(shot, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+            GameObject bulletInstantiator = bulletInstantiators[weaponID];
+            GameObject projectile = Instantiate(shot, bulletInstantiator.transform.position, bulletInstantiator.transform.rotation);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
-            rb1.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
             if (rb != null)
             {
-                rb.AddForce(playercam.transform.forward * shotspeed, ForceMode.Impulse);
+                rb.AddForce(camera.transform.forward * shotVel, ForceMode.Impulse);
             }
 
-            currentclip--;
-            canfire = false;
+            currentClip--;
+            CanFire = false;
 
-
-            Destroy(projectile, 2f);
+            Destroy(projectile, bulletLifespan);
             Destroy(muzzleFlash, 0.1f);
 
-
             StartCoroutine(CooldownFire());
+            StartCoroutine(GunAction());
         }
     }
 
 
-
-
-    public void ReloadClip()
+    public void SwitchWeapon(int weaponIndex)
     {
-        if (currentclip >= clipsize) return;
+        Debug.Log($"Attempting to switch to weapon index: {weaponIndex}");
 
-        GameObject MAG1 = Instantiate(MAG, Mag.position, Mag.rotation * Quaternion.Euler(-90, 0, 0));
-        Rigidbody rb = MAG1.GetComponent<Rigidbody>();
-        rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
-
-        Destroy(MAG1, 3f);
-
-        int reloadCount = (int)(clipsize - currentclip);
-
-        if (playerAmmo.lightAmmo < reloadCount)
+        if (weaponIndex >= 0 && weaponIndex < weapons.Length && weaponUnlocked[weaponIndex])
         {
-            currentclip += playerAmmo.lightAmmo;
-            currentammo = 0;
+            Debug.Log($"Switching to weapon: {weapons[weaponIndex].name}");
+
+            if (currentWeaponIndex >= 0)
+            {
+                weapons[currentWeaponIndex].SetActive(false);
+                weaponModels[currentWeaponIndex].SetActive(false);
+            }
+
+            weapons[weaponIndex].SetActive(true);
+            weaponModels[weaponIndex].SetActive(true);
+            currentWeaponIndex = weaponIndex;
+
+            SetupWeapon(weaponIndex);
         }
         else
         {
-            currentclip += reloadCount;
-            playerAmmo.lightAmmo -= reloadCount;
+            Debug.LogError("Cannot switch to weapon: either the index is invalid or the weapon is locked.");
         }
+    }
 
-       
+    public void UnlockWeapon(int weaponIndex)
+    {
+        if (weaponIndex >= 0 && weaponIndex < weaponUnlocked.Length)
+        {
+            weaponUnlocked[weaponIndex] = true;
+            SwitchWeapon(weaponIndex);
+        }
+    }
 
+    public void Reload()
+    {
+        if (currentClip >= clipSize) return;
+
+        int reloadCount = clipSize - currentClip;
+        int availableAmmo = playerAmmo.GetCurrentAmmo(weaponID);
+
+        if (availableAmmo < reloadCount)
+        {
+            currentClip += availableAmmo;
+            playerAmmo.DecreaseAmmo(weaponID, availableAmmo);
+        }
+        else
+        {
+            currentClip += reloadCount;
+            playerAmmo.DecreaseAmmo(weaponID, reloadCount);
+        }
     }
 
     private IEnumerator CooldownFire()
     {
-        yield return new WaitForSeconds(firerate);
-        canfire = true;
+        yield return new WaitForSeconds(fireRate);
+        CanFire = true;
     }
 
-   
+    IEnumerator GunAction()
+    {
+        yield return new WaitForSeconds(0.01f);
+    }
+
+
 
     private IEnumerator camshake()
     {
         yield return new WaitForSeconds(.2f);
         gunshake = false;
     }
+
+
 
 }

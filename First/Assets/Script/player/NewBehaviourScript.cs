@@ -52,7 +52,6 @@ public class NewBehaviourScript : MonoBehaviour
     private bool isGrounded;
     private Vector3 lastVelocity;
 
-    private CameraShake cameraShake;
 
     public gamemanager isnotalive;
 
@@ -62,23 +61,21 @@ public class NewBehaviourScript : MonoBehaviour
     private float targetLean = 30f;
     private float currentLean = 0f;
 
-    public int lightAmmo = 0;
-    public int heavyAmmo = 0;
+
+    [Header("Ammo")]
+    public int revAmmo = 28;
+    public int M4Ammo = 90;
+    public int BoltAmmo = 20;
+    public int LMGAmmo = 200;
     public bool levelevent = false;
     public int healthpacks;
     public int armour;
 
-    public float revolverrecoilcount;
-    public float m4recoilcount;
-    public float boltyrecoilcount;
-    public float lmgrecoilcount;
 
-    public revolver Revolver;
 
     void Start()
     {
         theRB = GetComponent<Rigidbody>();
-        cameraShake = FindObjectOfType<CameraShake>();
 
         isnotalive = gamemanager.GetComponent<gamemanager>();
 
@@ -91,8 +88,6 @@ public class NewBehaviourScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         gunNormalPosition = gunTransform.localPosition;
-
-        cameraShake = FindObjectOfType<CameraShake>();
 
 
     }
@@ -117,6 +112,8 @@ public class NewBehaviourScript : MonoBehaviour
         camRotation.y += Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.timeScale;
 
         playercam.transform.rotation = Quaternion.Euler(-camRotation.y, camRotation.x, 0);
+
+        camRotation.y = Mathf.Clamp(camRotation.y, -camRotationLimit, camRotationLimit);
 
         transform.rotation = Quaternion.Euler(0, camRotation.x, 0);
 
@@ -195,18 +192,33 @@ public class NewBehaviourScript : MonoBehaviour
 
 
 
-public void AddlightAmmo(int amount)
+    public void DecreaseAmmo(int weaponID, int amount)
     {
-        lightAmmo += amount;
-        Debug.Log("Added " + amount + " Type1 Ammo. Total: " + lightAmmo);
+        switch (weaponID)
+        {
+            case 0:
+                revAmmo = Mathf.Max(0, revAmmo - amount);
+                break;
+            case 1:
+                M4Ammo = Mathf.Max(0, M4Ammo - amount);
+                break;
+            case 2:
+                BoltAmmo = Mathf.Max(0, BoltAmmo - amount);
+                break;
+        }
     }
 
-    public void AddheavyAmmo(int amount)
+    public int GetCurrentAmmo(int weaponID)
     {
-        heavyAmmo += amount;
-        Debug.Log("Added " + amount + " Type2 Ammo. Total: " + heavyAmmo);
+        return weaponID switch
+        {
+            0 => revAmmo,      // M1911
+            1 => M4Ammo,      // M4
+            2 => BoltAmmo,     // FN SCAR
+            3 => LMGAmmo,      // HK416
+            _ => 0
+        };
     }
-
     private void OnCollisionEnter(Collision collision)
     {
 

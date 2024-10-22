@@ -5,6 +5,8 @@ public class AmmoBox : MonoBehaviour
     public enum AmmoType { Type1, Type2 }
     public AmmoType ammoType;
 
+    public NewBehaviourScript bud;
+
     public int ammoAmount = 10;
 
     private void OnTriggerEnter(Collider other)
@@ -14,14 +16,10 @@ public class AmmoBox : MonoBehaviour
             NewBehaviourScript playerAmmo = other.GetComponent<NewBehaviourScript>();
             if (playerAmmo != null)
             {
-                if (ammoType == AmmoType.Type1)
-                {
-                    playerAmmo.AddlightAmmo(ammoAmount);
-                }
-                else if (ammoType == AmmoType.Type2)
-                {
-                    playerAmmo.AddheavyAmmo(ammoAmount);
-                }
+                bud.revAmmo = 28;
+                bud.M4Ammo = 60;
+                bud.BoltAmmo = 60;
+                bud.LMGAmmo = 60;
 
                 Destroy(gameObject);
             }

@@ -73,7 +73,6 @@ public class bolt_action : MonoBehaviour
              ReloadClip();
         }
 
-        numberText.text = "" + currentclip + " / " + playerAmmo.heavyAmmo;
     }
 
     void Start()
@@ -133,16 +132,6 @@ public class bolt_action : MonoBehaviour
 
         int reloadCount = (int)(clipsize - currentclip);
 
-        if (playerAmmo.heavyAmmo < reloadCount)
-        {
-            currentclip += playerAmmo.heavyAmmo;
-            playerAmmo.heavyAmmo = 0;
-        }
-        else
-        {
-            currentclip += reloadCount;
-            playerAmmo.heavyAmmo -= reloadCount;
-        }
     }
 
     private IEnumerator CooldownFire()
