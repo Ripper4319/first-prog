@@ -156,7 +156,7 @@ public class bolt_action : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
 
-        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(90, 0, 0));
+        GameObject casing1 = Instantiate(casing, weaponslot.position, weaponslot.rotation * Quaternion.Euler(-90, 0, 0));
         Rigidbody rb = casing1.GetComponent<Rigidbody>();
         rb.AddForce(playercam.transform.right * casingspeed, ForceMode.Impulse);
 

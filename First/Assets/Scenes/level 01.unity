@@ -841,11 +841,6 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 1000140724677309288, guid: 4159e17f089784d428504d85588e970b, type: 3}
   m_PrefabInstance: {fileID: 505749873}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &539617972 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1592063059916146206, guid: 6365c4a7428e04c4aa30e87b076b4930, type: 3}
-  m_PrefabInstance: {fileID: 2049682914549566375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &565871876 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3640878557136722198, guid: 92e7dc4f35ebeda47ba1f596e1b8f7fb, type: 3}
@@ -1166,6 +1161,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a57c16c67a94884e8189f3761ae4ee9, type: 3}
+--- !u!1 &720634253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5753353125592708568, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
+  m_PrefabInstance: {fileID: 6987408126289875996}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &777023604 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4597122224556666368, guid: 92e7dc4f35ebeda47ba1f596e1b8f7fb, type: 3}
@@ -1562,6 +1562,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e4eb0c89387239440a0383f889b6934d, type: 3}
   m_PrefabInstance: {fileID: 1044604931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1061384268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6593861709547299890, guid: dbadf824a31cc2b409e25207b38f4606, type: 3}
+  m_PrefabInstance: {fileID: 8772518458242253415}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1066889367
 PrefabInstance:
@@ -2147,7 +2152,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 936774017599151038, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
   m_PrefabInstance: {fileID: 6987408126289875996}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 720634253}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 965632f5a24b0fd4ba8a3252c64786f5, type: 3}
@@ -7264,11 +7269,15 @@ PrefabInstance:
     - target: {fileID: 936774017599151038, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
       propertyPath: direction
       value: 
-      objectReference: {fileID: 539617972}
+      objectReference: {fileID: 1869756774}
     - target: {fileID: 936774017599151038, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 237640840}
+    - target: {fileID: 936774017599151038, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
+      propertyPath: playercam
+      value: 
+      objectReference: {fileID: 1869756774}
     - target: {fileID: 936774017599151038, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
       propertyPath: numberText
       value: 
@@ -7328,6 +7337,10 @@ PrefabInstance:
     - target: {fileID: 5753353125592708568, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
       propertyPath: m_Name
       value: weapon4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753353125592708568, guid: 0a418bd24e82e7f43afc2b296ac7f275, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7654,6 +7667,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 946550314}
     - target: {fileID: 789194871118368442, guid: 1979cf85acb9bed459b12c378d4b0239, type: 3}
+      propertyPath: 'weapons.Array.data[3]'
+      value: 
+      objectReference: {fileID: 720634253}
+    - target: {fileID: 789194871118368442, guid: 1979cf85acb9bed459b12c378d4b0239, type: 3}
       propertyPath: 'weaponpickups.Array.data[1]'
       value: 
       objectReference: {fileID: 8768925305045973847, guid: 652be3105b6be0e439836818cd61c2df, type: 3}
@@ -7661,6 +7678,10 @@ PrefabInstance:
       propertyPath: 'weaponpickups.Array.data[2]'
       value: 
       objectReference: {fileID: 2084803803}
+    - target: {fileID: 789194871118368442, guid: 1979cf85acb9bed459b12c378d4b0239, type: 3}
+      propertyPath: 'weaponpickups.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1061384268}
     - target: {fileID: 2520662385706762143, guid: 1979cf85acb9bed459b12c378d4b0239, type: 3}
       propertyPath: m_Name
       value: weapon controls

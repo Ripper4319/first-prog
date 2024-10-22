@@ -93,6 +93,15 @@ public class WeaponControl : MonoBehaviour
         }
     }
 
+    public void UnlockWeapon(int weaponIndex)
+    {
+        if (weaponIndex >= 0 && weaponIndex < weaponUnlocked.Length)
+        {
+            weaponUnlocked[weaponIndex] = true;
+            Debug.Log($"Weapon {weaponIndex} unlocked!");
+        }
+    }
+
     public void EnableWeapon(int weaponIndex)
     {
 
