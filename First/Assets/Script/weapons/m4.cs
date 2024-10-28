@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 public class Firearm : MonoBehaviour
 {
-
     [Header("Weapon Stats")]
     public int weaponID;
     public float shotVel;
@@ -20,18 +19,12 @@ public class Firearm : MonoBehaviour
     public float bulletLifespan;
     public float casingspeed;
 
-    public int ShotgunBB;
-
     [Header("Weapon Library")]
-    public bool useWeapon0 = true; 
-    public bool useWeapon1 = false; 
-    public bool useWeapon2 = false; 
-    public bool useWeapon3 = false;
-    public bool useWeapon4 = false;
-    public bool useWeapon5 = false;
+    public bool useWeapon0 = true; // Nagant Revolver
+    public bool useWeapon1 = true; // RPK
     public bool CanFire = true;
     public Transform camera;
-
+    public TextMeshProUGUI textMeshPro; 
 
     [Header("Weapon Objects")]
     public GameObject shot;
@@ -41,7 +34,6 @@ public class Firearm : MonoBehaviour
     public NewBehaviourScript playerAmmo;
     public Transform gunTransform;
 
-
     [Header("Weapon Models")]
     public GameObject[] weapons;
     public GameObject[] weaponModels;
@@ -49,7 +41,7 @@ public class Firearm : MonoBehaviour
     public GameObject[] weaponpickups;
     private int currentWeaponIndex = -1;
     public bool[] weaponUnlocked;
-
+    public Animator weapon1A;
 
     [Header("Shake")]
     public float gunShakeIntensity = 2f;
@@ -59,11 +51,8 @@ public class Firearm : MonoBehaviour
     public GameObject[] bulletInstantiators;
     public GameObject[] casingInstantiators;
 
-
-
     private void Start()
     {
-
     }
 
     void Update()
@@ -72,15 +61,10 @@ public class Firearm : MonoBehaviour
         {
             if (weapons.Length > i && weaponUnlocked[i])
             {
-                Debug.Log($"Weapon {i} is unlocked and can be switched.");
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))
                 {
                     SwitchWeapon(i);
                 }
-            }
-            else
-            {
-                Debug.Log($"Weapon {i} is locked.");
             }
         }
 
@@ -93,92 +77,68 @@ public class Firearm : MonoBehaviour
         {
             if (currentClip > 0)
             {
-                Debug.Log("Firing weapon...");
+
+                Debug.Log("shot");
+
                 Fire();
             }
             else
             {
                 Reload();
             }
-
         }
+
+        textMeshPro.text = $" {currentClip}";
     }
 
     public void SetupWeapon(int id)
     {
         switch (id)
         {
-            case 0 when useWeapon0: 
+            case 0 when useWeapon0: // Nagant Revolver
                 weaponID = 0;
-                shotVel = 300f;
-                fireMode = 0;
-                fireRate = 0.5f;
-                currentClip = 7;
+                shotVel = 400f; // Adjust shot velocity
+                fireMode = 0; // Semi-auto
+                fireRate = .5f; // Shots per second
+                currentClip = 7; 
                 clipSize = 7;
-                maxAmmo = 14;
-                currentAmmo = 21;
+                maxAmmo = 30; // Total ammo
+                currentAmmo = 30;
                 reloadAmt = 7;
-                bulletLifespan = 1.5f;
+                bulletLifespan = 2.0f; // Bullet lifespan
                 break;
 
-            case 1 when useWeapon1: 
+            case 1 when useWeapon1: // RPK
                 weaponID = 1;
-                shotVel = 900f;
-                fireMode = 1;
-                fireRate = 0.083f;
-                currentClip = 30;
+                shotVel = 800f; // Adjust shot velocity
+                fireMode = 1; // Full-auto
+                fireRate = 0.1f; // Shots per second
+                currentClip = 30; // Standard clip size
                 clipSize = 30;
-                maxAmmo = 60;
-                currentAmmo = 90;
-                reloadAmt = 30;
-                bulletLifespan = 2f;
-                break;
-
-            case 2 when useWeapon2: 
-                weaponID = 2;
-                shotVel = 600f;
-                fireMode = 2;
-                fireRate = 0.067f;
-                currentClip = 20;
-                clipSize = 20;
-                maxAmmo = 40;
-                currentAmmo = 60;
-                reloadAmt = 20;
-                bulletLifespan = 1.0f;
-                break;
-
-            case 3 when useWeapon3: 
-                weaponID = 3;
-                shotVel = 700f;
-                fireMode = 2;
-                fireRate = 0.1f;
-                currentClip = 30;
-                clipSize = 30;
-                maxAmmo = 60;
-                currentAmmo = 90;
-                reloadAmt = 30;
-                bulletLifespan = 1.0f;
+                maxAmmo = 120; // Total ammo
+                currentAmmo = 120;
+                reloadAmt = 30; // Reload 30 at once
+                bulletLifespan = 2.0f; // Bullet lifespan
                 break;
 
             default:
-                Debug.Log("Invalid weapon ID or weapon not available.");
                 break;
-
         }
     }
 
     public void Fire()
     {
+
         if (Time.timeScale == 1)
         {
+            if (weaponID == 0)
+            {
+                weapon1A.SetBool("isfiring", true);
+            }
+
             GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, gunTransform.position, gunTransform.rotation);
             gunshake = true;
             StartCoroutine(camshake());
-
-            Transform cameraTransform = Camera.main.transform;
-            float intensity = 2f;
-            float duration = 0.5f;
-
 
             GameObject bulletInstantiator = bulletInstantiators[weaponID];
             GameObject projectile = Instantiate(shot, bulletInstantiator.transform.position, bulletInstantiator.transform.rotation);
@@ -199,15 +159,10 @@ public class Firearm : MonoBehaviour
         }
     }
 
-
     public void SwitchWeapon(int weaponIndex)
     {
-        Debug.Log($"Attempting to switch to weapon index: {weaponIndex}");
-
         if (weaponIndex >= 0 && weaponIndex < weapons.Length && weaponUnlocked[weaponIndex])
         {
-            Debug.Log($"Switching to weapon: {weapons[weaponIndex].name}");
-
             if (currentWeaponIndex >= 0)
             {
                 weapons[currentWeaponIndex].SetActive(false);
@@ -223,15 +178,6 @@ public class Firearm : MonoBehaviour
         else
         {
             Debug.LogError("Cannot switch to weapon: either the index is invalid or the weapon is locked.");
-        }
-    }
-
-    public void UnlockWeapon(int weaponIndex)
-    {
-        if (weaponIndex >= 0 && weaponIndex < weaponUnlocked.Length)
-        {
-            weaponUnlocked[weaponIndex] = true;
-            SwitchWeapon(weaponIndex);
         }
     }
 
@@ -258,6 +204,7 @@ public class Firearm : MonoBehaviour
     {
         yield return new WaitForSeconds(fireRate);
         CanFire = true;
+        weapon1A.SetBool("Isfiring", false);
     }
 
     IEnumerator GunAction()
@@ -265,14 +212,10 @@ public class Firearm : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
     }
 
-
-
     private IEnumerator camshake()
     {
         yield return new WaitForSeconds(.2f);
         gunshake = false;
     }
-
-
-
 }
+

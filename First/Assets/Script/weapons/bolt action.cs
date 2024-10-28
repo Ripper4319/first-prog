@@ -73,6 +73,7 @@ public class bolt_action : MonoBehaviour
              ReloadClip();
         }
 
+        numberText.text = "" + currentclip + " / " + currentammo;
     }
 
     void Start()

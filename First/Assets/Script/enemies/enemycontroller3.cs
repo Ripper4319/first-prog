@@ -8,10 +8,11 @@ public class BasicEnemyController3 : MonoBehaviour
     public NewBehaviourScript player;
     public NavMeshAgent agent;
     public Transform enemy3;
-    public GameObject enemy3projectile1; // This will be the 'copy' or 'projectile' of the enemy.
+    public GameObject enemy3projectile1; 
     public GameObject enemyModel; // Reference to the model that follows the player
 
-    public float detectionRange = 2f;
+    public float detectionRange = 10f;
+    public float boomRange = 2f;
     public Transform player1;
 
     [Header("Enemy Stats")]
@@ -31,16 +32,21 @@ public class BasicEnemyController3 : MonoBehaviour
 
     void Update()
     {
-        agent.destination = player.transform.position;
 
         if (health <= 0)
             DestroyEnemy();
 
         float distanceToPlayer = Vector3.Distance(transform.position, player1.position);
-        if (distanceToPlayer <= detectionRange && !diving)
+        if (distanceToPlayer <= detectionRange )
         {
-            diving = true;
-            ActivateDive();
+            agent.destination = player.transform.position;
+
+            if (!diving && distanceToPlayer <= boomRange)
+            {
+                diving = true;
+                ActivateDive();
+            }
+            
         }
     }
 

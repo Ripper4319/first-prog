@@ -1,58 +1,45 @@
 using UnityEngine;
-using NUnit;
-using System.Collections;
-using UnityEditor.Experimental;
-using System.Runtime.CompilerServices;
-using System.Numerics;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
-using Quaternion = UnityEngine.Quaternion;
 
 public class WeaponPickup : MonoBehaviour
 {
     public int weaponIndex;
 
-    public bool canpickup = false;
     public float pickuprate = 2f;
-
-
+    private float pickupCooldown; // Cooldown timer
     public Firearm weaponController;
-
 
     void Start()
     {
+        pickupCooldown = 0f; // Initialize cooldown timer
     }
 
     private void Update()
     {
-        /*
-        if (pickuprate >= 0)
-            pickuprate -= Time.deltaTime;
-        else
-            canpickup = true;
-    */
-        canpickup = true;
+        if (pickupCooldown > 0)
+        {
+            pickupCooldown -= Time.deltaTime; // Reduce the cooldown
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && canpickup) 
+        if (collision.gameObject.CompareTag("Player") && pickupCooldown <= 0)
         {
-            UnlockWeapon(weaponIndex);
+            if (weaponController != null)
+            {
+                weaponController.weaponUnlocked[weaponIndex] = true;
+                weaponController.SwitchWeapon(weaponIndex);
+                Destroy(gameObject);
+
+                pickupCooldown = pickuprate; 
+            }
+            else
+            {
+                Debug.LogError("WeaponController is not assigned!");
+            }
         }
     }
-
-    public void UnlockWeapon(int weaponIndex)
-    {
-        if (weaponIndex >= 0 && weaponIndex < weaponController.weaponUnlocked.Length)
-        {
-            weaponController.UnlockWeapon(weaponIndex);
-            weaponController.SetupWeapon(weaponIndex);
-        }
-    }
-
-
-
 }
+
 
 

@@ -6,6 +6,7 @@ using static UnityEngine.ParticleSystem;
 
 public class EnemyProjectileScript : MonoBehaviour
 {
+    public NewBehaviourScript player;
     public bool collidedwithplayer = false;
     public bool shotted = false;
     public GameObject explosionPrefab;
@@ -21,6 +22,8 @@ public class EnemyProjectileScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+
+            player.Health--;
 
             droneexplode();
         }

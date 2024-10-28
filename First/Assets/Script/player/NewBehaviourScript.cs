@@ -64,8 +64,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     [Header("Ammo")]
     public int revAmmo = 28;
-    public int M4Ammo = 90;
-    public int BoltAmmo = 20;
     public int LMGAmmo = 200;
     public bool levelevent = false;
     public int healthpacks;
@@ -200,10 +198,7 @@ public class NewBehaviourScript : MonoBehaviour
                 revAmmo = Mathf.Max(0, revAmmo - amount);
                 break;
             case 1:
-                M4Ammo = Mathf.Max(0, M4Ammo - amount);
-                break;
-            case 2:
-                BoltAmmo = Mathf.Max(0, BoltAmmo - amount);
+                LMGAmmo = Mathf.Max(0, LMGAmmo - amount);
                 break;
         }
     }
@@ -212,10 +207,8 @@ public class NewBehaviourScript : MonoBehaviour
     {
         return weaponID switch
         {
-            0 => revAmmo,      // M1911
-            1 => M4Ammo,      // M4
-            2 => BoltAmmo,     // FN SCAR
-            3 => LMGAmmo,      // HK416
+            0 => revAmmo,      
+            3 => LMGAmmo,      
             _ => 0
         };
     }
@@ -230,10 +223,9 @@ public class NewBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") || collision.contacts[0].normal.y > 0.9f)
         {
             isGrounded = true;
-           // Mathf.Lerp
         }
 
-        if (collision.gameObject.CompareTag("weapon") && (collision.gameObject.GetComponent<WeaponPickup>() != null && collision.gameObject.GetComponent<WeaponPickup>().canpickup))
+        if (collision.gameObject.CompareTag("weapon"))
         {
 
             collision.gameObject.transform.SetPositionAndRotation(weaponslot.position, weaponslot.rotation);
@@ -245,7 +237,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag("healthpickup") && Health < maxHealth)
         {
             Destroy(collision.gameObject);
-            Health++;
+            healthpacks++;
         }
         if (collision.gameObject.CompareTag("shot"))
         {

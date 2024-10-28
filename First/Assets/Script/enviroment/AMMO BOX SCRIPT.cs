@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class AmmoBox : MonoBehaviour
 {
-    public enum AmmoType { Type1, Type2 }
-    public AmmoType ammoType;
+
+    [SerializeField] public AudioSource pickup;
 
     public NewBehaviourScript bud;
 
@@ -17,12 +18,17 @@ public class AmmoBox : MonoBehaviour
             if (playerAmmo != null)
             {
                 bud.revAmmo = 28;
-                bud.M4Ammo = 60;
-                bud.BoltAmmo = 60;
                 bud.LMGAmmo = 60;
 
-                Destroy(gameObject);
+                StartCoroutine(Play());
             }
         }
+    }
+
+    public IEnumerator Play()
+    {
+        pickup.Play();
+        yield return new WaitForSeconds(.2f);
+        Destroy(gameObject);
     }
 }

@@ -21,10 +21,12 @@ public class gamemanager : MonoBehaviour
     public GameObject quit;
     private bool QuitActive;
 
+    public GameObject tut;
+
+    public GameObject END;
+
     public GameObject set;
     private bool settingsOpen;
-
-    public GameObject end;
 
     public GameObject HUD;
     private bool HUDActive;
@@ -40,7 +42,10 @@ public class gamemanager : MonoBehaviour
     {
         set.SetActive(false);
         HUD.SetActive(true);
-        end.SetActive(false);
+        tut.SetActive(true);
+        END.SetActive(false);
+
+        StartCoroutine(Tut());
      
     }
 
@@ -84,12 +89,13 @@ public class gamemanager : MonoBehaviour
 
     public void RestartLevel()
     {
-
         Time.timeScale = 1;
         LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
-    
+    public void ResumeGame()
+    {
+    }
 
 
     public void Settings()
@@ -120,13 +126,11 @@ public class gamemanager : MonoBehaviour
         EndGame = true;
         HUD.SetActive(false);
         set.SetActive(false);
-        end.SetActive(true);
+        END.SetActive(true);
         settingsOpen = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
-
-        StartCoroutine(RestartGame());
     }
 
     public void LoadNextLevel()
@@ -139,11 +143,11 @@ public class gamemanager : MonoBehaviour
             SceneManager.LoadScene(nextSceneIndex);
         }
     }
-    public IEnumerator RestartGame()
+
+    IEnumerator Tut()
     {
+        yield return new WaitForSeconds(5f);
+        tut.SetActive(false);
 
-        yield return new WaitForSeconds(2);
-
-        Application.Quit();
     }
 }

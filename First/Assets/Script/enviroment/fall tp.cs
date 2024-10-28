@@ -18,6 +18,10 @@ public class FallTeleporter : MonoBehaviour
         }
     }
 
+    public void ToggleFog(bool isEnabled)
+    {
+        RenderSettings.fog = isEnabled;
+    }
 
     public IEnumerator Fade()
     {
